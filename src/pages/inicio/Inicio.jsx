@@ -20,8 +20,8 @@ function Inicio() {
 
   const navigate = useNavigate();
 
-  const goContactanos = () => {
-    navigate('/contactanos');
+  const goDesbloqueosForm = () => {
+    navigate('/desbloqueos');
   };
 
   return (
@@ -41,9 +41,9 @@ function Inicio() {
           position: 'fixed', top: '150px', right: { xs: '10px', sm: '40px' }, backgroundColor: '#2586AF', border: '8px solid #E1A73E', padding: '20px',
         }}
         size="large"
-        onClick={goContactanos}
+        onClick={goDesbloqueosForm}
       >
-        <Typography fontWeight="800"> Contactanos </Typography>
+        <Typography fontWeight="800"> !Desbloquea mi cel ya! </Typography>
       </Fab>
       <CardMedia
         component="img"
