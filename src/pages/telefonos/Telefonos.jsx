@@ -53,7 +53,7 @@ function Telefonos() {
   }
   return (
     <Container sx={{ padding: '20px', textAlign: 'center' }}>
-      <Typography variant="h4" color="white" fontWeight="700" marginTop="60px">Desbloquea tu cel</Typography>
+      <Typography variant="h4" color="white" fontWeight="700" marginTop="60px">Desbloquea mi cel</Typography>
       <Typography variant="h5" color="white">¡Consigue el que necesitas!</Typography>
       <Box sx={{
         display: 'flex',
@@ -70,7 +70,7 @@ function Telefonos() {
               key={phone.id}
               title={phone.name}
               imgsrc={phone.image}
-              buttontext={CONSTANTS.DESBLOQUEATUCELULAR}
+              buttontext={CONSTANTS.desbloqueamicelULAR}
               id={phone.id}
             />
           ))

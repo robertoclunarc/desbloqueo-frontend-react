@@ -59,7 +59,7 @@ function Acerca() {
           />
           <Typography variant="h5" textAlign="center" fontWeight="700">Sobre nosotros</Typography>
           <Typography textAlign="justify">
-            En Desbloquea tu cel, somos un equipo de expertos en desbloqueo de teléfonos inteligentes, brindando soluciones confiables y seguras que te permiten liberar todo el potencial de tus dispositivos móviles. Poseemos una pasión por la tecnología y aseguramos el compromiso de nuestro equipo con la satisfacción del cliente.
+            En Desbloquea mi cel, somos un equipo de expertos en desbloqueo de teléfonos inteligentes, brindando soluciones confiables y seguras que te permiten liberar todo el potencial de tus dispositivos móviles. Poseemos una pasión por la tecnología y aseguramos el compromiso de nuestro equipo con la satisfacción del cliente.
           </Typography>
         </Card>
       </Grid>
@@ -125,7 +125,7 @@ function Acerca() {
           />
           <Typography variant="h5" textAlign="center" fontWeight="700">Compromiso con la Calidad</Typography>
           <Typography textAlign="justify">
-            En Desbloquea tu cel, la calidad es nuestra máxima prioridad. Utilizamos métodos y herramientas de vanguardia para garantizar que tu teléfono se desbloquee de manera segura y sin riesgos. Cada desbloqueo es llevado a cabo con precisión y cuidado, respetando la integridad de tu dispositivo.
+            En Desbloquea mi cel, la calidad es nuestra máxima prioridad. Utilizamos métodos y herramientas de vanguardia para garantizar que tu teléfono se desbloquee de manera segura y sin riesgos. Cada desbloqueo es llevado a cabo con precisión y cuidado, respetando la integridad de tu dispositivo.
           </Typography>
         </Card>
       </Grid>
@@ -168,12 +168,12 @@ function Acerca() {
           />
           <Typography variant="h5" textAlign="center" fontWeight="700">Únete a la Experiencia</Typography>
           <Typography textAlign="justify">
-            Si estás buscando un servicio de desbloqueo de teléfonos inteligentes confiable y eficiente, no busques más. En Desbloquea tu cel, estamos listos para brindarte soluciones que transformarán la forma en que usas tu dispositivo. Únete a nuestra creciente lista de clientes satisfechos y descubre la libertad de elegir.
+            Si estás buscando un servicio de desbloqueo de teléfonos inteligentes confiable y eficiente, no busques más. En Desbloquea mi cel, estamos listos para brindarte soluciones que transformarán la forma en que usas tu dispositivo. Únete a nuestra creciente lista de clientes satisfechos y descubre la libertad de elegir.
           </Typography>
         </Card>
       </Grid>
       <Grid item xs={12}>
-        <Typography color="white" textAlign="center" variant="h4" fontWeight="700">¡Gracias por elegir Desbloquea tu cel!</Typography>
+        <Typography color="white" textAlign="center" variant="h4" fontWeight="700">¡Gracias por elegir Desbloquea mi cel!</Typography>
       </Grid>
     </Grid>
   );

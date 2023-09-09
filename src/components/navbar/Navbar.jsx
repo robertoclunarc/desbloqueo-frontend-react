@@ -70,7 +70,7 @@ function Navbar() {
               handleDrawerToggle();
             }}
           >
-            Desbloquea tu cell ya
+            Desbloquea mi cel ya
           </ListItemText>
         </ListItemButton>
       </ListItem>
@@ -117,7 +117,7 @@ function Navbar() {
             }}
             sx={{ display: { xs: 'none', sm: 'block' }, color: '#224776' }}
           >
-            ¡Desbloquea tu cel ya!
+            ¡Desbloquea mi cel ya!
           </Button>
         </StyledToolbar>
       </AppBar>
