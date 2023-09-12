@@ -43,7 +43,7 @@ function Inicio() {
         size="large"
         onClick={goDesbloqueosForm}
       >
-        <Typography fontWeight="800"> !Desbloquea mi cel ya! </Typography>
+        <Typography fontWeight="800"> !Libera mi cel ya! </Typography>
       </Fab>
       <CardMedia
         component="img"

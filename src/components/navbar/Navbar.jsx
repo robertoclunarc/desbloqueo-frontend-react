@@ -17,7 +17,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import MenuIcon from '@mui/icons-material/Menu';
 import { PATHS } from '../../shared/constants/Constants';
-import logo from '../../shared/image/2(7).png';
+import logo from '../../shared/image/LogoTransparente.png';
 
 const StyledToolbar = styled(Toolbar)({
   display: 'flex',
@@ -35,8 +35,6 @@ function Navbar() {
 
   const drawer = (
     <Box sx={{ backgroundColor: '#224776', height: '100vh' }}>
-      <Toolbar> </Toolbar>
-      <Divider> </Divider>
       <List>
         {
           PATHS.map((item) => (
@@ -56,9 +54,7 @@ function Navbar() {
           ))
         }
       </List>
-      <Toolbar> </Toolbar>
-      <Toolbar> </Toolbar>
-      <Divider> </Divider>
+      <Divider />
       <ListItem>
         <ListItemButton sx={{
           textAlign: 'center', backgroundColor: '#E1A73E', borderRadius: '20px', color: '#224776',
@@ -78,19 +74,19 @@ function Navbar() {
   );
 
   return (
-    <div>
+    <Box sx={{ marginBottom: { xs: '40vh', sm: '30vh', md: '20vh' } }}>
       <AppBar>
         <StyledToolbar>
           <IconButton color="otherColor" aria-label="open drawer" edge="start" sx={{ mr: 2, display: { sm: 'none' } }} onClick={handleDrawerToggle}>
             <MenuIcon> </MenuIcon>
           </IconButton>
-          <Box width={{ xs: '90%', sm: '20%' }} sx={{ height: '100px', overflow: 'hidden' }}>
+          <Box width={{ xs: '90%', sm: '20%' }} sx={{ height: '100%', overflow: 'visible' }}>
             <Box
               component="img"
               src={logo}
-              marginTop="-20px"
+              marginTop="2vh"
               sx={{
-                width: '100%', height: '100%', objectFit: 'cover',
+                width: '100%', height: '100%', objectFit: 'cover', marginX: 'auto', marginY: 'auto',
               }}
             />
           </Box>
@@ -121,7 +117,6 @@ function Navbar() {
           </Button>
         </StyledToolbar>
       </AppBar>
-      <Toolbar> </Toolbar>
       <Box component="nav">
         <Drawer
           variant="temporary"
@@ -138,7 +133,7 @@ function Navbar() {
           {drawer}
         </Drawer>
       </Box>
-    </div>
+    </Box>
   );
 }
 
