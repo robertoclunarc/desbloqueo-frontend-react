@@ -35,16 +35,7 @@ function Inicio() {
       width: '100%',
     }}
     >
-      <Fab
-        variant="extended"
-        sx={{
-          position: 'fixed', top: '150px', right: { xs: '10px', sm: '40px' }, backgroundColor: '#2586AF', border: '8px solid #E1A73E', padding: '20px',
-        }}
-        size="large"
-        onClick={goDesbloqueosForm}
-      >
-        <Typography fontWeight="800"> !Libera mi cel ya! </Typography>
-      </Fab>
+
       <CardMedia
         component="img"
         src={imagenLateral}
@@ -52,7 +43,22 @@ function Inicio() {
           width: '40%', position: 'absolute', left: '-20%', top: '50%',
         }}
       />
-      <Typography variant="h4" color="white">¿Necesitas desbloquear tu celular?</Typography>
+      <Box sx={{ display: 'grid' }}>
+        <Typography variant="h4" color="white">
+          ¿Necesitas desbloquear tu celular?
+        </Typography>
+        <Fab
+          variant="extended"
+          md={{
+            justifyContent: 'flex-end', backgroundColor: '#2586AF', border: '8px solid #E1A73E', padding: '20px', marginLeft: '5vw',
+          }}
+          sx={{ backgroundColor: '#2586AF', border: '8px solid #E1A73E', padding: '20px' }}
+          size="large"
+          onClick={goDesbloqueosForm}
+        >
+          <Typography fontWeight="800"> !Libera mi cel ya! </Typography>
+        </Fab>
+      </Box>
       <Carousel />
       <FeaturedPhones />
       <WhyUS whyUsTitle={inicio?.whyUsTitle} whyUsReasons={inicio?.whyUsReasonsCollection.items} />
