@@ -16,6 +16,7 @@ import {
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import MenuIcon from '@mui/icons-material/Menu';
+import Grid from '@mui/material/Unstable_Grid2';
 import { PATHS } from '../../shared/constants/Constants';
 import logo from '../../shared/image/LogoTransparente.png';
 
@@ -74,47 +75,54 @@ function Navbar() {
   );
 
   return (
-    <Box sx={{ marginBottom: { xs: '40vh', sm: '30vh', md: '20vh' } }}>
+    <Box sx={{
+      mb: {
+        xs: '5', sm: '4', md: '5', lg: '5',
+      },
+    }}
+    >
       <AppBar>
         <StyledToolbar>
-          <IconButton color="otherColor" aria-label="open drawer" edge="start" sx={{ mr: 2, display: { sm: 'none' } }} onClick={handleDrawerToggle}>
-            <MenuIcon> </MenuIcon>
-          </IconButton>
-          <Box width={{ xs: '90%', sm: '20%' }} sx={{ height: '100%', overflow: 'visible' }}>
-            <Box
-              component="img"
-              src={logo}
-              marginTop="2vh"
-              sx={{
-                width: '100%', height: '100%', objectFit: 'cover', marginX: 'auto', marginY: 'auto',
+          <Grid container direction="row" justifyContent="space-between" alignItems="center">
+            <IconButton color="otherColor" aria-label="open drawer" edge="start" sx={{ mr: 2, display: { sm: 'none' } }} onClick={handleDrawerToggle}>
+              <MenuIcon> </MenuIcon>
+            </IconButton>
+            <Box width={{ xs: '90%', sm: '20%' }} sx={{ height: '50%', overflow: 'visible' }}>
+              <Box
+                component="img"
+                src={logo}
+                marginTop="2vh"
+                sx={{
+                  width: '100%', height: '100%', objectFit: 'cover', marginX: 'auto', marginY: 'auto',
+                }}
+              />
+            </Box>
+            <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+              {
+                PATHS.map((item) => (
+                  <Button
+                    key={item.name}
+                    color="otherColor"
+                    onClick={() => {
+                      navigate(item.path);
+                    }}
+                  >
+                    {item.name}
+                  </Button>
+                ))
+              }
+            </Box>
+            <Button
+              color="secondary"
+              variant="contained"
+              onClick={() => {
+                navigate('/desbloqueos');
               }}
-            />
-          </Box>
-          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            {
-              PATHS.map((item) => (
-                <Button
-                  key={item.name}
-                  color="otherColor"
-                  onClick={() => {
-                    navigate(item.path);
-                  }}
-                >
-                  {item.name}
-                </Button>
-              ))
-            }
-          </Box>
-          <Button
-            color="secondary"
-            variant="contained"
-            onClick={() => {
-              navigate('/desbloqueos');
-            }}
-            sx={{ display: { xs: 'none', sm: 'block' }, color: '#224776' }}
-          >
-            ¡Desbloquea mi cel ya!
-          </Button>
+              sx={{ display: { xs: 'none', sm: 'block' }, color: '#224776' }}
+            >
+              ¡Desbloquea mi cel ya!
+            </Button>
+          </Grid>
         </StyledToolbar>
       </AppBar>
       <Box component="nav">
