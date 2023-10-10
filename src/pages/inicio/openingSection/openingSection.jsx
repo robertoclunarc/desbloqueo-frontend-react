@@ -17,7 +17,7 @@ const openingSection = () => (
       justifyContent: 'center',
       width: '100%',
       height: '50%',
-      paddingBottom: '10em',
+      paddingBottom: '9em',
     }}
   >
     <Box
