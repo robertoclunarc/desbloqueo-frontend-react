@@ -2,11 +2,11 @@ import React from 'react';
 import { useQuery } from '@apollo/client';
 import { Box, CardMedia, Fab } from '@mui/material';
 import { useNavigate } from 'react-router';
-import Navbar from '../../components/navbar/Navbar';
 import Header from './headerSection/header';
 import OpeningSection from './openingSection/openingSection';
 import FeaturedPhones from './featuredPhones/FeaturedPhones';
 import Servicios from './services/Services';
+import Counter from './counterStats/Counter';
 import WhyUS from './whyUs/WhyUs';
 import Spinner from '../../components/spinner/Spinner';
 import { getInicio } from '../../shared/api/contentful/queries';
@@ -34,13 +34,12 @@ function Inicio() {
         display: 'flex',
         justifyContent: 'center',
         gap: '10px',
-        paddingTop: '30px',
         alignItems: 'center',
         width: '100%',
+        paddingTop: '15px',
         backgroundColor: '#051650',
       }}
     >
-      <Navbar />
       <Fab
         sx={{
           background: `url(${Phone})`,
@@ -59,11 +58,11 @@ function Inicio() {
             backgroundColor: 'none',
           },
         }}
-        size='large'
+        size="large"
         onClick={goContactanos}
       />
       <CardMedia
-        component='img'
+        component="img"
         src={imagenLateral}
         sx={{
           width: '40%',
@@ -74,6 +73,7 @@ function Inicio() {
       />
       <Header />
       <OpeningSection />
+      <Counter />
       <FeaturedPhones />
       <WhyUS
         whyUsTitle={inicio?.whyUsTitle}

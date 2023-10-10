@@ -21,6 +21,7 @@ import logo from '../../shared/image/2(7).png';
 const StyledToolbar = styled(Toolbar)({
   display: 'flex',
   justifyContent: 'space-between',
+  height: '100px',
 });
 
 function Navbar() {
@@ -37,7 +38,7 @@ function Navbar() {
       <Toolbar>
         {' '}
         <Box
-          component='img'
+          component="img"
           src={logo}
           sx={{
             paddingRight: '35px',
@@ -94,9 +95,9 @@ function Navbar() {
       <AppBar>
         <StyledToolbar>
           <IconButton
-            color='otherColor'
-            aria-label='open drawer'
-            edge='start'
+            color="otherColor"
+            aria-label="open drawer"
+            edge="start"
             sx={{ mr: 2, display: { sm: 'none' } }}
             onClick={handleDrawerToggle}
           >
@@ -126,7 +127,7 @@ function Navbar() {
             }}
           >
             <Box
-              component='img'
+              component="img"
               src={logo}
               sx={{
                 width: '100%',
@@ -139,7 +140,7 @@ function Navbar() {
             {PATHS.map((item) => (
               <Button
                 key={item.name}
-                color='otherColor'
+                color="otherColor"
                 onClick={() => {
                   navigate(item.path);
                 }}
@@ -159,8 +160,8 @@ function Navbar() {
             ))}
           </Box>
           <Button
-            color='secondary'
-            variant='contained'
+            color="secondary"
+            variant="contained"
             onClick={() => {
               navigate('/desbloqueos');
             }}
@@ -174,9 +175,9 @@ function Navbar() {
         </StyledToolbar>
       </AppBar>
       <Toolbar> </Toolbar>
-      <Box component='nav'>
+      <Box component="nav">
         <Drawer
-          variant='temporary'
+          variant="temporary"
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{

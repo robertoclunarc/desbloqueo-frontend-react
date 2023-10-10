@@ -1,7 +1,10 @@
 /* eslint-disable max-len */
-import { Card, CardMedia, Fab, Grid, Typography } from '@mui/material';
+import {
+  Card, CardMedia, Fab, Grid, Typography,
+} from '@mui/material';
 import React from 'react';
 import { useNavigate } from 'react-router';
+import Navbar from '../../components/navbar/Navbar';
 import candado from '../../shared/image/10(3).png';
 import bombillo from '../../shared/image/9(3).png';
 import maleta from '../../shared/image/11(3).png';
@@ -20,14 +23,14 @@ function Acerca() {
       container
       sx={{
         padding: '10px',
-        marginTop: '100px',
+        marginTop: '10px',
         width: '100%',
       }}
       spacing={2}
     >
       <Navbar />
       <Fab
-        variant='extended'
+        variant="extended"
         sx={{
           position: 'fixed',
           top: '120px',
@@ -36,10 +39,10 @@ function Acerca() {
           border: '8px solid #E1A73E',
           padding: '20px',
         }}
-        size='large'
+        size="large"
         onClick={goContactanos}
       >
-        <Typography fontWeight='800'> Contactanos </Typography>
+        <Typography fontWeight="800"> Contactanos </Typography>
       </Fab>
       <Grid item xs={12} md={6}>
         <Card
@@ -52,16 +55,16 @@ function Acerca() {
           }}
         >
           <CardMedia
-            component='img'
+            component="img"
             src={bombillo}
             sx={{
               width: '75px',
             }}
           />
-          <Typography variant='h5' textAlign='center' fontWeight='700'>
+          <Typography variant="h5" textAlign="center" fontWeight="700">
             Sobre nosotros
           </Typography>
-          <Typography textAlign='justify'>
+          <Typography textAlign="justify">
             En Desbloquea tu cel, somos un equipo de expertos en desbloqueo de
             teléfonos inteligentes, brindando soluciones confiables y seguras
             que te permiten liberar todo el potencial de tus dispositivos
@@ -70,7 +73,7 @@ function Acerca() {
           </Typography>
         </Card>
       </Grid>
-      <Grid item xs={12} md={6} justifyContent='left'>
+      <Grid item xs={12} md={6} justifyContent="left">
         <Card
           sx={{
             maxWidth: { xs: '90%', md: '90%' }, // Usamos maxWidth para asegurarnos de que el contenido no sea más ancho que el porcentaje especificado
@@ -82,16 +85,16 @@ function Acerca() {
           }}
         >
           <CardMedia
-            component='img'
+            component="img"
             src={candado}
             sx={{
               width: '75px',
             }}
           />
-          <Typography variant='h5' textAlign='center' fontWeight='700'>
+          <Typography variant="h5" textAlign="center" fontWeight="700">
             Nuestra Misión
           </Typography>
-          <Typography textAlign='justify'>
+          <Typography textAlign="justify">
             Nuestra misión es simple pero poderosa: liberar la conectividad y la
             funcionalidad de tu teléfono inteligente. Creemos que todos los
             usuarios deberían tener la capacidad de usar su dispositivo con
@@ -113,16 +116,16 @@ function Acerca() {
           }}
         >
           <CardMedia
-            component='img'
+            component="img"
             src={maleta}
             sx={{
               width: '75px',
             }}
           />
-          <Typography variant='h5' textAlign='center' fontWeight='700'>
+          <Typography variant="h5" textAlign="center" fontWeight="700">
             Experiencia
           </Typography>
-          <Typography textAlign='justify'>
+          <Typography textAlign="justify">
             Nuestro equipo está formado por profesionales altamente capacitados
             y apasionados por la tecnología móvil. Con años de experiencia en el
             campo del desbloqueo de teléfonos inteligentes, hemos dominado una
@@ -143,16 +146,16 @@ function Acerca() {
           }}
         >
           <CardMedia
-            component='img'
+            component="img"
             src={estrellas}
             sx={{
               width: '75px',
             }}
           />
-          <Typography variant='h5' textAlign='center' fontWeight='700'>
+          <Typography variant="h5" textAlign="center" fontWeight="700">
             Compromiso con la Calidad
           </Typography>
-          <Typography textAlign='justify'>
+          <Typography textAlign="justify">
             En Desbloquea tu cel, la calidad es nuestra máxima prioridad.
             Utilizamos métodos y herramientas de vanguardia para garantizar que
             tu teléfono se desbloquee de manera segura y sin riesgos. Cada
@@ -172,16 +175,16 @@ function Acerca() {
           }}
         >
           <CardMedia
-            component='img'
+            component="img"
             src={audifonos}
             sx={{
               width: '75px',
             }}
           />
-          <Typography variant='h5' textAlign='center' fontWeight='700'>
+          <Typography variant="h5" textAlign="center" fontWeight="700">
             Atención personalizada
           </Typography>
-          <Typography textAlign='justify'>
+          <Typography textAlign="justify">
             Sabemos que cada cliente es único, y nuestro compromiso con la
             satisfacción del cliente refleja esta creencia. Nuestro equipo de
             atención al cliente está aquí para guiarte en cada paso del proceso,
@@ -202,16 +205,16 @@ function Acerca() {
           }}
         >
           <CardMedia
-            component='img'
+            component="img"
             src={chip}
             sx={{
               width: '75px',
             }}
           />
-          <Typography variant='h5' textAlign='center' fontWeight='700'>
+          <Typography variant="h5" textAlign="center" fontWeight="700">
             Únete a la Experiencia
           </Typography>
-          <Typography textAlign='justify'>
+          <Typography textAlign="justify">
             Si estás buscando un servicio de desbloqueo de teléfonos
             inteligentes confiable y eficiente, no busques más. En Desbloquea tu
             cel, estamos listos para brindarte soluciones que transformarán la
@@ -222,10 +225,10 @@ function Acerca() {
       </Grid>
       <Grid item xs={12}>
         <Typography
-          color='white'
-          textAlign='center'
-          variant='h4'
-          fontWeight='700'
+          color="white"
+          textAlign="center"
+          variant="h4"
+          fontWeight="700"
         >
           ¡Gracias por elegir Desbloquea tu cel!
         </Typography>
