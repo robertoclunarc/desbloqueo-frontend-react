@@ -1,19 +1,22 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
-import {
-  Box, CardMedia, Fab, Typography,
-} from '@mui/material';
+import { Box, CardMedia, Fab } from '@mui/material';
 import { useNavigate } from 'react-router';
-import Carousel from '../../components/carousel/Carousel';
+import Navbar from '../../components/navbar/Navbar';
+import Header from './headerSection/header';
+import OpeningSection from './openingSection/openingSection';
 import FeaturedPhones from './featuredPhones/FeaturedPhones';
 import Servicios from './services/Services';
 import WhyUS from './whyUs/WhyUs';
 import Spinner from '../../components/spinner/Spinner';
 import { getInicio } from '../../shared/api/contentful/queries';
 import imagenLateral from '../../shared/image/1(6).png';
+import Phone from '../../shared/image/Contáctanos.png';
 
 function Inicio() {
-  const { data, loading } = useQuery(getInicio, { variables: { id: '3jDI1X9rZoL25IpElqhGKZ' } });
+  const { data, loading } = useQuery(getInicio, {
+    variables: { id: '3jDI1X9rZoL25IpElqhGKZ' },
+  });
 
   const inicio = data?.inicio;
   if (loading === false) return <Spinner center />;
@@ -25,37 +28,57 @@ function Inicio() {
   };
 
   return (
-    <Box sx={{
-      flexDirection: 'column',
-      display: 'flex',
-      justifyContent: 'center',
-      gap: '40px',
-      paddingTop: '50px',
-      alignItems: 'center',
-      width: '100%',
-    }}
+    <Box
+      sx={{
+        flexDirection: 'column',
+        display: 'flex',
+        justifyContent: 'center',
+        gap: '10px',
+        paddingTop: '30px',
+        alignItems: 'center',
+        width: '100%',
+        backgroundColor: '#051650',
+      }}
     >
+      <Navbar />
       <Fab
-        variant="extended"
         sx={{
-          position: 'fixed', top: '150px', right: { xs: '10px', sm: '40px' }, backgroundColor: '#2586AF', border: '8px solid #E1A73E', padding: '20px',
+          background: `url(${Phone})`,
+          backgroundSize: 'contain',
+          backgroundRepeat: 'no-repeat',
+          position: 'fixed',
+          top: '150px',
+          right: { xs: '10px', sm: '60px' },
+          height: '199px',
+          width: '99px',
+          borderRadius: '5px',
+          margin: '0px',
+          boxShadow: 'none',
+          backgroundColor: 'none',
+          '&:hover': {
+            backgroundColor: 'none',
+          },
         }}
-        size="large"
+        size='large'
         onClick={goContactanos}
-      >
-        <Typography fontWeight="800"> Contactanos </Typography>
-      </Fab>
+      />
       <CardMedia
-        component="img"
+        component='img'
         src={imagenLateral}
         sx={{
-          width: '40%', position: 'absolute', left: '-20%', top: '50%',
+          width: '40%',
+          position: 'absolute',
+          left: '-20%',
+          top: '50%',
         }}
       />
-      <Typography variant="h4" color="white">¿Necesitas desbloquear tu celular?</Typography>
-      <Carousel />
+      <Header />
+      <OpeningSection />
       <FeaturedPhones />
-      <WhyUS whyUsTitle={inicio?.whyUsTitle} whyUsReasons={inicio?.whyUsReasonsCollection.items} />
+      <WhyUS
+        whyUsTitle={inicio?.whyUsTitle}
+        whyUsReasons={inicio?.whyUsReasonsCollection.items}
+      />
       <Servicios
         servicioTitle={inicio?.servicioTitle}
         servicios={inicio?.serviciosCollection.items}
