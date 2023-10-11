@@ -23,7 +23,7 @@ function Acerca() {
       container
       sx={{
         padding: '10px',
-        marginTop: '10px',
+        marginTop: '100px',
         width: '100%',
       }}
       spacing={2}
