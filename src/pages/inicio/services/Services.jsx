@@ -40,14 +40,23 @@ function Servicios() {
         paddingBottom: '40px',
       }}
     >
-      <Typography variant="h5" color="white" textAlign="center">
+      <Typography
+        variant="h3"
+        color="white"
+        textAlign="center"
+        sx={{
+          width: '100%', paddingBottom: '.5em', borderBottom: '1px solid #FFD700', textAlign: 'center',
+        }}
+      >
         Resultados efectivos con la marca que desees
       </Typography>
       <Grid
         container
         spacing={{ xs: 2, sm: 2 }}
         justifyContent="center"
-        sx={{ display: 'flex', gap: '40px' }}
+        sx={{
+          display: 'flex', gap: '40px',
+        }}
       >
         {logotipos.map((logo) => (
           <Grid

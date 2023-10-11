@@ -30,7 +30,13 @@ function Counter() {
   ];
 
   return (
-    <ScrollTrigger onEnter={() => setCounterOn(true)} onExit={() => setCounterOn(false)} style={{ width: '60%' }}>
+    <ScrollTrigger
+      onEnter={() => setCounterOn(true)}
+      onExit={() => setCounterOn(false)}
+      style={{
+        width: '58%', display: 'flex', justifyContent: 'center', alignItems: 'center',
+      }}
+    >
       <Box sx={{
         width: '100%',
         height: '8em',

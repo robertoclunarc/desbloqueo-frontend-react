@@ -1,26 +1,15 @@
 import React from 'react';
-import { useQuery } from '@apollo/client';
 import { Box, CardMedia, Fab } from '@mui/material';
 import { useNavigate } from 'react-router';
 import Header from './headerSection/header';
 import OpeningSection from './openingSection/openingSection';
-import FeaturedPhones from './featuredPhones/FeaturedPhones';
-import Servicios from './services/Services';
 import Counter from './counterStats/Counter';
-import WhyUS from './whyUs/WhyUs';
-import Spinner from '../../components/spinner/Spinner';
-import { getInicio } from '../../shared/api/contentful/queries';
+import NewWhyUs from './newWhyUs/newWhyUs';
+import Services from './services/Services';
 import imagenLateral from '../../shared/image/1(6).png';
 import Phone from '../../shared/image/Contáctanos.png';
 
 function Inicio() {
-  const { data, loading } = useQuery(getInicio, {
-    variables: { id: '3jDI1X9rZoL25IpElqhGKZ' },
-  });
-
-  const inicio = data?.inicio;
-  if (loading === false) return <Spinner center />;
-
   const navigate = useNavigate();
 
   const goContactanos = () => {
@@ -73,16 +62,9 @@ function Inicio() {
       />
       <Header />
       <OpeningSection />
+      <Services />
       <Counter />
-      <FeaturedPhones />
-      <WhyUS
-        whyUsTitle={inicio?.whyUsTitle}
-        whyUsReasons={inicio?.whyUsReasonsCollection.items}
-      />
-      <Servicios
-        servicioTitle={inicio?.servicioTitle}
-        servicios={inicio?.serviciosCollection.items}
-      />
+      <NewWhyUs />
     </Box>
   );
 }
