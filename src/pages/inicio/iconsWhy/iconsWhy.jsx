@@ -62,7 +62,7 @@ const iconsWhy = () => (
   >
     <Typography variant="h3" sx={{ color: 'white' }}> Why Unlock Your Phone With Desbloquea </Typography>
     <Typography variant="h6" sx={{ color: 'white' }}> Quick, fast, and easy way to unlock your phone in 3 simple steps </Typography>
-    <Grid container spacing={4} sx={{ marginTop: '2em' }}>
+    <Grid container spacing={3} sx={{ marginTop: '2em' }}>
       {iconsOptions.map(({ logo, title, desc }) => (
         <Grid
           item
