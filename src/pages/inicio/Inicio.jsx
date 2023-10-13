@@ -5,6 +5,7 @@ import Header from './headerSection/header';
 import OpeningSection from './openingSection/openingSection';
 import Counter from './counterStats/Counter';
 import NewWhyUs from './newWhyUs/newWhyUs';
+import IconsWhy from './iconsWhy/iconsWhy';
 import Services from './services/Services';
 import imagenLateral from '../../shared/image/1(6).png';
 import Phone from '../../shared/image/Contáctanos.png';
@@ -65,6 +66,7 @@ function Inicio() {
       <Services />
       <Counter />
       <NewWhyUs />
+      <IconsWhy />
     </Box>
   );
 }
