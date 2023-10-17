@@ -8,7 +8,7 @@ import * as Yup from 'yup';
 import {
   Box,
   Button,
-  Card, Checkbox, Container, FormControlLabel, IconButton, Stack, Step, StepLabel, Stepper, Typography,
+  CardMedia, Card, Checkbox, Container, FormControlLabel, IconButton, Stack, Step, StepLabel, Stepper, Typography,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector';
@@ -28,6 +28,7 @@ import Pagar from '../../pagar/Pagar';
 import Select from '../../../components/formik/select/Select';
 import Input from '../../../components/payment/input/Input';
 import SelectService from '../../servicios/input/SelectService';
+import mujer from '../../../shared/image/cutbottompic.png';
 
 const QontoStepIconRoot = styled('div')(({ theme, ownerState }) => ({
   color: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#eaeaf0',
@@ -321,37 +322,71 @@ function DesbloqueosForm() {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
+                justifyContent: 'center',
                 padding: '10px',
                 borderRadius: '35px',
                 backgroundColor: '#2586AF',
+                height: '60vh',
               }}
               >
-                <Typography variant="h5" fontWeight="700" color="white"> Pais y operadora </Typography>
                 <Box sx={{
+                  height: '90%',
+                  width: '90%',
+                  padding: '15px',
+                  border: '3px solid white',
+                  borderRadius: '35px',
                   display: 'flex',
-                  gap: '30px',
-                  padding: '20px',
-                  justifyContent: 'center',
-                  width: { xs: '100%', sm: '80%' },
-                  flexDirection: { xs: 'column', sm: 'row' },
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'start',
                 }}
                 >
-                  <Select
-                    name="country"
-                    options={countriesOptions}
-                    label="Pais"
-                    id={1}
-                  />
-                  <Select
-                    name="network"
-                    options={opcionesNetworksFilter}
-                    label="Compañia telefonica"
-                    id={2}
+                  <Typography
+                    variant="h3"
+                    fontWeight="700"
+                    color="white"
+                    sx={{
+                      paddingBottom: '.1em', borderBottom: '2px solid white', width: '90%', textAlign: 'center',
+                    }}
+                  >
+                    {' '}
+                    Pais y operadora
+                  </Typography>
+                  <Box sx={{
+                    display: 'flex',
+                    gap: '30px',
+                    padding: '20px',
+                    justifyContent: 'center',
+                    width: { xs: '100%', sm: '80%' },
+                    flexDirection: { xs: 'column', sm: 'row' },
+                  }}
+                  >
+                    <Select
+                      name="country"
+                      options={countriesOptions}
+                      label="Pais"
+                      id={1}
+                    />
+                    <Select
+                      name="network"
+                      options={opcionesNetworksFilter}
+                      label="Compañia telefonica"
+                      id={2}
+                    />
+                  </Box>
+                  <IconButton disabled={disabledPais} onClick={() => handleNextPrevClick(2)} style={{ backgroundColor: 'white', '&:hover': { background: 'black' } }}>
+
+                    <ArrowForwardIcon color="secondary" fontSize="large" />
+                  </IconButton>
+                  <CardMedia
+                    component="img"
+                    src={mujer}
+                    sx={{
+                      width: '100%',
+                      height: '70%',
+                    }}
                   />
                 </Box>
-                <IconButton disabled={disabledPais} onClick={() => handleNextPrevClick(2)}>
-                  <ArrowForwardIcon color="secondary" fontSize="large" />
-                </IconButton>
               </Card>
             )}
             {formActivePanel.formActivePanelId === 2 && (
