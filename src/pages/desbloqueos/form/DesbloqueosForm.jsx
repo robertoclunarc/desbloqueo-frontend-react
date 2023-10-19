@@ -24,6 +24,7 @@ import { useNavigate } from 'react-router';
 import axios from 'axios';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import Autocomplete from '@mui/material/Autocomplete';
 import Pagar from '../../pagar/Pagar';
 import Select from '../../../components/formik/select/Select';
 import Input from '../../../components/payment/input/Input';
@@ -182,7 +183,7 @@ function DesbloqueosForm() {
     const URL = 'https://2pr78ypovg.execute-api.us-east-1.amazonaws.com/items';
 
     axios.get(URL)
-      .then((response) => setCountriesOptions(response.data))
+      .then((response) => setCountriesOptions(response.data.sort((a, b) => a.name.localeCompare(b.name))))
       .catch((error) => error.data);
   };
 
