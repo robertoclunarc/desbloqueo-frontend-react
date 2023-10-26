@@ -19,7 +19,17 @@ const logotipos = [
 const providers = () => (
 
   <Box sx={{
-    gap: '20px', display: 'flex', flexDirection: 'column', alignItems: 'start', justifyContent: 'start', width: { xl: '35vw', lg: '40vw', md: '60vw' }, height: { xl: '23vh', lg: '30vh' }, paddingTop: '15px', paddingBottom: '25px',
+    gap: '20px',
+    flexDirection: 'column',
+    alignItems: 'start',
+    justifyContent: 'start',
+    width: { xl: '35vw', lg: '40vw', md: '60vw' },
+    height: { xl: '23vh', lg: '25vh' },
+    paddingTop: '15px',
+    paddingBottom: '25px',
+    display: {
+      xl: 'flex', lg: 'flex', md: 'flex', sm: 'none', xs: 'none',
+    },
   }}
   >
     <Grid

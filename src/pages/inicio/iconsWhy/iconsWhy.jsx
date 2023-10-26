@@ -57,16 +57,22 @@ const iconsOptions = [
 const iconsWhy = () => (
 
   <Box sx={{
-    width: '70%', paddingTop: '7em', height: '80vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'start',
+    width: '100%', paddingTop: '7em', height: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'start',
   }}
   >
     <Typography variant="h3" sx={{ color: 'white' }}> Why Unlock Your Phone With Desbloquea </Typography>
     <Typography variant="h6" sx={{ color: 'white' }}> Quick, fast, and easy way to unlock your phone in 3 simple steps </Typography>
-    <Grid container spacing={3} sx={{ marginTop: '2em' }}>
+    <Grid
+      container
+      spacing={3}
+      sx={{
+        marginTop: '2em', display: 'flex', alignItems: 'center', justifyContent: 'center',
+      }}
+    >
       {iconsOptions.map(({ logo, title, desc }) => (
         <Grid
           item
-          xs={3}
+          xs={8}
           sx={{
             display: 'flex', alignItems: 'center', justifyContents: 'center', flexDirection: 'column',
           }}

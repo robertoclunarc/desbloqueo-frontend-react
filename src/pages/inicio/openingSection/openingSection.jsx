@@ -10,7 +10,9 @@ import Providers from './providers/providers';
 const openingSection = () => (
   <Box
     sx={{
-      gap: { xl: '50px', lg: '30px' },
+      gap: {
+        xl: '50px', lg: '10px', md: '0px', sm: '30px', xs: '30px',
+      },
       display: 'flex',
       flexDirection: {
         xl: 'row', lg: 'column', md: 'column', sm: 'column', xs: 'column',
@@ -37,11 +39,15 @@ const openingSection = () => (
     </Box>
     <Box
       sx={{
-        display: 'flex',
+        display: {
+          xl: 'flex', lg: 'none', md: 'none', sm: 'flex', xs: 'flex',
+        },
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        width: '500px',
+        width: {
+          xl: '500px', lg: '500px', md: '500px', sm: '500px', xs: '98%',
+        },
         gap: '20px',
       }}
     >
@@ -53,7 +59,9 @@ const openingSection = () => (
           justifyContent: 'start',
           background: 'linear-gradient(to bottom right ,#091a30, blue)',
           borderRadius: '4%',
-          width: '500px',
+          width: {
+            xl: '500px', lg: '500px', md: '500px', sm: '500px', xs: '98%',
+          },
           height: '80%',
           border: '1px solid white',
           boxShadow:

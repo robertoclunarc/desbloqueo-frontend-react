@@ -27,18 +27,42 @@ const steps = [
 const newWhyUs = () => (
 
   <Box sx={{
-    width: '100%', paddingTop: '7em', height: '70vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'start',
+    width: '100%', paddingTop: '7em', height: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'start',
   }}
   >
     <Typography variant="h3" sx={{ color: 'white' }}> Quick, fast, and easy way to unlock your phone in 3 simple steps </Typography>
     <Typography variant="h6" sx={{ color: 'white' }}> Quick, fast, and easy way to unlock your phone in 3 simple steps </Typography>
     <Box sx={{
-      display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: '40vh', width: '100%', paddingTop: '3em', gap: '4em',
+      display: 'flex',
+      flexDirection: {
+        xl: 'row', lg: 'row', md: 'column', sm: 'column', xs: 'column',
+      },
+      alignItems: 'center',
+      justifyContent: 'center',
+      height: 'auto',
+      width: '100%',
+      paddingTop: {
+        xl: '3em', lg: '1em', md: '.5em', sm: '.5em', xs: '1em',
+      },
+      gap: {
+        xl: '4em', lg: '1em', md: '.5em', sm: '.5em', xs: '1em',
+      },
     }}
     >
       {steps.map(({ title, desc, icon }) => (
         <Box sx={{
-          display: 'flex', flexDirection: 'column', height: '40vh', width: '20%', alignItems: 'center',
+          display: 'flex',
+          flexDirection: 'column',
+          height: {
+            xl: '40vh', lg: '40vh', md: 'auto', sm: 'auto', xs: 'auto',
+          },
+          width: {
+            xl: '20%', lg: '30%', md: '50%', sm: '90%', xs: '80%',
+          },
+          alignItems: 'center',
+          border: '3px solid white',
+          padding: '1em',
+          borderRadius: '15px',
         }}
         >
           <SvgIcon

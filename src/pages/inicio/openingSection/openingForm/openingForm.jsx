@@ -45,16 +45,30 @@ const top100Films = [
 
 const openingForm = () => (
   <Box sx={{
-    display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'start', width: { xl: '28vw', lg: '40vw', md: '50vw' }, height: '28vh', padding: '15px',
+    display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'start', width: { xl: '28vw', lg: '40vw', md: '50vw' }, height: { xl: '25vh', lg: 'auto', md: '30vh' }, padding: '15px',
   }}
   >
-    <Typography color="white" variant="h4" sx={{ textDecoration: 'underline', marginBottom: '15px', lineHeight: '.3em' }} display="inline">Pais y operadora</Typography>
+    <Typography
+      color="white"
+      sx={{
+        textDecoration: 'underline',
+        marginBottom: '15px',
+        lineHeight: '1em',
+        fontSize: {
+          xl: '54px', lg: '44px', md: '46px', sm: '36px', xs: '24px',
+        },
+      }}
+      display="inline"
+    >
+      Pais y operadora
+
+    </Typography>
 
     <StyledAutocomplete
       disablePortal
       id="combo-box-demo"
       options={top100Films}
-      sx={{ width: '100%', height: '100px' }}
+      sx={{ width: '100%', height: '70px' }}
       renderInput={(params) => (
         <TextField
           {...params}
@@ -68,7 +82,7 @@ const openingForm = () => (
       id="combo-box-demo"
       options={top100Films}
       sx={{
-        width: '100%', height: '100px', color: 'white', paddingBottom: '0px',
+        width: '100%', height: '70px', color: 'white', paddingBottom: '0px',
       }}
       renderInput={(params) => (
         <TextField
@@ -77,7 +91,7 @@ const openingForm = () => (
         />
       )}
     />
-    <Typography color="white" display="inline" sx={{ paddingTop: '0px' }}>Pais y operadora Pais y operadora Pais y operadora Pais y operadora</Typography>
+    <Typography color="white" display="inline" sx={{ paddingTop: '0px', textAlign: 'center' }}>Pais y operadora Pais y operadora Pais y operadora Pais y operadora</Typography>
     <Box sx={{
       display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', width: '100%', paddingTop: '15px',
     }}

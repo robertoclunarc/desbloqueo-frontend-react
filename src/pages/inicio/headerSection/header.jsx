@@ -15,7 +15,9 @@ const header = () => (
     height: 'auto',
     padding: '60px 0px 0px 0px',
     borderBottom: '1.5px solid grey',
-    marginBottom: '35px',
+    marginBottom: {
+      xl: '35px', lg: '35px', md: '35px', sm: '15px', xs: '0px',
+    },
   }}
   >
 
