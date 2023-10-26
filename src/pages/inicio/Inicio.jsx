@@ -47,6 +47,9 @@ function Inicio() {
           '&:hover': {
             backgroundColor: 'none',
           },
+          display: {
+            xl: 'flex', lg: 'flex', md: 'flex', sm: 'none', xs: 'none',
+          },
         }}
         size="large"
         onClick={goContactanos}
@@ -59,6 +62,9 @@ function Inicio() {
           position: 'absolute',
           left: '-20%',
           top: '50%',
+          display: {
+            xl: 'flex', lg: 'flex', md: 'flex', sm: 'none', xs: 'none',
+          },
         }}
       />
       <Header />

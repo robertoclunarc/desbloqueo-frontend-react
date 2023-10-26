@@ -45,10 +45,10 @@ const top100Films = [
 
 const openingForm = () => (
   <Box sx={{
-    display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'start', width: '28vw', height: '28vh', padding: '15px',
+    display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'start', width: { xl: '28vw', lg: '40vw', md: '50vw' }, height: '28vh', padding: '15px',
   }}
   >
-    <Typography color="white" variant="h4" sx={{ textDecoration: 'underline', marginBottom: '15px' }} display="inline">Pais y operadora</Typography>
+    <Typography color="white" variant="h4" sx={{ textDecoration: 'underline', marginBottom: '15px', lineHeight: '.3em' }} display="inline">Pais y operadora</Typography>
 
     <StyledAutocomplete
       disablePortal

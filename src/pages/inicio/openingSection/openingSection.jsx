@@ -10,9 +10,11 @@ import Providers from './providers/providers';
 const openingSection = () => (
   <Box
     sx={{
-      gap: '50px',
+      gap: { xl: '50px', lg: '30px' },
       display: 'flex',
-      flexDirection: 'row',
+      flexDirection: {
+        xl: 'row', lg: 'column', md: 'column', sm: 'column', xs: 'column',
+      },
       alignItems: 'center',
       justifyContent: 'center',
       width: '100%',
@@ -23,10 +25,11 @@ const openingSection = () => (
     <Box
       sx={{
         display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
+        flexDirection: {
+          xl: 'column', lg: 'column-reverse', md: 'column-reverse', sm: 'column-reverse', xs: 'column-reverse',
+        },
+        alignItems: { xl: 'center', lg: 'center', md: 'center' },
         justifyContent: 'center',
-        paddingTop: '15px',
       }}
     >
       <Providers />

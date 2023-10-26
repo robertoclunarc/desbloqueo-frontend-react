@@ -5,11 +5,28 @@ import {
 
 const header = () => (
   <Box sx={{
-    display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'start', width: '60vw', height: '10vh', padding: '60px 0px 0px 0px', borderBottom: '1.5px solid grey', marginBottom: '35px',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'start',
+    width: {
+      xl: '60vw', lg: '70vw', md: '77vw', sm: '80vw', xs: '90vw',
+    },
+    height: 'auto',
+    padding: '60px 0px 0px 0px',
+    borderBottom: '1.5px solid grey',
+    marginBottom: '35px',
   }}
   >
 
-    <Typography variant="h2" sx={{ fontWeight: 'bold', color: 'white' }}>
+    <Typography sx={{
+      fontWeight: 'bold',
+      color: 'white',
+      fontSize: {
+        xl: '64px', lg: '64px', md: '54px', sm: '36px', xs: '24px',
+      },
+    }}
+    >
       {' '}
       WELCOME TO
       {' '}

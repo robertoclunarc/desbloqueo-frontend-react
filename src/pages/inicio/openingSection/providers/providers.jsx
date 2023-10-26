@@ -19,7 +19,7 @@ const logotipos = [
 const providers = () => (
 
   <Box sx={{
-    gap: '20px', display: 'flex', flexDirection: 'column', alignItems: 'start', justifyContent: 'start', width: '30vw', height: '23vh',
+    gap: '20px', display: 'flex', flexDirection: 'column', alignItems: 'start', justifyContent: 'start', width: { xl: '35vw', lg: '40vw', md: '60vw' }, height: { xl: '23vh', lg: '30vh' }, paddingTop: '15px', paddingBottom: '25px',
   }}
   >
     <Grid
@@ -30,9 +30,9 @@ const providers = () => (
       {logotipos.map((logo) => (
         <Grid
           item
-          xs={8}
-          sm={4}
-          md={3}
+          xs={3}
+          sm={2}
+          md={2}
           lg={2}
           sx={{
             display: 'flex',
@@ -56,7 +56,12 @@ const providers = () => (
     <Grid
       container
       justifyContent="center"
-      sx={{ display: 'flex', gap: '20px' }}
+      sx={{
+        display: {
+          xl: 'flex', lg: 'flex', md: 'none', sm: 'none', xs: 'none',
+        },
+        gap: '20px',
+      }}
     >
       {logotipos.map((logo) => (
         <Grid
