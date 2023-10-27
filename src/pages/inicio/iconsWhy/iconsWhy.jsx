@@ -2,6 +2,7 @@ import React from 'react';
 import {
   Box, Typography, Grid, SvgIcon, Button,
 } from '@mui/material';
+import { useNavigate } from 'react-router';
 import { ReactComponent as Award } from '../../../shared/image/award.svg';
 import { ReactComponent as Dollar } from '../../../shared/image/dollar-symbol.svg';
 import { ReactComponent as Globe } from '../../../shared/image/globe.svg';
@@ -54,60 +55,130 @@ const iconsOptions = [
   },
 ];
 
-const iconsWhy = () => (
+const iconsWhy = () => {
+  const navigate = useNavigate();
 
-  <Box sx={{
-    width: '100%', paddingTop: '7em', height: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'start',
-  }}
-  >
-    <Typography variant="h3" sx={{ color: 'white' }}> Why Unlock Your Phone With Desbloquea </Typography>
-    <Typography variant="h6" sx={{ color: 'white' }}> Quick, fast, and easy way to unlock your phone in 3 simple steps </Typography>
-    <Grid
-      container
-      spacing={3}
-      sx={{
-        marginTop: '2em', display: 'flex', alignItems: 'center', justifyContent: 'center',
-      }}
+  return (
+
+    <Box sx={{
+      width: '100%', paddingTop: '7em', height: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'start',
+    }}
     >
-      {iconsOptions.map(({ logo, title, desc }) => (
-        <Grid
-          item
-          xs={8}
-          sx={{
-            display: 'flex', alignItems: 'center', justifyContents: 'center', flexDirection: 'column',
-          }}
-        >
-          <Box sx={{
-            display: 'flex', alignItems: 'center', justifyContent: 'start', width: '100%', height: '10vh',
-          }}
+      <Typography
+        sx={{
+          color: 'white',
+          width: '95%',
+          fontSize: {
+            xl: '64px', lg: '64px', md: '54px', sm: '36px', xs: '30px',
+          },
+          paddingBottom: '.5em',
+          borderBottom: '1px solid gold',
+          textAlign: 'center',
+        }}
+      >
+        {' '}
+        Why Unlock Your Phone With Desbloquea
+        {' '}
+
+      </Typography>
+
+      <Grid
+        container
+        spacing={3}
+        sx={{
+          marginLeft: '0px',
+          gap: '1em',
+          marginTop: '2em',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        {iconsOptions.map(({ logo, title, desc }) => (
+          <Grid
+            item
+            xs={8}
+            sm={8}
+            md={5}
+            lg={2.5}
+            xl={2.5}
+            sx={{
+              '&:hover': { cursor: 'pointer' }, padding: '1em', display: 'flex', alignItems: 'center', justifyContents: 'center', flexDirection: 'column', borderRadius: '15px', border: '3px solid white',
+            }}
+            onClick={() => {
+              navigate('/desbloqueos');
+            }}
           >
-            <SvgIcon
-              component={logo}
-              inheritViewBox
-              sx={{
-                height: '50px',
-                width: '50px',
+            <Box sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'start',
+              width: '100%',
+              height: '10vh',
+              flexDirection: {
+                xl: 'row', lg: 'row', md: 'row', sm: 'row', xs: 'column',
+              },
+            }}
+            >
+              <SvgIcon
+                component={logo}
+                inheritViewBox
+                sx={{
+                  height: '50px',
+                  width: '50px',
+                  color: 'white',
+                  paddingBottom: '.5em',
+                }}
+              />
+              <Typography sx={{
                 color: 'white',
-                paddingBottom: '.5em',
+                fontSize: {
+                  xl: '44px', lg: '34px', md: '40px', sm: '40px', xs: '34px',
+                },
+                marginLeft: {
+                  xl: '.5em', lg: '.5em', md: '.5em', sm: '.5em', xs: '0em',
+                },
               }}
-            />
-            <Typography variant="h3" sx={{ color: 'white', marginLeft: '.5em' }}>{title}</Typography>
-          </Box>
-          <Typography sx={{ color: 'white' }}>{desc}</Typography>
-        </Grid>
-      ))}
+              >
+                {title}
 
-    </Grid>
-    <Button
-      variant="contained"
-      sx={{
-        backgroundColor: 'white', color: '#051650', marginTop: '3em', '&:hover': { color: 'white' },
-      }}
-    >
-      {' '}
-      Start Today!
-    </Button>
-  </Box>
-);
+              </Typography>
+            </Box>
+            <Typography sx={{
+              color: 'white',
+              marginTop: {
+                xl: '0em', lg: '0em', md: '0em', sm: '0em', xs: '1em',
+              },
+            }}
+            >
+              {desc}
+
+            </Typography>
+          </Grid>
+        ))}
+
+      </Grid>
+      <Button
+        variant="contained"
+        sx={{
+          width: {
+            xl: 'auto', lg: 'auto', md: 'auto', sm: '50%', xs: '50%',
+          },
+          marginBottom: '3em',
+          backgroundColor: 'white',
+          color: '#051650',
+          marginTop: '3em',
+          '&:hover': { color: 'white' },
+        }}
+        onClick={() => {
+          navigate('/desbloqueos');
+        }}
+      >
+        {' '}
+        Start Today!
+      </Button>
+    </Box>
+  );
+};
 
 export default iconsWhy;

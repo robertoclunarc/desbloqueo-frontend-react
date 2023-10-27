@@ -2,6 +2,7 @@ import {
   CardMedia, Container, Grid, Typography,
 } from '@mui/material';
 import React from 'react';
+import { useNavigate } from 'react-router';
 import apple from '../../../shared/image/25(1).png';
 import samsung from '../../../shared/image/22(1).png';
 import huawei from '../../../shared/image/20(1).png';
@@ -16,6 +17,8 @@ import blackberry from '../../../shared/image/29(1).png';
 import motorola from '../../../shared/image/19(1).png';
 
 function Servicios() {
+  const navigate = useNavigate();
+
   const logotipos = [
     apple,
     samsung,
@@ -38,14 +41,21 @@ function Servicios() {
         gap: '60px',
         width: '100%',
         paddingBottom: '40px',
+        alignItems: 'center',
+        justifyContent: 'center',
       }}
     >
       <Typography
-        variant="h3"
         color="white"
         textAlign="center"
         sx={{
-          width: '100%', paddingBottom: '.5em', borderBottom: '1px solid #FFD700', textAlign: 'center',
+          fontSize: {
+            xl: '54px', lg: '64px', md: '54px', sm: '36px', xs: '30px',
+          },
+          width: '100%',
+          paddingBottom: '.5em',
+          borderBottom: '1px solid #FFD700',
+          textAlign: 'center',
         }}
       >
         Resultados efectivos con la marca que desees
@@ -55,13 +65,19 @@ function Servicios() {
         spacing={{ xs: 2, sm: 2 }}
         justifyContent="center"
         sx={{
-          display: 'flex', gap: '40px',
+          display: 'flex',
+          gap: '40px',
+          width: '100%',
+          marginLeft: '0px',
+          '& .MuiGrid-root': {
+            marginRight: '-1em',
+          },
         }}
       >
         {logotipos.map((logo) => (
           <Grid
             item
-            xs={8}
+            xs={5}
             sm={4}
             md={3}
             lg={2}
@@ -72,7 +88,11 @@ function Servicios() {
               backgroundColor: 'white',
               padding: '20px',
               borderRadius: '10px',
+              '&:hover': { cursor: 'pointer' },
               boxShadow: 'rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px',
+            }}
+            onClick={() => {
+              navigate('/desbloqueos');
             }}
           >
             <CardMedia

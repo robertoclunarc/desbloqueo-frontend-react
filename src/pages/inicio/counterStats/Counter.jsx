@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import ScrollTrigger from 'react-scroll-trigger';
 import CountUp from 'react-countup';
+import { useNavigate } from 'react-router';
 
 function Counter() {
   const [counterOn, setCounterOn] = useState(false);
+
+  const navigate = useNavigate();
 
   const statCounterItems = [
     {
@@ -72,23 +75,28 @@ function Counter() {
       }}
       >
         {statCounterItems.map(({ title, start, end }) => (
-          <Box sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            border: {
-              xl: 'none', lg: '1px solid white', md: '1px solid white', sm: '1px solid white', xs: '1px solid white',
-            },
-            boxShadow: {
-              xl: 'none', lg: 'rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px', md: 'rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px', sm: 'rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px', xs: 'rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px',
-            },
-            borderRadius: '10px',
-            width: {
-              xl: 'none', lg: '300px', md: '500px', sm: '500px', xs: '90%',
-            },
-            height: 'auto',
-          }}
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              border: {
+                xl: 'none', lg: '1px solid white', md: '1px solid white', sm: '1px solid white', xs: '1px solid white',
+              },
+              boxShadow: {
+                xl: 'none', lg: 'rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px', md: 'rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px', sm: 'rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px', xs: 'rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px',
+              },
+              borderRadius: '10px',
+              width: {
+                xl: 'none', lg: '300px', md: '500px', sm: '500px', xs: '90%',
+              },
+              height: 'auto',
+              '&:hover': { cursor: 'pointer' },
+            }}
+            onClick={() => {
+              navigate('/desbloqueos');
+            }}
           >
             <Typography variant="h2" sx={{ color: 'white' }}>
               {counterOn && <CountUp start={start} end={end} duration={2} delay={0} />}

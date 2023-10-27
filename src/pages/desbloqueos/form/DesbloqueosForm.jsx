@@ -328,10 +328,12 @@ function DesbloqueosForm() {
                 borderRadius: '35px',
                 backgroundColor: '#2586AF',
                 height: '60vh',
+                width: '100%',
+                border: '2px solid black',
               }}
               >
                 <Box sx={{
-                  height: '90%',
+                  height: '95%',
                   width: '90%',
                   padding: '15px',
                   border: '3px solid white',
@@ -379,14 +381,6 @@ function DesbloqueosForm() {
 
                     <ArrowForwardIcon color="secondary" fontSize="large" />
                   </IconButton>
-                  <CardMedia
-                    component="img"
-                    src={mujer}
-                    sx={{
-                      width: '100%',
-                      height: '70%',
-                    }}
-                  />
                 </Box>
               </Card>
             )}
