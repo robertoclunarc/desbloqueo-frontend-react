@@ -1,9 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { useField } from 'formik';
-import {
-  FormControl, InputLabel, Autocomplete, TextField,
-} from '@mui/material';
+import { FormControl, InputLabel, MenuItem } from '@mui/material';
 import PropTypes from 'prop-types';
 import Select from '@mui/material/Select';
 import { useDispatch } from 'react-redux';
@@ -32,31 +30,26 @@ function SelectInput({
   return (
     <FormControl color="formColor" sx={{ width: { xs: '100%', sm: '50%' } }}>
       <InputLabel id={field.name} color="formColor">{label}</InputLabel>
-      <Autocomplete
+      <Select
         labelId={field.name}
         id={field.name}
-        value={field.value}
-        options={valueOptions}
+        value={valueOptions}
         // eslint-disable-next-line react/jsx-no-bind
         onChange={handleChange}
-        // onChange={(event: any, newValue: string | null) => {
-        //   setValue(newValue);
-        // }}
         label={label}
         sx={{ backgroundColor: 'white' }}
-        inputValue={field.value}
-        // renderInput={(option) => (
-        //   <MenuItem key={option.id} name={option.id} value={option.name}>
-        //     {option.name}
-        //   </MenuItem>
-        // )}
-        renderInput={(params) => <TextField {...params} />}
-      />
-      {
-        meta.touched && meta.error ? (
-          <div className="error">{meta.error}</div>
-        ) : null
-      }
+      >
+        {
+          options?.map((option) => (
+            <MenuItem key={option.id} name={option.id} value={option.name}>
+              {option.name}
+            </MenuItem>
+          ))
+        }
+      </Select>
+      {meta.touched && meta.error ? (
+        <div className="error">{meta.error}</div>
+      ) : null}
     </FormControl>
   );
 }
