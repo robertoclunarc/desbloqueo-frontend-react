@@ -128,13 +128,11 @@ function ColorlibStepIcon(props) {
   } = props;
 
   const icons = {
-    1: <LocationCityIcon name="Compañia Télefonica" />,
-    2: <LocalPhoneIcon name="Personal Data" />,
-    3: <AppSettingsAltIcon name="services" />,
-    4: <LocalPhoneIcon name="imei" />,
+    1: <AppSettingsAltIcon name="services" />,
+    2: <LocalPhoneIcon name="imei" />,
     /* 4: <PersonIcon name="Terms and Conditions" />, */
-    5: <PaymentIcon name="Finish" />,
-    6: <CheckCircleIcon name="payment" />,
+    3: <PaymentIcon name="Finish" />,
+    4: <CheckCircleIcon name="payment" />,
   };
 
   return (
@@ -158,7 +156,7 @@ ColorlibStepIcon.defaultProps = {
   icon: '',
 };
 
-const steps = ['Selecciona tu pais', 'Selecciona tu telefono', 'Servicio', 'Imei', 'Pagar', 'Finalizado'];
+const steps = ['Selecciona tu pais', 'Selecciona tu telefono', 'Pagar', 'Finalizado'];
 
 function DesbloqueosForm() {
   const navigate = useNavigate();
@@ -181,7 +179,7 @@ function DesbloqueosForm() {
     const URL = 'https://2pr78ypovg.execute-api.us-east-1.amazonaws.com/items';
 
     axios.get(URL)
-      .then((response) => setCountriesOptions(response.data))
+      .then((response) => setCountriesOptions(response.data.sort((a, b) => { if (a.name < b.name) { return -1; } if (a.name > b.name) { return 1; } return 0; })))
       .catch((error) => error.data);
   };
 
@@ -189,7 +187,7 @@ function DesbloqueosForm() {
     const URL = 'https://omb7k0gyvj.execute-api.us-east-1.amazonaws.com/items';
 
     axios.get(URL)
-      .then((response) => setNetworkOptions(response.data))
+      .then((response) => setNetworkOptions(response.data.sort((a, b) => { if (a.name < b.name) { return -1; } if (a.name > b.name) { return 1; } return 0; })))
       .catch((error) => error.data);
   };
 
@@ -197,7 +195,7 @@ function DesbloqueosForm() {
     const URL = 'https://mbt0pse1f1.execute-api.us-east-1.amazonaws.com/items';
 
     axios.get(URL)
-      .then((response) => setBrandOptions(response.data))
+      .then((response) => setBrandOptions(response.data.sort((a, b) => { if (a.name < b.name) { return -1; } if (a.name > b.name) { return 1; } return 0; })))
       .catch((error) => error.data);
   };
 
@@ -205,7 +203,7 @@ function DesbloqueosForm() {
     const URL = 'https://eb5dut1866.execute-api.us-east-1.amazonaws.com/items';
 
     axios.get(URL)
-      .then((response) => setDevicesOptions(response.data))
+      .then((response) => setDevicesOptions(response.data.sort((a, b) => { if (a.name < b.name) { return -1; } if (a.name > b.name) { return 1; } return 0; })))
       .catch((error) => error.data);
   };
 
@@ -261,7 +259,7 @@ function DesbloqueosForm() {
     <Box sx={{
       display: 'flex',
       flexDirection: 'column',
-      gap: '50px',
+      gap: '150px',
       textAlign: 'center',
     }}
     >
@@ -313,7 +311,8 @@ function DesbloqueosForm() {
       >
         <Form>
           <Container sx={{
-            width: { xs: '100%', sm: '60%' },
+            width: { xs: '100%', sm: '80%' },
+            position: 'relative',
           }}
           >
             {formActivePanel.formActivePanelId === 1 && (
@@ -321,19 +320,31 @@ function DesbloqueosForm() {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                padding: '10px',
+                paddingBottom: '30px',
                 borderRadius: '35px',
-                backgroundColor: '#2586AF',
+                backgroundColor: '#1f9cc8',
+                height: { xs: '530px', sm: '61vh' },
+                border: '2px solid white',
+                justifyContent: 'end',
+                boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+
               }}
               >
-                <Typography variant="h5" fontWeight="700" color="white"> Pais y operadora </Typography>
+                <Box sx={{
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'absolute', background: 'linear-gradient(to left top, #ffff00, #ffff7f)', width: '150px', height: '150px', top: '-13%', borderRadius: '50%',
+                }}
+                >
+                  <AppSettingsAltIcon name="services" sx={{ height: '100px', width: '100px', color: 'black' }} />
+
+                </Box>
+                <Typography fontWeight="700" color="white" sx={{ marginBottom: { xs: '15px', sm: '30px', md: '5px' }, fontSize: { xs: '48px', sm: '56px', md: '96px' } }}> Desbloques </Typography>
                 <Box sx={{
                   display: 'flex',
                   gap: '30px',
-                  padding: '20px',
                   justifyContent: 'center',
-                  width: { xs: '100%', sm: '80%' },
-                  flexDirection: { xs: 'column', sm: 'row' },
+                  alignItems: 'center',
+                  width: { xs: '90%', sm: '100%' },
+                  flexDirection: 'column',
                 }}
                 >
                   <Select
@@ -348,32 +359,6 @@ function DesbloqueosForm() {
                     label="Compañia telefonica"
                     id={2}
                   />
-                </Box>
-                <IconButton disabled={disabledPais} onClick={() => handleNextPrevClick(2)}>
-                  <ArrowForwardIcon color="secondary" fontSize="large" />
-                </IconButton>
-              </Card>
-            )}
-            {formActivePanel.formActivePanelId === 2 && (
-              <Card sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                padding: '10px',
-                borderRadius: '35px',
-                backgroundColor: '#2586AF',
-              }}
-              >
-                <Typography variant="h5" fontWeight="700" color="white"> Telefono </Typography>
-                <Box sx={{
-                  display: 'flex',
-                  gap: '30px',
-                  padding: '20px',
-                  justifyContent: 'center',
-                  width: { xs: '100%', sm: '80%' },
-                  flexDirection: { xs: 'column', sm: 'row' },
-                }}
-                >
                   <Select
                     name="brand"
                     options={brandOptions}
@@ -387,34 +372,41 @@ function DesbloqueosForm() {
                     id={4}
                   />
                 </Box>
-                <Box sx={{ display: 'flex', gap: { xs: '10px', sm: '100px' }, flexDirection: 'row' }}>
-                  <IconButton onClick={() => handleNextPrevClick(1)}>
-                    <ArrowBackIcon color="secondary" fontSize="large" />
-                  </IconButton>
-                  <IconButton disabled={disabledMarca} onClick={() => handleNextPrevClick(3)}>
-                    <ArrowForwardIcon color="secondary" fontSize="large" />
-                  </IconButton>
-                </Box>
+                <IconButton disabled={disabledPais} onClick={() => handleNextPrevClick(2)} sx={{ marginTop: '20px', background: 'linear-gradient(to left top, #ffff00, #ffff7f)' }}>
+                  <ArrowForwardIcon sx={{ color: 'black' }} fontSize="large" />
+                </IconButton>
               </Card>
             )}
-            {formActivePanel.formActivePanelId === 3 && (
+            {formActivePanel.formActivePanelId === 2 && (
               <Card sx={{
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                padding: '10px',
+                paddingBottom: '30px',
                 borderRadius: '35px',
-                backgroundColor: '#2586AF',
+                backgroundColor: '#1f9cc8',
+                height: { xs: '600px', sm: '63vh', md: '68vh' },
+                border: '2px solid white',
+                justifyContent: 'end',
+                boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+
               }}
               >
-                <Typography variant="h5" fontWeight="700" color="white"> Servicios </Typography>
+                <Box sx={{
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'absolute', background: 'linear-gradient(to left top, #a64ca6, #8c198c)', width: '150px', height: '150px', top: '-12%', borderRadius: '50%',
+                }}
+                >
+                  <LocalPhoneIcon name="services" sx={{ height: '100px', width: '100px', color: 'black' }} />
+
+                </Box>
+                <Typography fontWeight="700" color="white" sx={{ fontSize: { xs: '48px', sm: '56px', md: '96px' } }}> Servicios </Typography>
                 <Box sx={{
                   display: 'flex',
-                  gap: '10px',
-                  padding: '20px',
+                  gap: '30px',
                   justifyContent: 'center',
-                  width: '100%',
-                  flexDirection: { xs: 'column', sm: 'row' },
+                  alignItems: 'center',
+                  width: { xs: '90%', sm: '100%' },
+                  flexDirection: 'column',
                 }}
                 >
                   <SelectService
@@ -424,40 +416,16 @@ function DesbloqueosForm() {
                   />
                 </Box>
                 <Box sx={{ display: 'flex', gap: { xs: '10px', sm: '100px' }, flexDirection: 'row' }}>
-                  <IconButton onClick={() => handleNextPrevClick(2)}>
-                    <ArrowBackIcon color="secondary" fontSize="large" />
+                  <IconButton onClick={() => handleNextPrevClick(1)} sx={{ marginTop: '20px', background: 'linear-gradient(to left top,  #a64ca6, #8c198c)' }}>
+                    <ArrowBackIcon sx={{ color: 'black' }} fontSize="large" />
                   </IconButton>
-                  <IconButton disabled={disabledServicio} onClick={() => handleNextPrevClick(4)}>
-                    <ArrowForwardIcon color="secondary" fontSize="large" />
+                  <IconButton disabled={disabledServicio} onClick={() => handleNextPrevClick(3)} sx={{ marginTop: '20px', background: 'linear-gradient(to left top,  #a64ca6, #8c198c)' }}>
+                    <ArrowForwardIcon sx={{ color: 'black' }} fontSize="large" />
                   </IconButton>
                 </Box>
               </Card>
             )}
-            { formActivePanel.formActivePanelId === 44 && (
-              <Card sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '20px',
-                alignItems: 'center',
-                padding: '20px',
-              }}
-              >
-                <Typography variant="h6">
-                  Servicios de desbloqueos
-                </Typography>
-                <FormControlLabel control={<Checkbox />} label="I agreee to the terms and conditions" id="checkbox" />
-                <FormControlLabel control={<Checkbox />} label="I want to receive newsletter" id="checkbox2" />
-                <Box sx={{ display: 'flex', gap: { xs: '10px', sm: '100px' }, flexDirection: { xs: 'column', sm: 'row' } }}>
-                  <Button variant="contained" onClick={() => handleNextPrevClick(3)}> Anterior </Button>
-                  <Button variant="contained" onClick={() => handleNextPrevClick(5)}> Siguiente </Button>
-                </Box>
-              </Card>
-            )}
-            { formActivePanel.formActivePanelId === 4 && (
-              // eslint-disable-next-line max-len
-              <Input Next={handleNextPrevClick} />
-            )}
-            { formActivePanel.formActivePanelId === 5 && (
+            {formActivePanel.formActivePanelId === 3 && (
               <div>
                 <div>
                   <Card sx={{
@@ -481,7 +449,7 @@ function DesbloqueosForm() {
                 </div>
               </div>
             )}
-            { formActivePanel.formActivePanelId === 6 && (
+            { formActivePanel.formActivePanelId === 44 && (
               <Card sx={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -516,6 +484,10 @@ function DesbloqueosForm() {
                   </Typography>
                 )}
               </Card>
+            )}
+            { formActivePanel.formActivePanelId === 4 && (
+              // eslint-disable-next-line max-len
+              <Input Next={handleNextPrevClick} />
             )}
           </Container>
         </Form>

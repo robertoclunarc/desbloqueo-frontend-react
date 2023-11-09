@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import { useField } from 'formik';
 import {
-  Box, FormControl, InputLabel, MenuItem, TextField, Typography,
+  Box, FormControl, InputLabel, MenuItem, TextField,
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import Select from '@mui/material/Select';
@@ -117,6 +117,7 @@ function SelectService({
       gap: '10px',
       padding: '20px',
       justifyContent: 'center',
+      alignItems: 'center',
       width: '100%',
       flexDirection: { xs: 'column', md: 'row' },
     }}
@@ -148,11 +149,6 @@ function SelectService({
           <div className="error">{meta.error}</div>
         ) : null}
       </FormControl>
-      <Typography color="white" sx={{ width: { xs: '80%', sm: '50%' } }}>
-        {
-          descripcion?.desc
-        }
-      </Typography>
     </Box>
   );
 }
