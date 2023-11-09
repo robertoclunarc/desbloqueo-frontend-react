@@ -323,7 +323,7 @@ function DesbloqueosForm() {
                 paddingBottom: '30px',
                 borderRadius: '35px',
                 backgroundColor: '#1f9cc8',
-                height: { xs: '530px', sm: '61vh' },
+                height: { xs: '500px', sm: '62vh' },
                 border: '2px solid white',
                 justifyContent: 'end',
                 boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
@@ -331,13 +331,13 @@ function DesbloqueosForm() {
               }}
               >
                 <Box sx={{
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'absolute', background: 'linear-gradient(to left top, #ffff00, #ffff7f)', width: '150px', height: '150px', top: '-13%', borderRadius: '50%',
+                  border: '2px solid white', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'absolute', background: 'linear-gradient(109.6deg, rgb(255, 219, 47) 11.2%, rgb(244, 253, 0) 100.2%)', width: { xs: '100px', sm: '150px' }, height: { xs: '100px', sm: '150px' }, top: { xs: '-10%', sm: '-13%' }, borderRadius: '50%',
                 }}
                 >
-                  <AppSettingsAltIcon name="services" sx={{ height: '100px', width: '100px', color: 'black' }} />
+                  <AppSettingsAltIcon name="services" sx={{ height: { xs: '50px', sm: '100px' }, width: { xs: '50px', sm: '100px' }, color: 'black' }} />
 
                 </Box>
-                <Typography fontWeight="700" color="white" sx={{ marginBottom: { xs: '15px', sm: '30px', md: '5px' }, fontSize: { xs: '48px', sm: '56px', md: '96px' } }}> Desbloques </Typography>
+                <Typography fontWeight="700" color="white" sx={{ marginBottom: { xs: '5px', sm: '30px', md: '5px' }, fontSize: { xs: '38px', sm: '56px', md: '96px' } }}> Desbloques </Typography>
                 <Box sx={{
                   display: 'flex',
                   gap: '30px',
@@ -372,7 +372,7 @@ function DesbloqueosForm() {
                     id={4}
                   />
                 </Box>
-                <IconButton disabled={disabledPais} onClick={() => handleNextPrevClick(2)} sx={{ marginTop: '20px', background: 'linear-gradient(to left top, #ffff00, #ffff7f)' }}>
+                <IconButton disabled={disabledPais} onClick={() => handleNextPrevClick(2)} sx={{ marginTop: '20px', border: '1px solid white', background: 'linear-gradient(109.6deg, rgb(255, 219, 47) 11.2%, rgb(244, 253, 0) 100.2%)' }}>
                   <ArrowForwardIcon sx={{ color: 'black' }} fontSize="large" />
                 </IconButton>
               </Card>
@@ -385,27 +385,27 @@ function DesbloqueosForm() {
                 paddingBottom: '30px',
                 borderRadius: '35px',
                 backgroundColor: '#1f9cc8',
-                height: { xs: '600px', sm: '63vh', md: '68vh' },
+                height: { xs: '550px', sm: '70vh', md: '68vh' },
                 border: '2px solid white',
-                justifyContent: 'end',
+                justifyContent: 'center',
                 boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
 
               }}
               >
                 <Box sx={{
-                  display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'absolute', background: 'linear-gradient(to left top, #a64ca6, #8c198c)', width: '150px', height: '150px', top: '-12%', borderRadius: '50%',
+                  border: '2px solid white', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'absolute', background: 'linear-gradient(to top, #c471f5 0%, #fa71cd 100%)', width: { xs: '100px', sm: '150px' }, height: { xs: '100px', sm: '150px' }, top: { xs: '-9%', sm: '-13%' }, borderRadius: '50%',
                 }}
                 >
-                  <LocalPhoneIcon name="services" sx={{ height: '100px', width: '100px', color: 'black' }} />
+                  <LocalPhoneIcon name="services" sx={{ height: { xs: '50px', sm: '100px' }, width: { xs: '50px', sm: '100px' }, color: 'black' }} />
 
                 </Box>
-                <Typography fontWeight="700" color="white" sx={{ fontSize: { xs: '48px', sm: '56px', md: '96px' } }}> Servicios </Typography>
+                <Typography fontWeight="700" color="white" sx={{ paddingTop: { xs: '40px', sm: '70px' }, fontSize: { xs: '38px', sm: '56px', md: '96px' } }}> Servicios </Typography>
                 <Box sx={{
                   display: 'flex',
                   gap: '30px',
                   justifyContent: 'center',
                   alignItems: 'center',
-                  width: { xs: '90%', sm: '100%' },
+                  width: { xs: '100%', sm: '100%' },
                   flexDirection: 'column',
                 }}
                 >
@@ -416,10 +416,10 @@ function DesbloqueosForm() {
                   />
                 </Box>
                 <Box sx={{ display: 'flex', gap: { xs: '10px', sm: '100px' }, flexDirection: 'row' }}>
-                  <IconButton onClick={() => handleNextPrevClick(1)} sx={{ marginTop: '20px', background: 'linear-gradient(to left top,  #a64ca6, #8c198c)' }}>
+                  <IconButton onClick={() => handleNextPrevClick(1)} sx={{ marginTop: '20px', border: '1px solid white', background: 'linear-gradient(to top, #c471f5 0%, #fa71cd 100%)' }}>
                     <ArrowBackIcon sx={{ color: 'black' }} fontSize="large" />
                   </IconButton>
-                  <IconButton disabled={disabledServicio} onClick={() => handleNextPrevClick(3)} sx={{ marginTop: '20px', background: 'linear-gradient(to left top,  #a64ca6, #8c198c)' }}>
+                  <IconButton disabled={disabledServicio} onClick={() => handleNextPrevClick(3)} sx={{ marginTop: '20px', border: '1px solid white', background: 'linear-gradient(to top, #c471f5 0%, #fa71cd 100%)' }}>
                     <ArrowForwardIcon sx={{ color: 'black' }} fontSize="large" />
                   </IconButton>
                 </Box>
