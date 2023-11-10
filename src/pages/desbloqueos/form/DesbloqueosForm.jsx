@@ -388,22 +388,44 @@ function DesbloqueosForm() {
                 alignItems: 'center',
                 paddingBottom: '30px',
                 borderRadius: '35px',
-                backgroundColor: '#1f9cc8',
-                height: { xs: '550px', sm: '70vh', md: '68vh' },
+                backgroundColor: '#2c5b97',
+                height: { xs: 'auto', sm: 'auto' },
                 border: '2px solid white',
-                justifyContent: 'center',
+                justifyContent: 'end',
                 boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+                paddingTop: '8em',
 
               }}
               >
+                <Stack sx={{ width: '100%', paddingBottom: '4em' }} spacing={4}>
+                  <Stepper
+                    alternativeLabel
+                    activeStep={formActivePanel.formActivePanelId - 1}
+                    connector={<ColorlibConnector />}
+                    sx={{ display: { xs: 'flex', sm: 'flex' } }}
+                  >
+                    {
+            steps.map((label) => (
+              <Step key={label}>
+                <StepLabel StepIconComponent={ColorlibStepIcon}>
+                  <Typography sx={{ fontSize: '12px' }}>
+                    {
+                    label
+                  }
+                  </Typography>
+                </StepLabel>
+              </Step>
+            ))
+          }
+                  </Stepper>
+                </Stack>
                 <Box sx={{
-                  border: '2px solid white', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'absolute', background: 'linear-gradient(to top, #c471f5 0%, #fa71cd 100%)', width: { xs: '100px', sm: '150px' }, height: { xs: '100px', sm: '150px' }, top: { xs: '-9%', sm: '-13%' }, borderRadius: '50%',
+                  border: '2px solid white', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'absolute', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)', width: { xs: '100px', sm: '150px' }, height: { xs: '100px', sm: '150px' }, top: { xs: '-6%', sm: '-13%' }, borderRadius: '50%',
                 }}
                 >
                   <LocalPhoneIcon name="services" sx={{ height: { xs: '50px', sm: '100px' }, width: { xs: '50px', sm: '100px' }, color: 'black' }} />
 
                 </Box>
-                <Typography fontWeight="700" color="white" sx={{ paddingTop: { xs: '40px', sm: '70px' }, fontSize: { xs: '38px', sm: '56px', md: '96px' } }}> Servicios </Typography>
                 <Box sx={{
                   display: 'flex',
                   gap: '30px',
@@ -420,10 +442,10 @@ function DesbloqueosForm() {
                   />
                 </Box>
                 <Box sx={{ display: 'flex', gap: { xs: '10px', sm: '100px' }, flexDirection: 'row' }}>
-                  <IconButton onClick={() => handleNextPrevClick(1)} sx={{ marginTop: '20px', border: '1px solid white', background: 'linear-gradient(to top, #c471f5 0%, #fa71cd 100%)' }}>
+                  <IconButton onClick={() => handleNextPrevClick(1)} sx={{ marginTop: '20px', border: '1px solid white', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)' }}>
                     <ArrowBackIcon sx={{ color: 'black' }} fontSize="large" />
                   </IconButton>
-                  <IconButton disabled={disabledServicio} onClick={() => handleNextPrevClick(3)} sx={{ marginTop: '20px', border: '1px solid white', background: 'linear-gradient(to top, #c471f5 0%, #fa71cd 100%)' }}>
+                  <IconButton disabled={disabledServicio} onClick={() => handleNextPrevClick(3)} sx={{ marginTop: '20px', border: '1px solid white', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)' }}>
                     <ArrowForwardIcon sx={{ color: 'black' }} fontSize="large" />
                   </IconButton>
                 </Box>

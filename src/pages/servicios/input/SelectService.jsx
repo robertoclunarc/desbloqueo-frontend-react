@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import { useField } from 'formik';
 import {
-  Box, FormControl, InputLabel, MenuItem, TextField,
+  Box, FormControl, InputLabel, MenuItem, Typography,
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import Select from '@mui/material/Select';
@@ -17,6 +17,7 @@ function SelectService({
 }) {
   let tools = [];
   let descripcion;
+  const [descriptionText, setDescriptionText] = useState('Please choose a Servico before continuing.');
   const [field, meta] = useField(props);
   const [valueOptions, setValueOptions] = useState('');
   const [price, setPrice] = useState('');
@@ -51,17 +52,23 @@ function SelectService({
   const handleChange = async (event) => {
     setValueOptions(event.target.value);
     descripcion = await buscarElementoAsync(options, event.target.value);
-    descripcion.desc = resumir(descripcion?.desc);
-    setPrice(descripcion?.price);
-    setTimeMin(descripcion?.timeMin);
-    setTimeMax(descripcion?.timeMax);
-    setAvg(descripcion?.avg);
-    setToolType(descripcion?.toolType);
+    if (descripcion) {
+      descripcion.desc = resumir(descripcion?.desc);
+      descripcion.desc = descripcion.desc.replace(/undefined/g, '').replace(/\s{2,}/g, ' ');
+      descripcion.desc = descripcion.desc.replace(/[.!?]+$/, '.').trim();
+      setDescriptionText(descripcion.desc);
+      setPrice(descripcion?.price);
+      setTimeMin(descripcion?.timeMin);
+      setTimeMax(descripcion?.timeMax);
+      setAvg(descripcion?.avg);
+      setToolType(descripcion?.toolType);
+    }
     dispatch(setOpcionesGlobal({ [label]: descripcion.name, id: `${id}`, idReg: `${event.target.value}` }));
     dispatch(setOpcionesGlobal({ id: '8', price: `${descripcion.price}` }));
     dispatch(setOpcionesGlobal({ id: '9', timeMin: `${descripcion.timeMin}` }));
     dispatch(setOpcionesGlobal({ id: '10', timeMax: `${descripcion.timeMax}` }));
     dispatch(setOpcionesGlobal({ id: '11', avg: `${descripcion.avg}` }));
+    console.log('YSL', descripcion);
   };
 
   const getTools = async () => {
@@ -108,18 +115,26 @@ function SelectService({
     fetchData();
   }, []);
 
+  useEffect(() => {
+    if (options.length === 1 && options[0].name === 'Sin Servicio para este Terminal y/o Operadora') {
+      setValueOptions(options[0].id);
+    }
+  }, [options]);
+
   // eslint-disable-next-line eqeqeq
   descripcion = options?.find((descrip) => descrip.id == valueOptions);
   // descripcion = buscarElementoAsync(options, valueOptions);
+  const currentOption = options.find((option) => option.id === valueOptions);
+
   return (
     <Box sx={{
       display: 'flex',
       gap: '10px',
       padding: '20px',
-      justifyContent: 'center',
+      justifyContent: 'start',
       alignItems: 'center',
       width: '100%',
-      flexDirection: { xs: 'column', md: 'row' },
+      flexDirection: 'column',
     }}
     >
       <FormControl sx={{ width: { xs: '80%', sm: '40%' } }}>
@@ -132,23 +147,59 @@ function SelectService({
           label={label}
           sx={{ backgroundColor: 'white' }}
         >
-          {
-          options?.map((option) => (
+          {options?.map((option) => (
             <MenuItem key={option.id} value={option.id}>
               {option.name}
             </MenuItem>
-          ))
-        }
+          ))}
         </Select>
-        <TextField sx={{ backgroundColor: 'white' }} id="txtPrice" label="Precio $" variant="filled" value={price} InputProps={{ readOnly: true }} />
-        <TextField sx={{ backgroundColor: 'white' }} id="txtTimeMin" label="Dias Minimo" variant="filled" value={timeMin} InputProps={{ readOnly: true }} />
-        <TextField sx={{ backgroundColor: 'white' }} id="txtTimeMax" label="Dias Maximo" variant="filled" value={timeMax} InputProps={{ readOnly: true }} />
-        <TextField sx={{ backgroundColor: 'white' }} id="txtAvg" label="Promedio" variant="filled" value={avg} InputProps={{ readOnly: true }} />
-        <TextField sx={{ backgroundColor: 'white' }} id="txtRequiere" label="Requiere" variant="filled" value={toolType} InputProps={{ readOnly: true }} />
         {meta.touched && meta.error ? (
           <div className="error">{meta.error}</div>
         ) : null}
       </FormControl>
+      {currentOption && currentOption.name !== 'Sin Servicio para este Terminal y/o Operadora' && (
+        <Box sx={{
+          width: { xs: '80%', sm: '100%' }, height: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: { xs: 'white', sm: '#2C5B97' }, flexWrap: 'wrap', border: { xs: '2px solid black', sm: 'none' }, borderRadius: '15px', padding: '1em 0em 1em 0em',
+        }}
+        >
+          <Typography sx={{ backgroundColor: { xs: 'white', sm: '#2C5B97' }, color: { xs: 'black', sm: 'white' }, padding: '10px' }}>
+            Precio $:
+            {' '}
+            {price}
+            ,
+          </Typography>
+          <Typography sx={{ backgroundColor: { xs: 'white', sm: '#2C5B97' }, color: { xs: 'black', sm: 'white' }, padding: '10px' }}>
+            Días Mínimo:
+            {' '}
+            {timeMin}
+            ,
+          </Typography>
+          <Typography sx={{ backgroundColor: { xs: 'white', sm: '#2C5B97' }, color: { xs: 'black', sm: 'white' }, padding: '10px' }}>
+            Días Máximo:
+            {' '}
+            {timeMax}
+            ,
+          </Typography>
+          <Typography sx={{ backgroundColor: { xs: 'white', sm: '#2C5B97' }, color: { xs: 'black', sm: 'white' }, padding: '10px' }}>
+            Promedio:
+            {' '}
+            {avg}
+            ,
+          </Typography>
+          <Typography sx={{ backgroundColor: { xs: 'white', sm: '#2C5B97' }, color: { xs: 'black', sm: 'white' }, padding: '10px' }}>
+            Requiere:
+            {' '}
+            {toolType}
+          </Typography>
+          {' '}
+
+        </Box>
+      )}
+      <Typography color="white" sx={{ width: { xs: '80%', sm: '80%' } }}>
+        {currentOption && currentOption.name === 'Sin Servicio para este Terminal y/o Operadora'
+          ? 'We do not provide this specific serivce. Try again with new inputs.'
+          : descriptionText}
+      </Typography>
     </Box>
   );
 }
