@@ -28,7 +28,7 @@ function SelectInput({
     dispatch(setOpcionesGlobal({ [label]: event.target.value, id: `${id}`, idReg: `${opt.drSimID}` }));
   }
   return (
-    <FormControl color="formColor" sx={{ width: { xs: '100%', sm: '50%' } }}>
+    <FormControl color="formColor" sx={{ width: { xs: '100%', sm: '70%' } }}>
       <InputLabel id={field.name} color="formColor">{label}</InputLabel>
       <Select
         labelId={field.name}
@@ -37,7 +37,7 @@ function SelectInput({
         // eslint-disable-next-line react/jsx-no-bind
         onChange={handleChange}
         label={label}
-        sx={{ backgroundColor: 'white' }}
+        sx={{ backgroundColor: 'white', borderRadius: '10px' }}
       >
         {
           options?.map((option) => (

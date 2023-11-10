@@ -263,26 +263,6 @@ function DesbloqueosForm() {
       textAlign: 'center',
     }}
     >
-      <Stack sx={{ width: '100%' }} spacing={4}>
-        <Stepper
-          alternativeLabel
-          activeStep={formActivePanel.formActivePanelId - 1}
-          connector={<ColorlibConnector />}
-          sx={{ display: { xs: 'none', sm: 'flex' } }}
-        >
-          {
-            steps.map((label) => (
-              <Step key={label}>
-                <StepLabel StepIconComponent={ColorlibStepIcon}>
-                  {
-                    label
-                  }
-                </StepLabel>
-              </Step>
-            ))
-          }
-        </Stepper>
-      </Stack>
       <Formik
         initialValues={{
           country: '',
@@ -311,7 +291,9 @@ function DesbloqueosForm() {
       >
         <Form>
           <Container sx={{
-            width: { xs: '100%', sm: '80%' },
+            width: {
+              xs: '100%', sm: '100%', md: '80%', lg: '80%', xl: '80%',
+            },
             position: 'relative',
           }}
           >
@@ -322,22 +304,44 @@ function DesbloqueosForm() {
                 alignItems: 'center',
                 paddingBottom: '30px',
                 borderRadius: '35px',
-                backgroundColor: '#1f9cc8',
-                height: { xs: '500px', sm: '62vh' },
+                backgroundColor: '#2c5b97',
+                height: { xs: '500px', sm: 'auto' },
                 border: '2px solid white',
                 justifyContent: 'end',
                 boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+                paddingTop: '8em',
 
               }}
               >
+                <Stack sx={{ width: '100%', paddingBottom: '4em' }} spacing={4}>
+                  <Stepper
+                    alternativeLabel
+                    activeStep={formActivePanel.formActivePanelId - 1}
+                    connector={<ColorlibConnector />}
+                    sx={{ display: { xs: 'flex', sm: 'flex' } }}
+                  >
+                    {
+            steps.map((label) => (
+              <Step key={label}>
+                <StepLabel StepIconComponent={ColorlibStepIcon}>
+                  <Typography sx={{ fontSize: '12px' }}>
+                    {
+                    label
+                  }
+                  </Typography>
+                </StepLabel>
+              </Step>
+            ))
+          }
+                  </Stepper>
+                </Stack>
                 <Box sx={{
-                  border: '2px solid white', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'absolute', background: 'linear-gradient(109.6deg, rgb(255, 219, 47) 11.2%, rgb(244, 253, 0) 100.2%)', width: { xs: '100px', sm: '150px' }, height: { xs: '100px', sm: '150px' }, top: { xs: '-10%', sm: '-13%' }, borderRadius: '50%',
+                  border: '2px solid white', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'absolute', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)', width: { xs: '100px', sm: '150px' }, height: { xs: '100px', sm: '150px' }, top: { xs: '-8%', sm: '-11%' }, borderRadius: '50%',
                 }}
                 >
                   <AppSettingsAltIcon name="services" sx={{ height: { xs: '50px', sm: '100px' }, width: { xs: '50px', sm: '100px' }, color: 'black' }} />
 
                 </Box>
-                <Typography fontWeight="700" color="white" sx={{ marginBottom: { xs: '5px', sm: '30px', md: '5px' }, fontSize: { xs: '38px', sm: '56px', md: '96px' } }}> Desbloques </Typography>
                 <Box sx={{
                   display: 'flex',
                   gap: '30px',
@@ -372,7 +376,7 @@ function DesbloqueosForm() {
                     id={4}
                   />
                 </Box>
-                <IconButton disabled={disabledPais} onClick={() => handleNextPrevClick(2)} sx={{ marginTop: '20px', border: '1px solid white', background: 'linear-gradient(109.6deg, rgb(255, 219, 47) 11.2%, rgb(244, 253, 0) 100.2%)' }}>
+                <IconButton disabled={disabledPais} onClick={() => handleNextPrevClick(2)} sx={{ marginTop: '20px', border: '1px solid white', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)' }}>
                   <ArrowForwardIcon sx={{ color: 'black' }} fontSize="large" />
                 </IconButton>
               </Card>
