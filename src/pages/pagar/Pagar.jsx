@@ -167,15 +167,12 @@ function Pagar({ next, disabledButton }) {
         flexDirection: 'column',
         gap: '20px',
         alignItems: 'center',
-        padding: '5px',
-        backgroundColor: '#2586AF',
+        paddingRight: '15px',
       }}
       >
-        <Typography variant="h6" color="white"> Pagar </Typography>
         <Box sx={{
           display: 'flex',
           gap: '10px',
-          padding: '2px',
           justifyContent: 'center',
           width: { xs: '100%', sm: '80%' },
           flexDirection: 'column',

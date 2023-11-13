@@ -423,7 +423,7 @@ function DesbloqueosForm() {
                   border: '2px solid white', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'absolute', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)', width: { xs: '100px', sm: '150px' }, height: { xs: '100px', sm: '150px' }, top: { xs: '-6%', sm: '-13%' }, borderRadius: '50%',
                 }}
                 >
-                  <LocalPhoneIcon name="services" sx={{ height: { xs: '50px', sm: '100px' }, width: { xs: '50px', sm: '100px' }, color: 'black' }} />
+                  <LocalPhoneIcon name="imei" sx={{ height: { xs: '50px', sm: '100px' }, width: { xs: '50px', sm: '100px' }, color: 'black' }} />
 
                 </Box>
                 <Box sx={{
@@ -458,24 +458,58 @@ function DesbloqueosForm() {
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    padding: '10px',
+                    paddingBottom: '30px',
                     borderRadius: '35px',
-                    backgroundColor: '#2586AF',
-                    gap: '20px',
-                    width: '100%',
+                    backgroundColor: '#2c5b97',
+                    height: { xs: 'auto', sm: 'auto' },
+                    border: '2px solid white',
+                    justifyContent: 'end',
+                    boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+                    paddingTop: '8em',
                   }}
                   >
+                    <Stack sx={{ width: '100%', paddingBottom: '4em' }} spacing={4}>
+                      <Stepper
+                        alternativeLabel
+                        activeStep={formActivePanel.formActivePanelId - 1}
+                        connector={<ColorlibConnector />}
+                        sx={{ display: { xs: 'flex', sm: 'flex' } }}
+                      >
+                        {
+            steps.map((label) => (
+              <Step key={label}>
+                <StepLabel StepIconComponent={ColorlibStepIcon}>
+                  <Typography sx={{ fontSize: '12px' }}>
+                    {
+                    label
+                  }
+                  </Typography>
+                </StepLabel>
+              </Step>
+            ))
+          }
+                      </Stepper>
+                    </Stack>
+                    <Box sx={{
+                      border: '2px solid white', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'absolute', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)', width: { xs: '100px', sm: '150px' }, height: { xs: '100px', sm: '150px' }, top: { xs: '-3%', sm: '-6%' }, borderRadius: '50%',
+                    }}
+                    >
+                      <PaymentIcon name="Finish" sx={{ height: { xs: '50px', sm: '100px' }, width: { xs: '50px', sm: '100px' }, color: 'black' }} />
+
+                    </Box>
+                    <Input Next={handleNextPrevClick} />
                     <Typography variant="h5" fontWeight="700" color="white">
                       Servicios de desbloqueos
                     </Typography>
                     <FormControlLabel control={<Checkbox color="secondary" checked={aceptarTerminos} onChange={(e) => setAceptarTerminos(e.target.checked)} />} label="Aceptar los términos  y condiciones" style={{ color: 'white' }} id="checkbox" />
                     <FormControlLabel control={<Checkbox color="secondary" checked={recibirBoletin} onChange={(e) => setRecibirBoletin(e.target.checked)} />} label="Recibir boletín informativo" style={{ color: 'white' }} id="checkbox2" />
+
                     <Pagar disabledButton={disabledButton} next={handleNextPrevClick} />
                   </Card>
                 </div>
               </div>
             )}
-            { formActivePanel.formActivePanelId === 44 && (
+            { formActivePanel.formActivePanelId === 4 && (
               <Card sx={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -510,10 +544,6 @@ function DesbloqueosForm() {
                   </Typography>
                 )}
               </Card>
-            )}
-            { formActivePanel.formActivePanelId === 4 && (
-              // eslint-disable-next-line max-len
-              <Input Next={handleNextPrevClick} />
             )}
           </Container>
         </Form>
