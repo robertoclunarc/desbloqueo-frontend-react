@@ -159,10 +159,10 @@ function SelectService({
       </FormControl>
       {currentOption && currentOption.name !== 'Sin Servicio para este Terminal y/o Operadora' && (
         <Box sx={{
-          background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)', width: { xs: '80%', sm: '100%' }, height: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: { xs: 'white', sm: '#2C5B97' }, flexWrap: 'wrap', border: { xs: '2px solid black', sm: 'none' }, borderRadius: '15px', padding: '1em 0em 1em 0em',
+          background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)', width: { xs: '80%', sm: '60%' }, height: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: { xs: 'white', sm: '#2C5B97' }, flexWrap: 'wrap', border: { xs: '2px solid black', sm: '2px solid black' }, borderRadius: '15px', padding: '1em 0em 1em 0em', margin: { xs: 'none', sm: '1em 0em 0em 0em' },
         }}
         >
-          <Typography sx={{ color: { xs: 'black', sm: 'white' }, padding: '10px' }}>
+          <Typography sx={{ color: 'black', padding: '10px' }}>
             Precio:
             {' '}
             <span style={{ fontWeight: 'bold' }}>
@@ -171,7 +171,7 @@ function SelectService({
               ,
             </span>
           </Typography>
-          <Typography sx={{ color: { xs: 'black', sm: 'white' }, padding: '10px' }}>
+          <Typography sx={{ color: 'black', padding: '10px' }}>
             Días Mínimo:
             <span style={{ fontWeight: 'bold' }}>
               {' '}
@@ -179,7 +179,7 @@ function SelectService({
               ,
             </span>
           </Typography>
-          <Typography sx={{ color: { xs: 'black', sm: 'white' }, padding: '10px' }}>
+          <Typography sx={{ color: 'black', padding: '10px' }}>
             Días Máximo:
             <span style={{ fontWeight: 'bold' }}>
               {' '}
@@ -187,7 +187,7 @@ function SelectService({
               ,
             </span>
           </Typography>
-          <Typography sx={{ color: { xs: 'black', sm: 'white' }, padding: '10px' }}>
+          <Typography sx={{ color: 'black', padding: '10px' }}>
             Promedio:
             <span style={{ fontWeight: 'bold' }}>
               {' '}
@@ -195,7 +195,7 @@ function SelectService({
               ,
             </span>
           </Typography>
-          <Typography sx={{ color: { xs: 'black', sm: 'white' }, padding: '10px' }}>
+          <Typography sx={{ color: 'black', padding: '10px' }}>
             Requiere:
             <span style={{ fontWeight: 'bold' }}>
               {' '}
@@ -203,10 +203,26 @@ function SelectService({
             </span>
           </Typography>
           {' '}
-
+          <Typography sx={{
+            display: { xs: 'none', sm: 'inline' }, color: 'black', textAlign: 'center', width: '100%', borderTop: '1px solid black', padding: '1em',
+          }}
+          >
+            Description:
+          </Typography>
+          <Typography sx={{
+            display: { xs: 'none', sm: 'inline' }, color: 'black', fontWeight: 'bold', textAlign: 'left', width: '80%',
+          }}
+          >
+            {currentOption && currentOption.name === 'Sin Servicio para este Terminal y/o Operadora'
+              ? 'We do not provide this specific serivce. Try again with new inputs.'
+              : descriptionText}
+          </Typography>
         </Box>
       )}
-      <Typography color="white" sx={{ width: { xs: '80%', sm: '80%' }, textAlign: 'left' }}>
+      <Typography sx={{
+        display: { xs: 'inline', sm: 'none' }, color: 'white', textAlign: 'left', width: '80%',
+      }}
+      >
         {currentOption && currentOption.name === 'Sin Servicio para este Terminal y/o Operadora'
           ? 'We do not provide this specific serivce. Try again with new inputs.'
           : descriptionText}

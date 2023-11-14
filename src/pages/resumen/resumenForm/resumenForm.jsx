@@ -1,7 +1,6 @@
 /* eslint-disable react/forbid-prop-types */
 import React from 'react';
-import { Box } from '@mui/material';
-import TextField from '@mui/material/TextField';
+import { Box, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 
 function ResumenForm() {
@@ -9,131 +8,90 @@ function ResumenForm() {
   return (
     <Box
       sx={{
-        '& .MuiTextField-root': { m: 1, width: '100%' },
+        gap: '5px', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)', width: { xs: '80%', sm: '60%' }, height: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: { xs: 'white', sm: '#2C5B97' }, flexWrap: 'wrap', border: { xs: '2px solid black', sm: '2px solid black' }, borderRadius: '15px', padding: '1em 0em 1em 0em', margin: { xs: 'none', sm: '1em 0em 0em 0em' },
       }}
-      noValidate
-      autoComplete="off"
     >
-      <div>
-        <TextField
-          id="filled-read-only-input1"
-          label="Pais"
-          value={opciones[0].Pais}
-          InputProps={{
-            readOnly: true,
-          }}
-          variant="filled"
-          color="secondary"
-          sx={{ backgroundColor: 'white' }}
-        />
-        <TextField
-          id="filled-read-only-input2"
-          label="Operadora"
-          value={opciones[1]['Compañia telefonica']}
-          InputProps={{
-            readOnly: true,
-          }}
-          variant="filled"
-          color="secondary"
-          sx={{ backgroundColor: 'white' }}
-        />
-      </div>
-      <div>
-        <TextField
-          id="filled-read-only-input3"
-          label="Marca"
-          value={opciones[2]?.Marca}
-          InputProps={{
-            readOnly: true,
-          }}
-          variant="filled"
-          color="secondary"
-          sx={{ backgroundColor: 'white' }}
-        />
-        <TextField
-          id="filled-read-only-input4"
-          label="Modelo"
-          value={opciones[3]?.Modelo}
-          InputProps={{
-            readOnly: true,
-          }}
-          variant="filled"
-          color="secondary"
-          sx={{ backgroundColor: 'white' }}
-        />
-      </div>
-      <div>
-        <TextField
-          id="filled-read-only-input5"
-          label="Tiempo Minimo de Desbloqueo"
-          value={opciones[6]?.timeMin}
-          InputProps={{
-            readOnly: true,
-          }}
-          variant="filled"
-          color="secondary"
-          sx={{ backgroundColor: 'white' }}
-        />
-        <TextField
-          id="filled-read-only-input6"
-          label="Tiempo Maximo de Desbloqueo"
-          value={opciones[7]?.timeMax}
-          InputProps={{
-            readOnly: true,
-          }}
-          variant="filled"
-          color="secondary"
-          sx={{ backgroundColor: 'white' }}
-        />
-      </div>
-      <div>
-        <TextField
-          id="filled-read-only-input7"
-          label="IMEI"
-          value={opciones[9]?.imei}
-          InputProps={{
-            readOnly: true,
-          }}
-          variant="filled"
-          color="secondary"
-          sx={{ backgroundColor: 'white' }}
-        />
-        <TextField
-          id="filled-read-only-input8"
-          label="E-Mail"
-          value={opciones[10]?.email}
-          InputProps={{
-            readOnly: true,
-          }}
-          variant="filled"
-          color="secondary"
-          sx={{ backgroundColor: 'white' }}
-        />
-      </div>
-      <div>
-        <TextField
-          label="Promedio"
-          value={opciones[8]?.avg}
-          variant="filled"
-          sx={{ backgroundColor: 'white' }}
-          InputProps={{
-            readOnly: true,
-          }}
-          color="warning"
-          focused
-        />
-        <TextField
-          label="Monto a Pagar $"
-          value={opciones[5]?.price}
-          variant="filled"
-          InputProps={{
-            readOnly: true,
-          }}
-          color="warning"
-          focused
-          sx={{ backgroundColor: 'white' }}
-        />
-      </div>
+      <Typography
+        sx={{ color: 'black' }}
+      >
+        Pais:
+        <span>  </span>
+        <span style={{ fontWeight: 'bold' }}>
+          {opciones[0].Pais}
+        </span>
+        ,
+
+      </Typography>
+      <Typography
+        sx={{ color: 'black' }}
+      >
+        Operadora:
+        <span>  </span>
+        <span style={{ fontWeight: 'bold' }}>
+          {opciones[1]['Compañia telefonica']}
+        </span>
+        ,
+        {' '}
+
+      </Typography>
+      <Typography
+        sx={{ color: 'black' }}
+      >
+        Marca:
+        <span>  </span>
+        <span style={{ fontWeight: 'bold' }}>
+          {opciones[2]?.Marca}
+        </span>
+      </Typography>
+      <Typography
+        sx={{ color: 'black' }}
+      >
+        Modelo:
+        <span>  </span>
+        <span style={{ fontWeight: 'bold' }}>
+          {opciones[3]?.Modelo}
+        </span>
+
+      </Typography>
+      <Typography
+        sx={{ color: 'black' }}
+      >
+        Tiempo Minimo de Desbloqueo:
+        <span>  </span>
+        <span style={{ fontWeight: 'bold' }}>
+          {opciones[6]?.timeMin}
+        </span>
+      </Typography>
+      <Typography
+        sx={{ color: 'black' }}
+      >
+        Tiempo Maximo de Desbloqueo:
+        <span>  </span>
+        <span style={{ fontWeight: 'bold' }}>
+          {opciones[7]?.timeMax}
+        </span>
+
+      </Typography>
+      <Typography
+        sx={{ color: 'black' }}
+      >
+        Promedio:
+        <span>  </span>
+        <span style={{ fontWeight: 'bold' }}>
+          {opciones[8]?.avg}
+        </span>
+
+      </Typography>
+      <Typography
+        sx={{ color: 'black' }}
+      >
+        Monto a Pagar:
+        <span>  </span>
+        <span style={{ fontWeight: 'bold' }}>
+          $
+          {opciones[5]?.price}
+        </span>
+      </Typography>
     </Box>
   );
 }

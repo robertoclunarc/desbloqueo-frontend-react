@@ -393,11 +393,11 @@ function DesbloqueosForm() {
                 border: '2px solid white',
                 justifyContent: 'end',
                 boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
-                paddingTop: '8em',
+                paddingTop: '6em',
 
               }}
               >
-                <Stack sx={{ width: '100%', paddingBottom: '4em' }} spacing={4}>
+                <Stack sx={{ width: '100%', paddingBottom: '1em' }} spacing={4}>
                   <Stepper
                     alternativeLabel
                     activeStep={formActivePanel.formActivePanelId - 1}
