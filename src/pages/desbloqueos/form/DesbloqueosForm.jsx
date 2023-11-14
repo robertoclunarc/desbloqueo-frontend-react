@@ -28,6 +28,7 @@ import Pagar from '../../pagar/Pagar';
 import Select from '../../../components/formik/select/Select';
 import Input from '../../../components/payment/input/Input';
 import SelectService from '../../servicios/input/SelectService';
+import Resumen from '../../resumen/Resumen';
 
 const QontoStepIconRoot = styled('div')(({ theme, ownerState }) => ({
   color: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#eaeaf0',
@@ -497,13 +498,13 @@ function DesbloqueosForm() {
                       <PaymentIcon name="Finish" sx={{ height: { xs: '50px', sm: '100px' }, width: { xs: '50px', sm: '100px' }, color: 'black' }} />
 
                     </Box>
+                    <Resumen />
                     <Input Next={handleNextPrevClick} />
                     <Typography variant="h5" fontWeight="700" color="white">
                       Servicios de desbloqueos
                     </Typography>
                     <FormControlLabel control={<Checkbox color="secondary" checked={aceptarTerminos} onChange={(e) => setAceptarTerminos(e.target.checked)} />} label="Aceptar los términos  y condiciones" style={{ color: 'white' }} id="checkbox" />
                     <FormControlLabel control={<Checkbox color="secondary" checked={recibirBoletin} onChange={(e) => setRecibirBoletin(e.target.checked)} />} label="Recibir boletín informativo" style={{ color: 'white' }} id="checkbox2" />
-
                     <Pagar disabledButton={disabledButton} next={handleNextPrevClick} />
                   </Card>
                 </div>

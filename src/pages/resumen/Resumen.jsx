@@ -10,11 +10,18 @@ function Resumen() {
     <Container sx={{
       display: 'flex',
       flexDirection: 'column',
-      gap: '30px',
-      padding: '3px',
+      justifyContent: 'center',
+      alignItems: 'center',
+      gap: '10px',
+      margin: '.5em',
     }}
     >
-      <Typography variant="h4" color="secondary" sx={{ borderBottom: '2Spx solid yellow' }}>
+      <Typography
+        variant="h4"
+        sx={{
+          fontWeight: 'bold', color: 'transparent', backgroundClip: 'text', backgroundImage: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)',
+        }}
+      >
         Resumen
       </Typography>
       <ResumenForm />

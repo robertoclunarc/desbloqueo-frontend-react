@@ -22,7 +22,7 @@ function Input() {
 
   return (
     <Box sx={{
-      display: 'flex', width: '90%', flexDirection: 'column', padding: '20px', borderRadius: '15px',
+      display: 'flex', width: { xs: '90%', sm: '60%' }, flexDirection: 'column', padding: '20px', borderRadius: '15px',
     }}
     >
       <Typography sx={{ color: 'white', fontSize: '20px' }}> Enter IMEI </Typography>

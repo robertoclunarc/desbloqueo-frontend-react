@@ -130,7 +130,6 @@ const CheckoutForm = ({ next, disabledButton }) => {
   const disabled = (!disabledButton || loading) ? 'disabled' : undefined;
   return (
     <div className="div_payment-cardElement">
-      <Resumen />
       <div className="form_payment-cardElement">
         <label className="form-label">Tarjeta</label>
         <CardElement options={CARD_ELEMENT_OPTIONS} />
