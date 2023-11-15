@@ -64,7 +64,7 @@ async function createOrden(idTerminal, idOperador, imei, idService) {
   return servicios;
 }
 
-const stripePromise = loadStripe(env.key_public);
+const stripePromise = loadStripe(process.env.REACT_APP_key_public);
 // eslint-disable-next-line react/prop-types
 const CheckoutForm = ({ next, disabledButton }) => {
   const dispatch = useDispatch();
@@ -142,7 +142,7 @@ const CheckoutForm = ({ next, disabledButton }) => {
       <Button
         disabled={loading}
         variant="contained"
-        onClick={() => next(4)}
+        onClick={() => next(2)}
       >
         Anterior
       </Button>

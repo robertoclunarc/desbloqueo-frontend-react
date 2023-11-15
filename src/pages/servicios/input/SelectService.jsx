@@ -23,6 +23,7 @@ function SelectService({
   const [price, setPrice] = useState('');
   const [timeMin, setTimeMin] = useState('');
   const [timeMax, setTimeMax] = useState('');
+  const [type, setType] = useState('');
   const [avg, setAvg] = useState('');
   const [toolType, setToolType] = useState('');
   const opciones = useSelector((state) => state.opciones);
@@ -60,6 +61,7 @@ function SelectService({
       setPrice(descripcion?.price);
       setTimeMin(descripcion?.timeMin);
       setTimeMax(descripcion?.timeMax);
+      setType(descripcion?.type);
       setAvg(descripcion?.avg);
       setToolType(descripcion?.toolType);
     }
@@ -68,7 +70,7 @@ function SelectService({
     dispatch(setOpcionesGlobal({ id: '9', timeMin: `${descripcion.timeMin}` }));
     dispatch(setOpcionesGlobal({ id: '10', timeMax: `${descripcion.timeMax}` }));
     dispatch(setOpcionesGlobal({ id: '11', avg: `${descripcion.avg}` }));
-    console.log('YSL', descripcion);
+    dispatch(setOpcionesGlobal({ id: '12', type: `${descripcion.type}` }));
   };
 
   const getTools = async () => {
@@ -100,6 +102,7 @@ function SelectService({
               price: opt.price,
               timeMin: opt.time.min,
               timeMax: opt.time.max,
+              type: opt.time.type,
               avg: opt.avg,
               toolType: opt.tool_type,
             };
@@ -172,18 +175,9 @@ function SelectService({
             </span>
           </Typography>
           <Typography sx={{ color: 'black', padding: '10px' }}>
-            Días Mínimo:
+            Timeo:
             <span style={{ fontWeight: 'bold' }}>
-              {' '}
-              {timeMin}
-              ,
-            </span>
-          </Typography>
-          <Typography sx={{ color: 'black', padding: '10px' }}>
-            Días Máximo:
-            <span style={{ fontWeight: 'bold' }}>
-              {' '}
-              {timeMax}
+              {` ${timeMin} ${type} - ${timeMax} ${type}`}
               ,
             </span>
           </Typography>

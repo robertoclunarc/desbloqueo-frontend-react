@@ -18,8 +18,8 @@ function ResumenForm() {
         <span>  </span>
         <span style={{ fontWeight: 'bold' }}>
           {opciones[0].Pais}
+          ,
         </span>
-        ,
 
       </Typography>
       <Typography
@@ -29,10 +29,8 @@ function ResumenForm() {
         <span>  </span>
         <span style={{ fontWeight: 'bold' }}>
           {opciones[1]['Compañia telefonica']}
+          ,
         </span>
-        ,
-        {' '}
-
       </Typography>
       <Typography
         sx={{ color: 'black' }}
@@ -41,6 +39,7 @@ function ResumenForm() {
         <span>  </span>
         <span style={{ fontWeight: 'bold' }}>
           {opciones[2]?.Marca}
+          ,
         </span>
       </Typography>
       <Typography
@@ -50,27 +49,26 @@ function ResumenForm() {
         <span>  </span>
         <span style={{ fontWeight: 'bold' }}>
           {opciones[3]?.Modelo}
+          ,
         </span>
 
       </Typography>
       <Typography
         sx={{ color: 'black' }}
       >
-        Tiempo Minimo de Desbloqueo:
+        Tiempo:
         <span>  </span>
         <span style={{ fontWeight: 'bold' }}>
-          {opciones[6]?.timeMin}
-        </span>
-      </Typography>
-      <Typography
-        sx={{ color: 'black' }}
-      >
-        Tiempo Maximo de Desbloqueo:
-        <span>  </span>
-        <span style={{ fontWeight: 'bold' }}>
+          {` ${opciones[6]?.timeMin} ${opciones[9]?.type} - ${opciones[7]?.timeMax} ${opciones[9]?.type}`}
+          {/* {opciones[6]?.timeMin}
+          hr(s)
+          {' '}
+          -
+          {' '}
           {opciones[7]?.timeMax}
+          hr(s)
+          , */}
         </span>
-
       </Typography>
       <Typography
         sx={{ color: 'black' }}
@@ -79,11 +77,12 @@ function ResumenForm() {
         <span>  </span>
         <span style={{ fontWeight: 'bold' }}>
           {opciones[8]?.avg}
+          ,
         </span>
 
       </Typography>
       <Typography
-        sx={{ color: 'black' }}
+        sx={{ color: 'black', fontSize: '20px' }}
       >
         Monto a Pagar:
         <span>  </span>

@@ -19,12 +19,20 @@ function Resumen() {
       <Typography
         variant="h4"
         sx={{
-          fontWeight: 'bold', color: 'transparent', backgroundClip: 'text', backgroundImage: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)',
+          color: 'white',
         }}
       >
         Resumen
       </Typography>
       <ResumenForm />
+      <Typography
+        variant="h6"
+        sx={{
+          color: 'white',
+        }}
+      >
+        If everything here looks correct, please fill out your IMEI and Email to finish the process.
+      </Typography>
     </Container>
   );
 }

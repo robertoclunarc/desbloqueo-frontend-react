@@ -25,9 +25,23 @@ function Input() {
       display: 'flex', width: { xs: '90%', sm: '60%' }, flexDirection: 'column', padding: '20px', borderRadius: '15px',
     }}
     >
-      <Typography sx={{ color: 'white', fontSize: '20px' }}> Enter IMEI </Typography>
+      <Typography sx={{ color: 'white', fontSize: '20px', textAlign: 'left' }}>
+        {' '}
+        Enter IMEI
+        {' '}
+        <span style={{ color: 'red' }}>*</span>
+        {' '}
+      </Typography>
       <TextField sx={{ backgroundColor: 'white' }} color="secondary" id="imei" label="IMEI" variant="filled" onChange={handleChangeImei} defaultValue={valueOptions} />
-      <Typography sx={{ color: 'white', fontSize: '20px', paddingTop: '15px' }}> Enter Email </Typography>
+      <Typography sx={{
+        color: 'white', fontSize: '20px', paddingTop: '15px', textAlign: 'left',
+      }}
+      >
+        {' '}
+        Enter Email
+        <span style={{ color: 'red' }}>*</span>
+        {' '}
+      </Typography>
       <TextField sx={{ backgroundColor: 'white' }} color="secondary" id="email" label="Correo electronico" variant="filled" onChange={handleChangeEmail} defaultValue={valueOptionsEmail} />
     </Box>
   );
