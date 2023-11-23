@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
+import { useNavigate } from 'react-router';
 import {
   Box, Typography, Button,
 } from '@mui/material';
@@ -9,16 +10,22 @@ import { useSelector } from 'react-redux';
 import Select from '../../../../components/formik/select/Select';
 
 const openingForm = () => {
+  const navigate = useNavigate();
+
   // Initialize states with default values
-  const [countriesOptions, setCountriesOptionsHome] = useState([]);
-  const [networkOptions, setNetworkOptionsHome] = useState([]);
+  const [countriesOptions, setCountriesOptions] = useState([]);
+  const [networkOptions, setNetworkOptions] = useState([]);
   const opciones = useSelector((state) => state.opciones);
 
   // Function to fetch countries
   const countries = () => {
     const URL = 'https://2pr78ypovg.execute-api.us-east-1.amazonaws.com/items';
     axios.get(URL)
-      .then((response) => setCountriesOptionsHome(response.data))
+      .then((response) => {
+        setCountriesOptions(response.data.sort((a, b) => {
+          if (a.name < b.name) { return -1; } if (a.name > b.name) { return 1; } return 0;
+        }));
+      })
       .catch((error) => console.error(error));
   };
 
@@ -26,7 +33,11 @@ const openingForm = () => {
   const networks = () => {
     const URL = 'https://omb7k0gyvj.execute-api.us-east-1.amazonaws.com/items';
     axios.get(URL)
-      .then((response) => setNetworkOptionsHome(response.data))
+      .then((response) => {
+        setNetworkOptions(response.data.sort((a, b) => {
+          if (a.name < b.name) { return -1; } if (a.name > b.name) { return 1; } return 0;
+        }));
+      })
       .catch((error) => console.error(error));
   };
 
@@ -103,7 +114,16 @@ const openingForm = () => {
             display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around', width: '100%', paddingTop: '15px',
           }}
           >
-            <Button variant="contained" sx={{ width: '150px', background: 'linear-gradient(to bottom right ,gold, #E1A73E)', color: '#224776' }}>go</Button>
+            <Button
+              variant="contained"
+              sx={{ width: '150px', background: 'linear-gradient(to bottom right ,gold, #E1A73E)', color: '#224776' }}
+              onClick={() => {
+                navigate('/desbloqueos');
+              }}
+            >
+              go
+
+            </Button>
           </Box>
         </Form>
       </Formik>

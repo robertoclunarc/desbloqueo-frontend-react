@@ -139,7 +139,7 @@ function Desbloqueos() {
           }}
         />
       </Box>
-      <Container sx={{ marginTop: { xs: '7vh', sm: '5vh' } }}>
+      <Container sx={{ marginTop: { xs: '7vh', sm: '5vh' }, height: 'auto' }}>
         <DesbloqueosForm />
       </Container>
     </Container>

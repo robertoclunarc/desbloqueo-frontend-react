@@ -262,9 +262,11 @@ function DesbloqueosForm() {
       flexDirection: 'column',
       gap: '150px',
       textAlign: 'center',
+      height: 'auto',
     }}
     >
       <Formik
+        style={{ height: 'auto' }}
         initialValues={{
           country: '',
           network: '',
@@ -296,6 +298,7 @@ function DesbloqueosForm() {
               xs: '100%', sm: '100%', md: '80%', lg: '80%', xl: '80%',
             },
             position: 'relative',
+            height: 'auto',
           }}
           >
             {formActivePanel.formActivePanelId === 1 && (

@@ -97,7 +97,7 @@ const iconsWhy = () => {
         {iconsOptions.map(({ logo, title, desc }) => (
           <Grid
             item
-            xs={8}
+            xs={10}
             sm={8}
             md={5}
             lg={2.5}
