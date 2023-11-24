@@ -15,7 +15,6 @@ import {
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import MenuIcon from '@mui/icons-material/Menu';
-import Grid from '@mui/material/Unstable_Grid2';
 import { PATHS } from '../../shared/constants/Constants';
 import logo from '../../shared/image/LogoTransparente.png';
 

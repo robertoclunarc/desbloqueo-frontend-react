@@ -52,7 +52,7 @@ function Inicio() {
           },
         }}
         size="large"
-        onClick={goContactanos}
+        onClick={goDesbloqueosForm}
       />
       <CardMedia
         component="img"
