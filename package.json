@@ -28,6 +28,7 @@
     "react-chartjs-2": "^5.0.1",
     "react-countup": "^6.4.2",
     "react-dom": "^18.2.0",
+    "react-ga4": "^2.1.0",
     "react-hook-form": "^7.43.7",
     "react-numeric-input": "^2.2.3",
     "react-popper": "^2.3.0",
