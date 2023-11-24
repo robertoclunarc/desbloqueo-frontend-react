@@ -130,7 +130,6 @@ const CheckoutForm = ({ next, disabledButton }) => {
   const disabled = (!disabledButton || loading) ? 'disabled' : undefined;
   return (
     <div className="div_payment-cardElement">
-      <Resumen />
       <div className="form_payment-cardElement">
         <label className="form-label">Tarjeta</label>
         <CardElement options={CARD_ELEMENT_OPTIONS} />
@@ -143,7 +142,7 @@ const CheckoutForm = ({ next, disabledButton }) => {
       <Button
         disabled={loading}
         variant="contained"
-        onClick={() => next(4)}
+        onClick={() => next(2)}
       >
         Anterior
       </Button>
@@ -167,15 +166,12 @@ function Pagar({ next, disabledButton }) {
         flexDirection: 'column',
         gap: '20px',
         alignItems: 'center',
-        padding: '5px',
-        backgroundColor: '#2586AF',
+        paddingRight: '15px',
       }}
       >
-        <Typography variant="h6" color="white"> Pagar </Typography>
         <Box sx={{
           display: 'flex',
           gap: '10px',
-          padding: '2px',
           justifyContent: 'center',
           width: { xs: '100%', sm: '80%' },
           flexDirection: 'column',

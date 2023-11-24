@@ -1,23 +1,16 @@
 import React from 'react';
-import { useQuery } from '@apollo/client';
-import {
-  Box, CardMedia, Fab, Typography,
-} from '@mui/material';
+import { Box, CardMedia, Fab } from '@mui/material';
 import { useNavigate } from 'react-router';
-import Carousel from '../../components/carousel/Carousel';
-import FeaturedPhones from './featuredPhones/FeaturedPhones';
-import Servicios from './services/Services';
-import WhyUS from './whyUs/WhyUs';
-import Spinner from '../../components/spinner/Spinner';
-import { getInicio } from '../../shared/api/contentful/queries';
+import Header from './headerSection/header';
+import OpeningSection from './openingSection/openingSection';
+import Counter from './counterStats/Counter';
+import NewWhyUs from './newWhyUs/newWhyUs';
+import IconsWhy from './iconsWhy/iconsWhy';
+import Services from './services/Services';
 import imagenLateral from '../../shared/image/1(6).png';
+import Phone from '../../shared/image/Contáctanos.png';
 
 function Inicio() {
-  const { data, loading } = useQuery(getInicio, { variables: { id: '3jDI1X9rZoL25IpElqhGKZ' } });
-
-  const inicio = data?.inicio;
-  if (loading === false) return <Spinner center />;
-
   const navigate = useNavigate();
 
   const goDesbloqueosForm = () => {
@@ -25,47 +18,61 @@ function Inicio() {
   };
 
   return (
-    <Box sx={{
-      flexDirection: 'column',
-      display: 'flex',
-      justifyContent: 'center',
-      gap: '40px',
-      paddingTop: '50px',
-      alignItems: 'center',
-      width: '100%',
-    }}
+    <Box
+      sx={{
+        flexDirection: 'column',
+        display: 'flex',
+        justifyContent: 'center',
+        gap: '10px',
+        alignItems: 'center',
+        width: '100%',
+        paddingTop: '15px',
+        backgroundColor: '#051650',
+      }}
     >
-
+      <Fab
+        sx={{
+          background: `url(${Phone})`,
+          backgroundSize: 'contain',
+          backgroundRepeat: 'no-repeat',
+          position: 'fixed',
+          top: '150px',
+          right: { xs: '10px', sm: '60px' },
+          height: '199px',
+          width: '99px',
+          borderRadius: '5px',
+          margin: '0px',
+          boxShadow: 'none',
+          backgroundColor: 'none',
+          '&:hover': {
+            backgroundColor: 'none',
+          },
+          display: {
+            xl: 'flex', lg: 'flex', md: 'flex', sm: 'none', xs: 'none',
+          },
+        }}
+        size="large"
+        onClick={goDesbloqueosForm}
+      />
       <CardMedia
         component="img"
         src={imagenLateral}
         sx={{
-          width: '40%', position: 'absolute', left: '-20%', top: '50%',
+          width: '40%',
+          position: 'absolute',
+          left: '-20%',
+          top: '50%',
+          display: {
+            xl: 'flex', lg: 'flex', md: 'flex', sm: 'none', xs: 'none',
+          },
         }}
       />
-      <Box sx={{ display: 'grid' }}>
-        <Typography variant="h4" color="white">
-          ¿Necesitas desbloquear tu celular?
-        </Typography>
-        <Fab
-          variant="extended"
-          md={{
-            justifyContent: 'flex-end', backgroundColor: '#2586AF', border: '8px solid #E1A73E', padding: '20px', marginLeft: '5vw',
-          }}
-          sx={{ backgroundColor: '#2586AF', border: '8px solid #E1A73E', padding: '20px' }}
-          size="large"
-          onClick={goDesbloqueosForm}
-        >
-          <Typography fontWeight="800"> !Libera mi cel ya! </Typography>
-        </Fab>
-      </Box>
-      <Carousel />
-      <FeaturedPhones />
-      <WhyUS whyUsTitle={inicio?.whyUsTitle} whyUsReasons={inicio?.whyUsReasonsCollection.items} />
-      <Servicios
-        servicioTitle={inicio?.servicioTitle}
-        servicios={inicio?.serviciosCollection.items}
-      />
+      <Header />
+      <OpeningSection />
+      <Services />
+      <Counter />
+      <NewWhyUs />
+      <IconsWhy />
     </Box>
   );
 }

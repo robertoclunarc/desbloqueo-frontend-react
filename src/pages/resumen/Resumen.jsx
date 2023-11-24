@@ -10,14 +10,29 @@ function Resumen() {
     <Container sx={{
       display: 'flex',
       flexDirection: 'column',
-      gap: '30px',
-      padding: '3px',
+      justifyContent: 'center',
+      alignItems: 'center',
+      gap: '10px',
+      margin: '.5em',
     }}
     >
-      <Typography variant="h6" color="secondary">
+      <Typography
+        variant="h4"
+        sx={{
+          color: 'white',
+        }}
+      >
         Resumen
       </Typography>
       <ResumenForm />
+      <Typography
+        variant="h6"
+        sx={{
+          color: 'white',
+        }}
+      >
+        If everything here looks correct, please fill out your IMEI and Email to finish the process.
+      </Typography>
     </Container>
   );
 }
