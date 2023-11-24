@@ -13,8 +13,8 @@ import Phone from '../../shared/image/Contáctanos.png';
 function Inicio() {
   const navigate = useNavigate();
 
-  const goContactanos = () => {
-    navigate('/contactanos');
+  const goDesbloqueosForm = () => {
+    navigate('/desbloqueos');
   };
 
   return (

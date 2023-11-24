@@ -15,8 +15,9 @@ import {
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import MenuIcon from '@mui/icons-material/Menu';
+import Grid from '@mui/material/Unstable_Grid2';
 import { PATHS } from '../../shared/constants/Constants';
-import logo from '../../shared/image/2(7).png';
+import logo from '../../shared/image/LogoTransparente.png';
 
 const StyledToolbar = styled(Toolbar)({
   display: 'flex',
@@ -67,7 +68,7 @@ function Navbar() {
           </ListItem>
         ))}
       </List>
-      <Divider> </Divider>
+      <Divider />
       <ListItem>
         <ListItemButton
           sx={{
@@ -83,7 +84,7 @@ function Navbar() {
               handleDrawerToggle();
             }}
           >
-            Desbloquea tu cell ya
+            Desbloquea mi cel ya
           </ListItemText>
         </ListItemButton>
       </ListItem>
@@ -174,7 +175,6 @@ function Navbar() {
           </Button>
         </StyledToolbar>
       </AppBar>
-      <Toolbar> </Toolbar>
       <Box component="nav">
         <Drawer
           variant="temporary"

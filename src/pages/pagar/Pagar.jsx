@@ -64,7 +64,7 @@ async function createOrden(idTerminal, idOperador, imei, idService) {
   return servicios;
 }
 
-const stripePromise = loadStripe(process.env.REACT_APP_key_public);
+const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC);
 // eslint-disable-next-line react/prop-types
 const CheckoutForm = ({ next, disabledButton }) => {
   const dispatch = useDispatch();
@@ -93,7 +93,7 @@ const CheckoutForm = ({ next, disabledButton }) => {
       console.log(paymentMethod);
       const { id } = paymentMethod;
       try {
-        const { data } = await axios.post(env.apiStripeUrl, {
+        const { data } = await axios.post(process.env.REACT_APP_STRIPE_URL, {
           id,
           // eslint-disable-next-line max-len
           amount: price, /* en stripe los montos van expresados en centavos (entero). monto en dolares multiplicado por 100 centavos */
@@ -136,8 +136,8 @@ const CheckoutForm = ({ next, disabledButton }) => {
       </div>
       <Button disabled={disabled} onClick={handleSubmit} variant="contained">
         {loading ? (
-          <div>{ message }</div>
-        ) : 'PAGAR' }
+          <div>{message}</div>
+        ) : 'PAGAR'}
       </Button>
       <Button
         disabled={loading}
@@ -148,7 +148,7 @@ const CheckoutForm = ({ next, disabledButton }) => {
       </Button>
       <Typography variant="subtitle1" component="div">
         {' '}
-        { msnSolicitud?.status }
+        {msnSolicitud?.status}
       </Typography>
     </div>
   );

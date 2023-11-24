@@ -8,7 +8,6 @@ import {
   Typography,
 } from '@mui/material';
 import React from 'react';
-import PhoneInTalkIcon from '@mui/icons-material/PhoneInTalk';
 import EmailIcon from '@mui/icons-material/Email';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import FacebookIcon from '@mui/icons-material/Facebook';
@@ -30,30 +29,24 @@ function Contactanos() {
         ¡Contactanos!
       </Typography>
       <Grid container spacing={2} justifyContent="space-between" sx={{ width: '100%' }}>
-        <Grid item xs={12} md={2}>
-          <Fab variant="extended" sx={{ backgroundColor: '#2586AF', color: 'white' }}>
-            <PhoneInTalkIcon />
-            <Typography> (561) 207-8335</Typography>
-          </Fab>
-        </Grid>
         <Grid item xs={12} md={3}>
           <Fab variant="extended" sx={{ backgroundColor: '#2586AF', color: 'white' }}>
             <EmailIcon />
-            <Typography> servicios@desbloqueatucel.com</Typography>
+            <Typography> servicios@desbloqueamicel.com</Typography>
           </Fab>
         </Grid>
         <Grid item xs={12} md={2}>
           <Fab variant="extended" href="https://instagram.com/desbloqueamicel?igshid=MmIzYWVlNDQ5Yg==" sx={{ backgroundColor: '#2586AF', color: 'white' }}>
             <InstagramIcon />
             <Typography>
-              desbloqueatuceloficial
+              desbloqueamicel
             </Typography>
           </Fab>
         </Grid>
         <Grid item xs={12} md={2}>
           <Fab variant="extended" href="https://www.facebook.com/DesbloqueaMiCel?mibextid=LQQJ4d" sx={{ backgroundColor: '#2586AF', color: 'white' }}>
             <FacebookIcon />
-            <Typography>Desbloquea tu Cel</Typography>
+            <Typography>Desbloquea mi Cel</Typography>
           </Fab>
         </Grid>
       </Grid>

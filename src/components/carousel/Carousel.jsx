@@ -22,7 +22,7 @@ function Carousel() {
     <div className="slider">
       <div className={`slider__container ${classImg[indexClass]}`}>
         {phones?.map((phone) => (
-          <img className="slider__imgs" key={phone.id} src={phone.image} alt="imagenes" />
+          <Box component="img" className="slider__imgs" key={phone.id} src={phone.image} alt="imagenes" />
         ))}
       </div>
       <div className="puntitos-container">
