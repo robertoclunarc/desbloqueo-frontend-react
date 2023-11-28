@@ -61,7 +61,7 @@ const iconsWhy = () => {
   return (
 
     <Box sx={{
-      width: '100%', paddingTop: '7em', height: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'start',
+      width: '90%', paddingTop: '7em', height: 'auto', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'start',
     }}
     >
       <Typography
@@ -72,7 +72,7 @@ const iconsWhy = () => {
             xl: '64px', lg: '64px', md: '54px', sm: '36px', xs: '30px',
           },
           paddingBottom: '.5em',
-          borderBottom: '1px solid gold',
+          borderBottom: '1px solid #1F9CC8',
           textAlign: 'center',
         }}
       >
@@ -114,7 +114,7 @@ const iconsWhy = () => {
               alignItems: 'center',
               justifyContent: 'start',
               width: '100%',
-              height: '10vh',
+              height: 'auto',
               flexDirection: {
                 xl: 'row', lg: 'row', md: 'row', sm: 'row', xs: 'column',
               },
@@ -133,7 +133,7 @@ const iconsWhy = () => {
               <Typography sx={{
                 color: 'white',
                 fontSize: {
-                  xl: '44px', lg: '34px', md: '40px', sm: '40px', xs: '34px',
+                  xl: '44px', lg: '30px', md: '40px', sm: '40px', xs: '34px',
                 },
                 marginLeft: {
                   xl: '.5em', lg: '.5em', md: '.5em', sm: '.5em', xs: '0em',

@@ -54,7 +54,7 @@ function Servicios() {
           },
           width: '100%',
           paddingBottom: '.5em',
-          borderBottom: '1px solid #FFD700',
+          borderBottom: '1px solid #1F9CC8',
           textAlign: 'center',
         }}
       >

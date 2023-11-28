@@ -8,6 +8,7 @@ import axios from 'axios';
 import Card from '../../components/cards/Card';
 import { CONSTANTS } from '../../shared/constants/Constants';
 import Pagination from '../../components/pagination/Pagination';
+import Navbar from '../../components/navbar/Navbar';
 
 function Telefonos() {
   const [getDevice, setGetDevice] = useState();
@@ -53,6 +54,7 @@ function Telefonos() {
   }
   return (
     <Container sx={{ padding: '20px', textAlign: 'center' }}>
+      <Navbar />
       <Typography variant="h4" color="white" fontWeight="700" marginTop="60px">Desbloquea mi cel</Typography>
       <Typography variant="h5" color="white">¡Consigue el que necesitas!</Typography>
       <Box sx={{

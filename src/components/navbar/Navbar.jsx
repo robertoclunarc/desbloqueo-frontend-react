@@ -34,17 +34,16 @@ function Navbar() {
   const navigate = useNavigate();
 
   const drawer = (
-    <Box sx={{ backgroundColor: '#0A2472', height: '100vh' }}>
+    <Box sx={{ backgroundColor: '#224776', height: '100vh' }}>
       <Toolbar>
         {' '}
         <Box
           component="img"
           src={logo}
           sx={{
-            paddingRight: '35px',
-            paddingBottom: '25px',
-            width: '100%',
-            height: '70px',
+            margin: 'auto',
+            width: '80%',
+            height: '100px',
             objectFit: 'cover',
           }}
         />
@@ -130,7 +129,8 @@ function Navbar() {
               component="img"
               src={logo}
               sx={{
-                width: '100%',
+                paddingTop: '2em',
+                width: '70%',
                 height: '100%',
                 objectFit: 'cover',
               }}

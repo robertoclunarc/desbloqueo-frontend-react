@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router';
 import DesbloqueosForm from './form/DesbloqueosForm';
 import { ReactComponent as Check } from '../../shared/image/checked.svg';
 import mujer from '../../shared/image/1(6).png';
+import Navbar from '../../components/navbar/Navbar';
 
 const checkedOptions = [
   {
@@ -42,8 +43,10 @@ function Desbloqueos() {
       paddingBottom: '6vh',
       alignItems: 'center',
       justifyContent: 'center',
+      backgroundColor: '#0F5986',
     }}
     >
+      <Navbar />
       <Box sx={{
         display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', width: '85%',
       }}

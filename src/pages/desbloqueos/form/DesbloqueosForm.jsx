@@ -308,7 +308,7 @@ function DesbloqueosForm() {
                 alignItems: 'center',
                 paddingBottom: '30px',
                 borderRadius: '35px',
-                backgroundColor: '#2c5b97',
+                backgroundColor: '#224776',
                 height: { xs: '500px', sm: 'auto' },
                 border: '2px solid white',
                 justifyContent: 'end',
@@ -328,7 +328,7 @@ function DesbloqueosForm() {
             steps.map((label) => (
               <Step key={label}>
                 <StepLabel StepIconComponent={ColorlibStepIcon}>
-                  <Typography sx={{ fontSize: '12px' }}>
+                  <Typography sx={{ fontSize: '12px', color: 'white' }}>
                     {
                     label
                   }
@@ -412,7 +412,7 @@ function DesbloqueosForm() {
             steps.map((label) => (
               <Step key={label}>
                 <StepLabel StepIconComponent={ColorlibStepIcon}>
-                  <Typography sx={{ fontSize: '12px' }}>
+                  <Typography sx={{ fontSize: '12px', color: 'white' }}>
                     {
                     label
                   }
@@ -483,7 +483,7 @@ function DesbloqueosForm() {
             steps.map((label) => (
               <Step key={label}>
                 <StepLabel StepIconComponent={ColorlibStepIcon}>
-                  <Typography sx={{ fontSize: '12px' }}>
+                  <Typography sx={{ fontSize: '12px', color: 'white' }}>
                     {
                     label
                   }

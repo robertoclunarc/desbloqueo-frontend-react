@@ -14,6 +14,7 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import ContactForm from './contactForm/ContactForm';
 import imagenFondo from '../../shared/image/15(2).png';
 import imagenFondoDerecho from '../../shared/image/MicrosoftTeams-image.png';
+import Navbar from '../../components/navbar/Navbar';
 
 function Contactanos() {
   return (
@@ -25,6 +26,7 @@ function Contactanos() {
       paddingTop: '50px',
     }}
     >
+      <Navbar />
       <Typography variant="h4" color="white" textAlign="center" fontWeight="800">
         ¡Contactanos!
       </Typography>
