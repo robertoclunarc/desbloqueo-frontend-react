@@ -10,11 +10,11 @@ const header = () => (
     alignItems: 'center',
     justifyContent: 'start',
     width: {
-      xl: '60vw', lg: '70vw', md: '77vw', sm: '80vw', xs: '90vw',
+      xl: '70vw', lg: '70vw', md: '77vw', sm: '80vw', xs: '90vw',
     },
     height: 'auto',
     padding: '60px 0px 0px 0px',
-    borderBottom: '1.5px solid grey',
+    borderBottom: '1.5px solid #1F9CC8',
     marginBottom: {
       xl: '35px', lg: '35px', md: '35px', sm: '15px', xs: '0px',
     },

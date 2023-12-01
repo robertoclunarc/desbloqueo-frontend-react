@@ -61,7 +61,7 @@ const openingSection = () => {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'start',
-            background: 'linear-gradient(to bottom right ,#091a30, blue)',
+            background: 'linear-gradient(to bottom right ,#1F9CC8, #224776)',
             borderRadius: '4%',
             width: {
               xl: '500px', lg: '500px', md: '500px', sm: '500px', xs: '98%',

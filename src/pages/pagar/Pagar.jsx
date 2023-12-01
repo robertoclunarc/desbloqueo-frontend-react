@@ -22,6 +22,7 @@ import Resumen from '../resumen/Resumen';
 import postCreateOrdenDrSim from '../../api/drsimcreateordenes';
 import { setOpcionesGlobal } from '../../store/slices/opciones.slice';
 import putDynamobdOrden from '../../api/putDynamodbOrden';
+import Navbar from '../../components/navbar/Navbar';
 
 const env = environments;
 
@@ -161,6 +162,7 @@ function Pagar({ next, disabledButton }) {
       width: { xs: '100%', sm: '80%' },
     }}
     >
+      <Navbar />
       <Box sx={{
         display: 'flex',
         flexDirection: 'column',

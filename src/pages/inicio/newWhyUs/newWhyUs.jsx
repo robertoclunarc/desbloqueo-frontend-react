@@ -45,7 +45,7 @@ const newWhyUs = () => {
             xl: '54px', lg: '54px', md: '32px', sm: '36px', xs: '30px',
           },
           paddingBottom: '.5em',
-          borderBottom: '1px solid gold',
+          borderBottom: '1px solid #1F9CC8',
         }}
       >
         {' '}

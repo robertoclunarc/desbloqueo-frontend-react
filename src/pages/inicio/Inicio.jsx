@@ -1,6 +1,5 @@
 import React from 'react';
-import { Box, CardMedia, Fab } from '@mui/material';
-import { useNavigate } from 'react-router';
+import { Box, CardMedia } from '@mui/material';
 import Header from './headerSection/header';
 import OpeningSection from './openingSection/openingSection';
 import Counter from './counterStats/Counter';
@@ -8,15 +7,9 @@ import NewWhyUs from './newWhyUs/newWhyUs';
 import IconsWhy from './iconsWhy/iconsWhy';
 import Services from './services/Services';
 import imagenLateral from '../../shared/image/1(6).png';
-import Phone from '../../shared/image/Contáctanos.png';
+import Navbar from '../../components/navbar/Navbar';
 
 function Inicio() {
-  const navigate = useNavigate();
-
-  const goDesbloqueosForm = () => {
-    navigate('/desbloqueos');
-  };
-
   return (
     <Box
       sx={{
@@ -26,34 +19,11 @@ function Inicio() {
         gap: '10px',
         alignItems: 'center',
         width: '100%',
-        paddingTop: '15px',
-        backgroundColor: '#051650',
+        paddingTop: '5em',
+        backgroundColor: '#0F5986',
       }}
     >
-      <Fab
-        sx={{
-          background: `url(${Phone})`,
-          backgroundSize: 'contain',
-          backgroundRepeat: 'no-repeat',
-          position: 'fixed',
-          top: '150px',
-          right: { xs: '10px', sm: '60px' },
-          height: '199px',
-          width: '99px',
-          borderRadius: '5px',
-          margin: '0px',
-          boxShadow: 'none',
-          backgroundColor: 'none',
-          '&:hover': {
-            backgroundColor: 'none',
-          },
-          display: {
-            xl: 'flex', lg: 'flex', md: 'flex', sm: 'none', xs: 'none',
-          },
-        }}
-        size="large"
-        onClick={goDesbloqueosForm}
-      />
+      <Navbar />
       <CardMedia
         component="img"
         src={imagenLateral}
@@ -63,7 +33,11 @@ function Inicio() {
           left: '-20%',
           top: '50%',
           display: {
-            xl: 'flex', lg: 'flex', md: 'flex', sm: 'none', xs: 'none',
+            xl: 'flex',
+            lg: 'flex',
+            md: 'flex',
+            sm: 'none',
+            xs: 'none',
           },
         }}
       />
