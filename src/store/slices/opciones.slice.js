@@ -15,9 +15,10 @@ export const opcionesSlice = createSlice({
         state[index] = action.payload;
       }
     },
+    setOpcionesStore: (state, action) => action.payload,
   },
 });
 
 export const { setOpcionesGlobal } = opcionesSlice.actions;
-
+export const { setOpcionesStore } = opcionesSlice.actions;
 export default opcionesSlice.reducer;

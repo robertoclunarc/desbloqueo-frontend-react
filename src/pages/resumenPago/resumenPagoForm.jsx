@@ -1,18 +1,19 @@
 /* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import { Box, Typography } from '@mui/material';
-import { useSelector/* useDispatch */ } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
-// import { setOpcionesStore } from '../../../store/slices/opciones.slice';
+import { setOpcionesStore } from '../../store/slices/opciones.slice';
 
-function ResumenForm() {
+function ResumenPagoForm() {
   const { status } = useParams();
   // eslint-disable-next-line no-console
   console.log(status);
-  /* const datosResumen = localStorage.getItem('datosResumen');
+  const datosResumen = localStorage.getItem('datosResumen');
   const dispatch = useDispatch();
-  dispatch(setOpcionesStore(datosResumen)); */
-  const opciones = useSelector((state) => state.opciones);
+  dispatch(setOpcionesStore(datosResumen));
+  const opcionesString = useSelector((state) => state.opciones);
+  const opciones = JSON.parse(opcionesString);
   // eslint-disable-next-line no-console
   console.log(opciones);
   localStorage.removeItem('datosResumen');
@@ -71,14 +72,6 @@ function ResumenForm() {
         <span>  </span>
         <span style={{ fontWeight: 'bold' }}>
           {` ${opciones[6]?.timeMin} ${opciones[9]?.type} - ${opciones[7]?.timeMax} ${opciones[9]?.type}`}
-          {/* {opciones[6]?.timeMin}
-          hr(s)
-          {' '}
-          -
-          {' '}
-          {opciones[7]?.timeMax}
-          hr(s)
-          , */}
         </span>
       </Typography>
       <Typography
@@ -95,7 +88,7 @@ function ResumenForm() {
       <Typography
         sx={{ color: 'black', fontSize: '20px' }}
       >
-        Monto a Pagar:
+        Monto Pagado:
         <span>  </span>
         <span style={{ fontWeight: 'bold' }}>
           $
@@ -106,4 +99,4 @@ function ResumenForm() {
   );
 }
 
-export default ResumenForm;
+export default ResumenPagoForm;

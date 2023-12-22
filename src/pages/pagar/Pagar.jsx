@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable no-unused-vars */
 /* eslint-disable import/no-unresolved */
@@ -5,46 +6,19 @@
 /* eslint-disable no-console */
 /* eslint-disable react/button-has-type */
 /* eslint-disable react/function-component-definition */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { loadStripe } from '@stripe/stripe-js';
-import {
-  Elements, CardElement, useStripe, useElements,
-} from '@stripe/react-stripe-js';
-import {
-  Box,
-  Container, Typography, Button,
-} from '@mui/material';
+import { Typography, Button, Hidden } from '@mui/material';
 import axios from 'axios';
 import { environments } from '../../environments/environment';
 import '../../assets/formPayment.css';
-import Resumen from '../resumen/Resumen';
 import postCreateOrdenDrSim from '../../api/drsimcreateordenes';
 import { setOpcionesGlobal } from '../../store/slices/opciones.slice';
 import putDynamobdOrden from '../../api/putDynamodbOrden';
-import Navbar from '../../components/navbar/Navbar';
+import imgStripe from '../../shared/image/stripe-for-wordpress.png';
 
 const env = environments;
-
-const CARD_ELEMENT_OPTIONS = {
-  style: {
-    base: {
-      color: '#32325d',
-      fontFamily: 'Arial, sans-serif',
-      fontSmoothing: 'antialiased',
-      fontSize: '16px',
-      /* border_color: '#a67106',
-      background: '#e4e3e1', */
-      '::placeholder': {
-        color: '#aab7c4',
-      },
-    },
-    invalid: {
-      color: 'red',
-      iconColor: 'red',
-    },
-  },
-};
+const urlApiStripe = `${env.apiStripeUrl}/create-checkout-session`;
 
 function dosDecimales(n) {
   const t = n.toString();
@@ -65,81 +39,58 @@ async function createOrden(idTerminal, idOperador, imei, idService) {
   return servicios;
 }
 
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_PUBLIC);
 // eslint-disable-next-line react/prop-types
 const CheckoutForm = ({ next, disabledButton }) => {
   const dispatch = useDispatch();
   const [msnSolicitud, setMsnSolicitud] = useState('');
   const opcion = useSelector((state) => state.opciones);
+  console.log(typeof opcion);
   const idTerminal = opcion[3].idReg;
   const idOperador = opcion[1].idReg;
   const { imei } = opcion[9] !== undefined ? opcion[9] : '';
   const { email } = opcion[10] !== undefined ? opcion[10] : '';
   const idService = opcion[4].idReg;
-  let message = 'CARGANDO...';
+  const prdName = opcion[3].Modelo !== undefined ? opcion[3].Modelo : 'Modelo no especificado';
+  const dscService = opcion[4].Servicio !== undefined ? opcion[4].Servicio : 'Servicio sin especificacion';
+  const displayPrice = `${opcion[5]?.price}`;
   let price = opcion[5]?.price;
   price = dosDecimales(price) * 100;
   price = parseInt(price.toString(), 10);
-  const stripe = useStripe();
-  const element = useElements();
   const [loading, setLoading] = useState(false);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
-      type: 'card',
-      card: element.getElement(CardElement),
+    console.log(urlApiStripe);
+    const { data } = await axios.post(urlApiStripe, {
+      urlDomain: `${window.location.origin}/resumenPago`,
+      id_terminal: idTerminal,
+      id_operador: idOperador,
+      id_service: idService,
     });
-    setLoading(true);
-    if (!error) {
-      console.log(paymentMethod);
-      const { id } = paymentMethod;
-      try {
-        const { data } = await axios.post(process.env.REACT_APP_STRIPE_URL, {
-          id,
-          // eslint-disable-next-line max-len
-          amount: price, /* en stripe los montos van expresados en centavos (entero). monto en dolares multiplicado por 100 centavos */
-        });
-        // console.log(data);
-        if (data.message === 'Succesfull Payment') {
-          const ticket = await createOrden(idTerminal, idOperador, imei, idService);
-          if (ticket?.res?.id_ticket) {
-            const timestamp = Date.now();
-            const fecha = new Date(timestamp);
-            const hoy = fecha.toISOString();
-            putDynamobdOrden(timestamp, `${ticket?.res.id_ticket}`, hoy, email, `${imei}`, id, `${price}`, 'PENDIENTE');
-            setMsnSolicitud(ticket);
-            dispatch(setOpcionesGlobal({ id: '12', id_ticket: `${ticket?.res.id_ticket}` }));
-            next(6);
-          } else {
-            setMsnSolicitud('Solicitid: NO Procesada!');
-            if (ticket?.res?.id_ticket === undefined) {
-              setLoading(true);
-            }
-          }
-          // setLoading(true);
-          console.log(ticket);
-        }
-        element.getElement(CardElement).clear();
-      } catch (er) {
-        console.log(er);
-        message = er?.message;
-      }
-    } else {
-      console.log(error);
-    }
+    // Redirige a la URL de Stripe Checkout
+    window.location.replace(data.sessionId);
   };
-  const disabled = (!disabledButton || loading) ? 'disabled' : undefined;
   return (
     <div className="div_payment-cardElement">
-      <div className="form_payment-cardElement">
-        <label className="form-label">Tarjeta</label>
-        <CardElement options={CARD_ELEMENT_OPTIONS} />
-      </div>
-      <Button disabled={disabled} onClick={handleSubmit} variant="contained">
-        {loading ? (
-          <div>{message}</div>
-        ) : 'PAGAR'}
-      </Button>
+      <section>
+        <div className="product">
+          <img
+            className="imgStripe"
+            src={imgStripe}
+            alt="Stripe"
+          />
+          <div className="descriptionStripe">
+            <h3 className="h3Stripe">Monto a Pagar</h3>
+            <h5 className="h5Stripe">
+              $
+              {displayPrice}
+            </h5>
+          </div>
+        </div>
+        <button onClick={handleSubmit} className="buttonStripe" type="submit">
+          Pagar
+        </button>
+      </section>
       <Button
         disabled={loading}
         variant="contained"
@@ -155,38 +106,39 @@ const CheckoutForm = ({ next, disabledButton }) => {
   );
 };
 
-// eslint-disable-next-line react/prop-types
+const Message = ({ message }) => (
+  <section>
+    <p>{message}</p>
+  </section>
+);
+
 function Pagar({ next, disabledButton }) {
-  return (
-    <Container sx={{
-      width: { xs: '100%', sm: '80%' },
-    }}
-    >
-      <Navbar />
-      <Box sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '20px',
-        alignItems: 'center',
-        paddingRight: '15px',
-      }}
-      >
-        <Box sx={{
-          display: 'flex',
-          gap: '10px',
-          justifyContent: 'center',
-          width: { xs: '100%', sm: '80%' },
-          flexDirection: 'column',
-        }}
-        >
-          <Elements stripe={stripePromise}>
-            <CheckoutForm next={next} disabledButton={disabledButton} />
-          </Elements>
-        </Box>
+  const [message, setMessage] = useState('');
+  const opcion = useSelector((state) => state.opciones);
+  // Convierte tu estado a formato de cadena (puede ser JSON en este caso)
+  const estadoString = JSON.stringify(opcion);
+  // Guarda el estado en el localStorage
+  localStorage.setItem('datosResumen', estadoString);
 
-      </Box>
+  useEffect(() => {
+    // Check to see if this is a redirect back from Checkout
+    const query = new URLSearchParams(window.location.search);
 
-    </Container>
+    if (query.get('success')) {
+      setMessage('Order placed! You will receive an email confirmation');
+    }
+
+    if (query.get('canceled')) {
+      setMessage(
+        'Order canceled -- continue to shop around and checkout when you are ready.',
+      );
+    }
+  }, []);
+
+  return message ? (
+    <Message message={message} />
+  ) : (
+    <CheckoutForm />
   );
 }
 
