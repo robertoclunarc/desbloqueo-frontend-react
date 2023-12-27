@@ -1,22 +1,23 @@
 /* eslint-disable no-console */
 /* eslint-disable react/forbid-prop-types */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
-import { setOpcionesStore, setOpcionesGlobal } from '../../store/slices/opciones.slice';
+import { setOpcionesStore/* , setOpcionesGlobal */ } from '../../store/slices/opciones.slice';
 import postCreateOrdenDrSim from '../../api/drsimcreateordenes';
 import putDynamobdOrden from '../../api/putDynamodbOrden';
 
 async function createOrden(idTerminal, idOperador, imei, idService) {
   let servicios = [];
-  console.log(`term:${idTerminal}, oper:${idOperador}, imei:${imei}, serv:${idService}`);
+  // console.log(`term:${idTerminal}, oper:${idOperador}, imei:${imei}, serv:${idService}`);
   await postCreateOrdenDrSim(idTerminal, idOperador, imei, idService)
     .then((respuesta) => {
       servicios = respuesta;
     })
     .catch((error) => {
       console.log(error);
+      throw error;
     });
   return servicios;
 }
@@ -27,39 +28,46 @@ async function ResumenPagoForm() {
   const dispatch = useDispatch();
   const [msnSolicitud, setMsnSolicitud] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [resTicket, setResTicket] = useState(null);
   dispatch(setOpcionesStore(datosResumen));
   const opcionesString = useSelector((state) => state.opciones);
   const opciones = JSON.parse(opcionesString);
-  if (status === 'success') {
-    const price = opciones[5]?.price;
-    const idTerminal = opciones[3].idReg;
-    const idOperador = opciones[1].idReg;
-    const { imei } = opciones[10] !== undefined ? opciones[10] : '';
-    const { email } = opciones[11] !== undefined ? opciones[11] : '';
-    const idService = opciones[4].idReg;
-    await createOrden(idTerminal, idOperador, imei, idService)
-      .then((ticket) => {
-        console.log(ticket);
-        if (ticket?.res?.id_ticket) {
-          const timestamp = Date.now();
-          const fecha = new Date(timestamp);
-          const hoy = fecha.toISOString();
-          putDynamobdOrden(timestamp, `${ticket?.res.id_ticket}`, hoy, email, `${imei}`, idService, `${price}`, 'PENDIENTE');
-          setMsnSolicitud(ticket);
-          dispatch(setOpcionesGlobal({ id: '12', id_ticket: `${ticket?.res.id_ticket}` }));
-        } else {
-          setMsnSolicitud('Solicitud: NO Procesada!');
-          if (ticket?.res?.id_ticket === undefined) {
+  useEffect(() => {
+    const fetchData = async () => {
+      if (status === 'success') {
+        const price = opciones[5]?.price;
+        const idTerminal = opciones[3]?.idReg;
+        const idOperador = opciones[1]?.idReg;
+        const { imei } = opciones[10] || '';
+        const { email } = opciones[11] || '';
+        const idService = opciones[4]?.idReg;
+        try {
+          const ticket = await createOrden(idTerminal, idOperador, imei, idService);
+          if (ticket?.res?.id_ticket) {
+            const timestamp = Date.now();
+            const fecha = new Date(timestamp);
+            const hoy = fecha.toISOString();
+            putDynamobdOrden(timestamp, `${ticket?.res.id_ticket}`, hoy, email, `${imei}`, idService, `${price}`, 'PENDIENTE');
+            setResTicket(ticket);
+            setMsnSolicitud(`Solicitud procesada, Nro. Ticket: ${ticket.res.id_ticket}`);
+            setLoading(false);
+          } else {
+            setMsnSolicitud('Solicitud: NO Procesada!');
             setLoading(true);
           }
+          console.log(msnSolicitud);
+          console.log(loading);
+        } catch (error) {
+          console.error(error);
+          setMsnSolicitud('Hubo un error al procesar la solicitud.');
+          setLoading(true);
         }
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-    console.log(msnSolicitud);
-    console.log(loading);
-  }
+      }
+    };
+
+    fetchData();
+  }, [status, opciones]);
+
   return (
     <Box
       sx={{
@@ -143,9 +151,11 @@ async function ResumenPagoForm() {
       >
         Nro. Ticket:
         <span>  </span>
-        <span style={{ fontWeight: 'bold' }}>
-          id
-        </span>
+        {resTicket && (
+          <span style={{ fontWeight: 'bold' }}>
+            dgfdsgfdgfdsg
+          </span>
+        )}
       </Typography>
     </Box>
   );
