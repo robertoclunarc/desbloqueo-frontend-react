@@ -39,7 +39,7 @@ function ResumenPago() {
             color: 'white',
           }}
         >
-          Pronto estara recibiendo respuesta al correo que suministro. Gracias!
+          Pronto estara recibiendo respuesta al correo que usted suministro. Gracias!
         </Typography>
       </Container>
     </>
