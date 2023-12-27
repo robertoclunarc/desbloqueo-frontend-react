@@ -14,7 +14,6 @@ async function createOrden(idTerminal, idOperador, imei, idService) {
   await postCreateOrdenDrSim(idTerminal, idOperador, imei, idService)
     .then((respuesta) => {
       servicios = respuesta;
-      console.log(respuesta);
     })
     .catch((error) => {
       console.log(error);
@@ -26,7 +25,7 @@ async function ResumenPagoForm() {
   const { status } = useParams();
   const datosResumen = localStorage.getItem('datosResumen');
   const dispatch = useDispatch();
-  const [msnSolicitud, setMsnSolicitud] = useState('');
+  const [msnSolicitud, setMsnSolicitud] = useState(null);
   const [loading, setLoading] = useState(false);
   dispatch(setOpcionesStore(datosResumen));
   const opcionesString = useSelector((state) => state.opciones);
@@ -38,25 +37,29 @@ async function ResumenPagoForm() {
     const { imei } = opciones[10] !== undefined ? opciones[10] : '';
     const { email } = opciones[11] !== undefined ? opciones[11] : '';
     const idService = opciones[4].idReg;
-    const ticket = await createOrden(idTerminal, idOperador, imei, idService);
-    if (ticket?.res?.id_ticket) {
-      const timestamp = Date.now();
-      const fecha = new Date(timestamp);
-      const hoy = fecha.toISOString();
-      putDynamobdOrden(timestamp, `${ticket?.res.id_ticket}`, hoy, email, `${imei}`, idService, `${price}`, 'PENDIENTE');
-      setMsnSolicitud(ticket);
-      dispatch(setOpcionesGlobal({ id: '12', id_ticket: `${ticket?.res.id_ticket}` }));
-    } else {
-      setMsnSolicitud('Solicitud: NO Procesada!');
-      if (ticket?.res?.id_ticket === undefined) {
-        setLoading(true);
-      }
-    }
+    await createOrden(idTerminal, idOperador, imei, idService)
+      .then((ticket) => {
+        console.log(ticket);
+        if (ticket?.res?.id_ticket) {
+          const timestamp = Date.now();
+          const fecha = new Date(timestamp);
+          const hoy = fecha.toISOString();
+          putDynamobdOrden(timestamp, `${ticket?.res.id_ticket}`, hoy, email, `${imei}`, idService, `${price}`, 'PENDIENTE');
+          setMsnSolicitud(ticket);
+          dispatch(setOpcionesGlobal({ id: '12', id_ticket: `${ticket?.res.id_ticket}` }));
+        } else {
+          setMsnSolicitud('Solicitud: NO Procesada!');
+          if (ticket?.res?.id_ticket === undefined) {
+            setLoading(true);
+          }
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
     console.log(msnSolicitud);
     console.log(loading);
-    console.log(ticket);
   }
-
   return (
     <Box
       sx={{
@@ -141,8 +144,7 @@ async function ResumenPagoForm() {
         Nro. Ticket:
         <span>  </span>
         <span style={{ fontWeight: 'bold' }}>
-          $
-          {msnSolicitud?.status}
+          id
         </span>
       </Typography>
     </Box>
