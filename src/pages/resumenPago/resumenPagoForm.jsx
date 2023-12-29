@@ -22,50 +22,49 @@ async function createOrden(idTerminal, idOperador, imei, idService) {
   return servicios;
 }
 
-async function ResumenPagoForm() {
+async function resumen(opciones) {
+  const price = opciones[5]?.price;
+  const idTerminal = opciones[3]?.idReg;
+  const idOperador = opciones[1]?.idReg;
+  const { imei } = opciones[10] || '';
+  const { email } = opciones[11] || '';
+  const idService = opciones[4]?.idReg;
+  try {
+    const respTicket = await createOrden(idTerminal, idOperador, imei, idService);
+    if (respTicket?.res?.id_ticket) {
+      const timestamp = Date.now();
+      const fecha = new Date(timestamp);
+      const hoy = fecha.toISOString();
+      putDynamobdOrden(timestamp, `${respTicket?.res.id_ticket}`, hoy, email, `${imei}`, idService, `${price}`, 'PENDIENTE');
+      const ticket = {
+        message: `Solicitud Procesada con el Nro. de Ticket: ${respTicket?.res.id_ticket}`,
+        idticket: respTicket?.res.id_ticket,
+      };
+    } else {
+      const ticket = {
+        message: `Solicitud Procesada con el Nro. de Ticket: ${respTicket?.res.id_ticket}`,
+        idticket: respTicket?.res.id_ticket,
+      };
+    }
+  } catch (error) {
+    console.error(error);
+  }
+
+  return ticket;
+}
+
+function ResumenPagoForm() {
   const { status } = useParams();
   const datosResumen = localStorage.getItem('datosResumen');
   const dispatch = useDispatch();
-  const [msnSolicitud, setMsnSolicitud] = useState(null);
-  const [loading, setLoading] = useState(false);
   const [resTicket, setResTicket] = useState(null);
   dispatch(setOpcionesStore(datosResumen));
   const opcionesString = useSelector((state) => state.opciones);
   const opciones = JSON.parse(opcionesString);
   useEffect(() => {
-    const fetchData = async () => {
-      if (status === 'success') {
-        const price = opciones[5]?.price;
-        const idTerminal = opciones[3]?.idReg;
-        const idOperador = opciones[1]?.idReg;
-        const { imei } = opciones[10] || '';
-        const { email } = opciones[11] || '';
-        const idService = opciones[4]?.idReg;
-        try {
-          const ticket = await createOrden(idTerminal, idOperador, imei, idService);
-          if (ticket?.res?.id_ticket) {
-            const timestamp = Date.now();
-            const fecha = new Date(timestamp);
-            const hoy = fecha.toISOString();
-            putDynamobdOrden(timestamp, `${ticket?.res.id_ticket}`, hoy, email, `${imei}`, idService, `${price}`, 'PENDIENTE');
-            setResTicket(ticket);
-            setMsnSolicitud(`Solicitud procesada, Nro. Ticket: ${ticket.res.id_ticket}`);
-            setLoading(false);
-          } else {
-            setMsnSolicitud('Solicitud: NO Procesada!');
-            setLoading(true);
-          }
-          console.log(msnSolicitud);
-          console.log(loading);
-        } catch (error) {
-          console.error(error);
-          setMsnSolicitud('Hubo un error al procesar la solicitud.');
-          setLoading(true);
-        }
-      }
-    };
-
-    fetchData();
+    if (status === 'success') {
+      const ticket = resumen(status, opciones);
+    }
   }, [status, opciones]);
 
   return (
