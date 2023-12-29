@@ -22,32 +22,37 @@ async function createOrden(idTerminal, idOperador, imei, idService) {
   return servicios;
 }
 
-async function resumen(opciones) {
+async function crearTicket(opciones) {
   const price = opciones[5]?.price;
   const idTerminal = opciones[3]?.idReg;
   const idOperador = opciones[1]?.idReg;
   const { imei } = opciones[10] || '';
   const { email } = opciones[11] || '';
   const idService = opciones[4]?.idReg;
+  let ticket = {};
   try {
     const respTicket = await createOrden(idTerminal, idOperador, imei, idService);
     if (respTicket?.res?.id_ticket) {
+      ticket = {
+        message: `Solicitud Procesada con el Nro. de Ticket: ${respTicket?.res.id_ticket}`,
+        id: respTicket?.res.id_ticket,
+      };
       const timestamp = Date.now();
       const fecha = new Date(timestamp);
       const hoy = fecha.toISOString();
-      putDynamobdOrden(timestamp, `${respTicket?.res.id_ticket}`, hoy, email, `${imei}`, idService, `${price}`, 'PENDIENTE');
-      const ticket = {
-        message: `Solicitud Procesada con el Nro. de Ticket: ${respTicket?.res.id_ticket}`,
-        idticket: respTicket?.res.id_ticket,
-      };
+      putDynamobdOrden(timestamp, `${ticket.id}`, hoy, email, `${imei}`, idService, `${price}`, 'PENDIENTE');
     } else {
-      const ticket = {
-        message: `Solicitud Procesada con el Nro. de Ticket: ${respTicket?.res.id_ticket}`,
-        idticket: respTicket?.res.id_ticket,
+      ticket = {
+        message: 'Solicitud NO Procesada',
+        id: null,
       };
     }
   } catch (error) {
     console.error(error);
+    ticket = {
+      message: 'Lo sentimos, hubo un problema para crear la orden',
+      id: null,
+    };
   }
 
   return ticket;
@@ -63,7 +68,10 @@ function ResumenPagoForm() {
   const opciones = JSON.parse(opcionesString);
   useEffect(() => {
     if (status === 'success') {
-      const ticket = resumen(status, opciones);
+      const ticket = crearTicket(status, opciones);
+      setResTicket(ticket);
+    } else {
+      setResTicket({ message: 'Lo sentimos, Tu Pago Fue Rechazado' });
     }
   }, [status, opciones]);
 
@@ -152,7 +160,7 @@ function ResumenPagoForm() {
         <span>  </span>
         {resTicket && (
           <span style={{ fontWeight: 'bold' }}>
-            dgfdsgfdgfdsg
+            resTicket.message
           </span>
         )}
       </Typography>
