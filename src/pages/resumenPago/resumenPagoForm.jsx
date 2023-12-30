@@ -27,7 +27,7 @@ async function ResumenPagoForm() {
   const datosResumen = localStorage.getItem('datosResumen');
   const dispatch = useDispatch();
   const [msnSolicitud, setMsnSolicitud] = useState(null);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(true);
   const [resTicket, setResTicket] = useState(null);
   dispatch(setOpcionesStore(datosResumen));
   const opcionesString = useSelector((state) => state.opciones);
@@ -43,6 +43,7 @@ async function ResumenPagoForm() {
         const idService = opciones[4]?.idReg;
         try {
           const ticket = await createOrden(idTerminal, idOperador, imei, idService);
+          console.log(ticket);
           if (ticket?.res?.id_ticket) {
             const timestamp = Date.now();
             const fecha = new Date(timestamp);
@@ -50,17 +51,13 @@ async function ResumenPagoForm() {
             putDynamobdOrden(timestamp, `${ticket?.res.id_ticket}`, hoy, email, `${imei}`, idService, `${price}`, 'PENDIENTE');
             setResTicket(ticket);
             setMsnSolicitud(`Solicitud procesada, Nro. Ticket: ${ticket.res.id_ticket}`);
-            setLoading(false);
           } else {
             setMsnSolicitud('Solicitud: NO Procesada!');
-            setLoading(true);
           }
           console.log(msnSolicitud);
-          console.log(loading);
         } catch (error) {
           console.error(error);
           setMsnSolicitud('Hubo un error al procesar la solicitud.');
-          setLoading(true);
         }
       }
     };
