@@ -161,10 +161,11 @@ const steps = ['Selecciona tu pais', 'Selecciona tu telefono', 'Pagar', 'Finaliz
 
 function DesbloqueosForm() {
   const navigate = useNavigate();
+  const statusDesbloqueos = useSelector((state) => state.status);
   const options = useSelector((state) => state.opciones);
   // handleCreateData();
   const [formActivePanel, setFromActivePanel] = useState({
-    formActivePanelId: 1,
+    formActivePanelId: statusDesbloqueos,
     formActivePanelChange: false,
   });
 

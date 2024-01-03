@@ -1,10 +1,13 @@
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable eqeqeq */
+/* eslint-disable no-console */
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useField } from 'formik';
 import { FormControl, InputLabel, MenuItem } from '@mui/material';
 import PropTypes from 'prop-types';
 import Select from '@mui/material/Select';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setOpcionesGlobal } from '../../../store/slices/opciones.slice';
 
 function SelectInput({
@@ -13,9 +16,14 @@ function SelectInput({
   const [field, meta] = useField(props);
   const [valueOptions, setValueOptions] = useState('');
   const dispatch = useDispatch();
-  /*
+  const opciones = useSelector((state) => state.opciones);
 
-*/
+  useEffect(() => {
+    const opcionesSelect = opciones.filter((item) => item.id == id);
+    if (opcionesSelect.length > 0) {
+      setValueOptions(opcionesSelect[0][`${label}`]);
+    }
+  }, [opciones, id, label]);
   // eslint-disable-next-line arrow-body-style
   async function findAsync(arr, valor) {
     // eslint-disable-next-line no-return-await
@@ -28,8 +36,8 @@ function SelectInput({
     dispatch(setOpcionesGlobal({ [label]: event.target.value, id: `${id}`, idReg: `${opt.drSimID}` }));
   }
   return (
-    <FormControl color="formColor" sx={{ width: { xs: '100%', sm: '70%' } }}>
-      <InputLabel id={field.name} color="formColor">{label}</InputLabel>
+    <FormControl color="formColor" sx={{ width: { xs: '100%', sm: '70%' } }} variant="filled">
+      <InputLabel id={field.name}>{label}</InputLabel>
       <Select
         labelId={field.name}
         id={field.name}
@@ -37,7 +45,7 @@ function SelectInput({
         // eslint-disable-next-line react/jsx-no-bind
         onChange={handleChange}
         label={label}
-        sx={{ backgroundColor: 'white', borderRadius: '10px' }}
+        sx={{ backgroundColor: 'white' }}
       >
         {
           options?.map((option) => (
