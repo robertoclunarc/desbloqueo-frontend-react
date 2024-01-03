@@ -2,19 +2,10 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 import { useSelector/* useDispatch */ } from 'react-redux';
-import { useParams } from 'react-router';
 // import { setOpcionesStore } from '../../../store/slices/opciones.slice';
 
 function ResumenForm() {
-  const { status } = useParams();
-  // eslint-disable-next-line no-console
-  console.log(status);
-  /* const datosResumen = localStorage.getItem('datosResumen');
-  const dispatch = useDispatch();
-  dispatch(setOpcionesStore(datosResumen)); */
   const opciones = useSelector((state) => state.opciones);
-  // eslint-disable-next-line no-console
-  console.log(opciones);
   localStorage.removeItem('datosResumen');
   return (
     <Box

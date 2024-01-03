@@ -8,13 +8,11 @@
 /* eslint-disable react/function-component-definition */
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Typography, Button, Hidden } from '@mui/material';
+import { Typography, Button } from '@mui/material';
 import axios from 'axios';
 import { environments } from '../../environments/environment';
 import '../../assets/formPayment.css';
 import postCreateOrdenDrSim from '../../api/drsimcreateordenes';
-import { setOpcionesGlobal } from '../../store/slices/opciones.slice';
-import putDynamobdOrden from '../../api/putDynamodbOrden';
 import imgStripe from '../../shared/image/stripe-for-wordpress.png';
 
 const env = environments;
@@ -26,25 +24,10 @@ function dosDecimales(n) {
   return t.match(regex)[0];
 }
 
-async function createOrden(idTerminal, idOperador, imei, idService) {
-  let servicios = [];
-  await postCreateOrdenDrSim(idTerminal, idOperador, imei, idService)
-    .then((respuesta) => {
-      servicios = respuesta;
-      // console.log(respuesta);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-  return servicios;
-}
-
 // eslint-disable-next-line react/prop-types
 const CheckoutForm = ({ next, disabledButton }) => {
-  const dispatch = useDispatch();
   const [msnSolicitud, setMsnSolicitud] = useState('');
   const opcion = useSelector((state) => state.opciones);
-  console.log(typeof opcion);
   const idTerminal = opcion[3].idReg;
   const idOperador = opcion[1].idReg;
   const { imei } = opcion[9] !== undefined ? opcion[9] : '';
