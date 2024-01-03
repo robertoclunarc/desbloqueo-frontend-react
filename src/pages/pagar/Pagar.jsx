@@ -43,7 +43,8 @@ const CheckoutForm = ({ next, disabledButton }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(urlApiStripe);
+    // console.log(urlApiStripe);
+    setLoading(true);
     const { data } = await axios.post(urlApiStripe, {
       urlDomain: `${window.location.origin}/resumenPago`,
       id_terminal: idTerminal,
@@ -70,8 +71,8 @@ const CheckoutForm = ({ next, disabledButton }) => {
             </h5>
           </div>
         </div>
-        <button onClick={handleSubmit} className="buttonStripe" type="submit">
-          Pagar
+        <button onClick={handleSubmit} className="buttonStripe" type="submit" disabled={loading}>
+          {loading ? 'Cargando...' : 'Pagar'}
         </button>
       </section>
       <Button
