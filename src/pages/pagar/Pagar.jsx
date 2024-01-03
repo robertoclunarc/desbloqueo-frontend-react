@@ -40,6 +40,27 @@ const CheckoutForm = ({ next, disabledButton }) => {
   price = dosDecimales(price) * 100;
   price = parseInt(price.toString(), 10);
   const [loading, setLoading] = useState(false);
+  const [loadingButton, setLoadingButton] = useState(false);
+
+  useEffect(() => {
+    if (disabledButton) {
+      setLoadingButton(false);
+    } else {
+      setLoadingButton(true);
+    }
+  }, [disabledButton]);
+
+  console.log(loadingButton);
+
+  let buttonText = '';
+
+  if (loadingButton) {
+    buttonText = 'Acepte los Terminos y condiciones';
+  } else if (loading) {
+    buttonText = 'Cargando ...';
+  } else {
+    buttonText = 'Pagar';
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -71,8 +92,8 @@ const CheckoutForm = ({ next, disabledButton }) => {
             </h5>
           </div>
         </div>
-        <button onClick={handleSubmit} className="buttonStripe" type="submit" disabled={loading}>
-          {loading ? 'Cargando...' : 'Pagar'}
+        <button onClick={handleSubmit} className="buttonStripe" type="submit" disabled={loading || loadingButton}>
+          {buttonText}
         </button>
       </section>
       <Button
@@ -122,7 +143,7 @@ function Pagar({ next, disabledButton }) {
   return message ? (
     <Message message={message} />
   ) : (
-    <CheckoutForm />
+    <CheckoutForm disabledButton={disabledButton} />
   );
 }
 

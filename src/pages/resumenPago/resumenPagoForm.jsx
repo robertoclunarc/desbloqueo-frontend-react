@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-console */
 /* eslint-disable react/forbid-prop-types */
 import React, { useEffect, useState } from 'react';
@@ -58,7 +59,7 @@ async function crearTicket(opciones) {
   }
 }
 
-function ResumenPagoForm() {
+function ResumenPagoForm({ setButton }) {
   const { status } = useParams();
   const datosResumen = localStorage.getItem('datosResumen');
   const dispatch = useDispatch();
@@ -72,8 +73,10 @@ function ResumenPagoForm() {
       if (status === 'success') {
         const ticket = await crearTicket(opciones);
         setResTicket(ticket);
+        setButton(false);
       } else {
         setResTicket({ message: 'Lo sentimos, Tu Pago Fue Rechazado' });
+        setButton(true);
       }
     };
     fetchData();

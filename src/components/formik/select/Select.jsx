@@ -19,9 +19,11 @@ function SelectInput({
   const opciones = useSelector((state) => state.opciones);
 
   useEffect(() => {
-    const opcionesSelect = opciones.filter((item) => item.id == id);
-    if (opcionesSelect.length > 0) {
-      setValueOptions(opcionesSelect[0][`${label}`]);
+    if (Array.isArray(opciones)) {
+      const opcionesSelect = opciones?.filter((item) => item.id == id);
+      if (opcionesSelect.length > 0) {
+        setValueOptions(opcionesSelect[0][`${label}`]);
+      }
     }
   }, [opciones, id, label]);
   // eslint-disable-next-line arrow-body-style
