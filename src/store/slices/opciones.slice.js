@@ -7,7 +7,7 @@ export const opcionesSlice = createSlice({
   initialState: [],
   reducers: {
     setOpcionesGlobal: (state, action) => {
-      const index = state.findIndex((e) => (e.id === action.payload.id));
+      const index = state?.findIndex((e) => e.id === action.payload.id);
       if (index === -1) {
         state.push(action.payload);
       } else {
@@ -15,9 +15,10 @@ export const opcionesSlice = createSlice({
         state[index] = action.payload;
       }
     },
+    setOpcionesStore: (state, action) => action.payload,
   },
 });
 
 export const { setOpcionesGlobal } = opcionesSlice.actions;
-
+export const { setOpcionesStore } = opcionesSlice.actions;
 export default opcionesSlice.reducer;

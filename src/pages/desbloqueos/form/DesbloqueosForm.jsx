@@ -161,10 +161,10 @@ const steps = ['Selecciona tu pais', 'Selecciona tu telefono', 'Pagar', 'Finaliz
 
 function DesbloqueosForm() {
   const navigate = useNavigate();
-  const options = useSelector((state) => state.opciones);
+  const statusDesbloqueos = useSelector((state) => state.status);
   // handleCreateData();
   const [formActivePanel, setFromActivePanel] = useState({
-    formActivePanelId: 1,
+    formActivePanelId: statusDesbloqueos,
     formActivePanelChange: false,
   });
 
@@ -243,11 +243,11 @@ function DesbloqueosForm() {
     navigate('/');
   };
 
-  const disabledPais = options[0] && options[1] ? undefined : 'disabled';
-  const disabledMarca = options[2] && options[3] ? undefined : 'disabled';
+  const disabledPais = opciones[0] && opciones[1] ? undefined : 'disabled';
+  const disabledMarca = opciones[2] && opciones[3] ? undefined : 'disabled';
   let disabledServicio = 'disabled';
 
-  if (options[4]?.Servicio !== 'Sin Servicio para este Terminal y/o Operadora') {
+  if (opciones[4]?.Servicio !== 'Sin Servicio para este Terminal y/o Operadora') {
     disabledServicio = undefined;
   } else {
     disabledServicio = 'disabled';
@@ -256,6 +256,8 @@ function DesbloqueosForm() {
   const [aceptarTerminos, setAceptarTerminos] = useState(false);
   const [recibirBoletin, setRecibirBoletin] = useState(false);
   const disabledButton = (aceptarTerminos && recibirBoletin);
+
+  console.log(disabledButton);
   return (
     <Box sx={{
       display: 'flex',

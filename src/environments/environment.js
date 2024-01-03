@@ -1,10 +1,9 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable import/prefer-default-export */
-// eslint-disable-next-line linebreak-style
+/* eslint-disable-next-line linebreak-style */
 
 export const environments = {
-  apiStripeUrl: 'https://j1ay5c9qrd.execute-api.us-east-1.amazonaws.com/pay/checkout',
-  key_public: process.env.REACT_APP_KEYPUBLIC,
+  apiStripeUrl: 'https://j1ay5c9qrd.execute-api.us-east-1.amazonaws.com/pay',
   AWS_REGION: 'us-east-1',
   AWS_API_GATEWAY: 'https://n5um5iws84.execute-api.us-east-2.amazonaws.com',
   DSIM_KEY: '',
