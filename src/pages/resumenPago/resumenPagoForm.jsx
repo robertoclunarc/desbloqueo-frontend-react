@@ -66,7 +66,7 @@ function ResumenPagoForm() {
   dispatch(setOpcionesStore(datosResumen));
   const opcionesString = useSelector((state) => state.opciones);
   const opciones = JSON.parse(opcionesString);
-  console.log(opciones);
+  // console.log(opciones);
   useEffect(() => {
     const fetchData = async () => {
       if (status === 'success') {
@@ -176,11 +176,16 @@ function ResumenPagoForm() {
           color: '#f0a919',
         }}
       >
-        {resTicket && resTicket.message && (
-        <span style={{ fontWeight: 'bold' }}>
-          {resTicket.message}
-        </span>
-        )}
+        {resTicket && resTicket.message ? (
+          <span style={{ fontWeight: 'bold' }}>
+            {resTicket.message}
+          </span>
+        )
+          : (
+            <span style={{ fontWeight: 'bold' }}>
+              Procesando Orden, Por Favor Espere...
+            </span>
+          )}
       </Typography>
     </>
   );

@@ -1,15 +1,16 @@
+/* eslint-disable max-len */
 import {
   Container, Typography, Card, Box,
 } from '@mui/material';
 import React from 'react';
 import { useParams } from 'react-router';
-import AppSettingsAltIcon from '@mui/icons-material/AppSettingsAlt';
+import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
+import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import ResumenPagoForm from './resumenPagoForm';
 import Navbar from '../../components/navbar/Navbar';
 
 function ResumenPago() {
   const { status } = useParams();
-
   return (
     <>
       <Navbar />
@@ -48,8 +49,10 @@ function ResumenPago() {
               border: '2px solid white', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'absolute', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)', width: { xs: '100px', sm: '150px' }, height: { xs: '100px', sm: '150px' }, top: { xs: '-8%', sm: '-11%' }, borderRadius: '50%',
             }}
             >
-              <AppSettingsAltIcon name="completed" sx={{ height: { xs: '50px', sm: '100px' }, width: { xs: '50px', sm: '100px' }, color: 'black' }} />
-
+              { status === 'success' ? (
+                <DoneOutlineIcon name="completed" sx={{ height: { xs: '50px', sm: '100px' }, width: { xs: '50px', sm: '100px' }, color: 'black' }} />
+              )
+                : (<CancelOutlinedIcon name="canceled" sx={{ height: { xs: '50px', sm: '100px' }, width: { xs: '50px', sm: '100px' }, color: 'black' }} />)}
             </Box>
             <Typography
               variant="h4"
