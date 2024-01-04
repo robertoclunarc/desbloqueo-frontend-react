@@ -114,7 +114,7 @@ const iconsWhy = () => {
               flexDirection: 'column',
               borderRadius: '15px',
               border: '3px solid white',
-              height: '200px',
+              height: '220px',
             }}
             onClick={() => {
               navigate('/desbloqueos');
