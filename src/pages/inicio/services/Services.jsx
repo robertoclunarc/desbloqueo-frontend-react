@@ -58,7 +58,14 @@ function Servicios() {
           textAlign: 'center',
         }}
       >
-        Resultados efectivos con la marca que desees
+        Desde
+        {' '}
+        <span style={{ color: 'gold' }}>iPhone</span>
+        {' '}
+        hasta
+        {' '}
+        <span style={{ color: 'gold' }}>Samsung</span>
+        , desbloqueamos todo
       </Typography>
       <Grid
         container

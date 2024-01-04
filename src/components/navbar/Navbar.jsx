@@ -170,7 +170,7 @@ function Navbar() {
               color: '#224776',
             }}
           >
-            ¡Desbloquea tu cel ya!
+            ¡Libera tu cel ya!
           </Button>
         </StyledToolbar>
       </AppBar>

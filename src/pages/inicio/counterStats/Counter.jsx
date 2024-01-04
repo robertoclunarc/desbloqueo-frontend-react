@@ -11,24 +11,24 @@ function Counter() {
 
   const statCounterItems = [
     {
-      title: 'lorem ipsum',
+      title: 'Celulares liberados',
       start: 0,
-      end: 1000,
+      end: 1500,
     },
     {
-      title: 'lorem ipsum',
+      title: 'Paises atendidos',
       start: 0,
       end: 100,
     },
     {
-      title: 'lorem ipsum',
+      title: 'Operadoras Telefónicas Compatibles',
       start: 0,
       end: 10000,
     },
     {
-      title: 'lorem ipsum',
+      title: 'Años de experiencia',
       start: 0,
-      end: 10000,
+      end: 10,
     },
   ];
 
