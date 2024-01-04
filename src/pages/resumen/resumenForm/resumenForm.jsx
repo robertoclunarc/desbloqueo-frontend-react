@@ -1,10 +1,12 @@
 /* eslint-disable react/forbid-prop-types */
 import React from 'react';
 import { Box, Typography } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useSelector/* useDispatch */ } from 'react-redux';
+// import { setOpcionesStore } from '../../../store/slices/opciones.slice';
 
 function ResumenForm() {
   const opciones = useSelector((state) => state.opciones);
+  localStorage.removeItem('datosResumen');
   return (
     <Box
       sx={{
