@@ -92,7 +92,7 @@ const newWhyUs = () => {
               display: 'flex',
               flexDirection: 'column',
               height: {
-                xl: '55vh', lg: '40vh', md: '30vh', sm: '30vh', xs: 'auto',
+                xl: '100vh', lg: '110vh', md: '90vh', sm: '90vh', xs: 'auto',
               },
               width: {
                 xl: '25%', lg: '28%', md: '50vw', sm: '80vw', xs: '80%',

@@ -21,9 +21,13 @@ function MediaCard({
 }) {
   const navigate = useNavigate();
   return (
-    <Card sx={{
-      backgroundColor: '#2586AF', borderRadius: '20px', width: '250px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
-    }}
+    <Card
+      sx={{
+        backgroundColor: '#2586AF', borderRadius: '20px', width: '250px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
+      }}
+      onClick={() => {
+        navigate(`/telefonos/${id}`);
+      }}
     >
       <CardMedia component="img" image={imgsrc} sx={{ height: '200px', objectFit: 'contain' }} />
       <CardContent>

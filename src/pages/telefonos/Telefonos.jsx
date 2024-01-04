@@ -53,7 +53,7 @@ function Telefonos() {
     }
   }
   return (
-    <Container sx={{ padding: '20px', textAlign: 'center' }}>
+    <Container sx={{ padding: '20px', textAlign: 'center', marginTop: '6vh' }}>
       <Navbar />
       <Typography variant="h4" color="white" fontWeight="700" marginTop="60px">Desbloquea mi cel</Typography>
       <Typography variant="h5" color="white">¡Consigue el que necesitas!</Typography>

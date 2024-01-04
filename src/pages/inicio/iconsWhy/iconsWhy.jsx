@@ -103,10 +103,18 @@ const iconsWhy = () => {
             xs={10}
             sm={8}
             md={5}
-            lg={2.5}
+            lg={3}
             xl={2.5}
             sx={{
-              '&:hover': { cursor: 'pointer' }, padding: '1em', display: 'flex', alignItems: 'center', justifyContents: 'center', flexDirection: 'column', borderRadius: '15px', border: '3px solid white',
+              '&:hover': { cursor: 'pointer' },
+              padding: '1em',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContents: 'center',
+              flexDirection: 'column',
+              borderRadius: '15px',
+              border: '3px solid white',
+              height: '200px',
             }}
             onClick={() => {
               navigate('/desbloqueos');
@@ -116,6 +124,7 @@ const iconsWhy = () => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'start',
+              textAlign: 'center',
               width: '100%',
               height: 'auto',
               flexDirection: {
@@ -130,7 +139,7 @@ const iconsWhy = () => {
                   height: '50px',
                   width: '50px',
                   color: 'white',
-                  paddingBottom: '.5em',
+                  paddingBottom: '.2em',
                 }}
               />
               <Typography sx={{
