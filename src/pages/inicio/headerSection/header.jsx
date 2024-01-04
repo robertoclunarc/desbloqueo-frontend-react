@@ -29,10 +29,10 @@ const header = () => (
       },
     }}
     >
+      <span style={{ color: 'gold' }}>Liberación</span>
       {' '}
-      WELCOME TO
+      de celulares al alcance de tu mano
       {' '}
-      <span style={{ color: 'gold' }}>DESBLOQUEA</span>
     </Typography>
   </Box>
 );

@@ -6,7 +6,6 @@ import LocalAtmIcon from '@mui/icons-material/LocalAtm';
 import { useNavigate } from 'react-router';
 import mujer from '../../../shared/image/cutbottompic.png';
 import OpeningForm from './openingForm/openingForm';
-import Providers from './providers/providers';
 
 const openingSection = () => {
   const navigate = useNavigate();
@@ -38,7 +37,6 @@ const openingSection = () => {
           justifyContent: 'center',
         }}
       >
-        <Providers />
         <OpeningForm />
       </Box>
       <Box
@@ -70,7 +68,7 @@ const openingSection = () => {
             border: '1px solid white',
             '&:hover': { cursor: 'pointer' },
             boxShadow:
-            'rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px',
+              'rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px',
           }}
           onClick={() => {
             navigate('/desbloqueos');

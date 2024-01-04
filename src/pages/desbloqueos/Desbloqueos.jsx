@@ -3,12 +3,10 @@ import {
   Container,
   Typography,
   Box,
-  Button,
   SvgIcon,
   CardMedia,
 } from '@mui/material';
 import React from 'react';
-import { useNavigate } from 'react-router';
 import DesbloqueosForm from './form/DesbloqueosForm';
 import { ReactComponent as Check } from '../../shared/image/checked.svg';
 import mujer from '../../shared/image/1(6).png';
@@ -17,21 +15,19 @@ import Navbar from '../../components/navbar/Navbar';
 const checkedOptions = [
   {
     icon: Check,
-    title: 'Guaranteed or Money Back',
+    title: 'Garantía Total o le Devolvemos su Dinero',
   },
   {
     icon: Check,
-    title: 'Thousands of Satisfied Customers',
+    title: 'Únase a Nuestra Comunidad de Clientes Satisfechos',
   },
   {
     icon: Check,
-    title: 'Lowest Price Guaranteed',
+    title: 'Libera Tu Mundo Móvil',
   },
 ];
 
 function Desbloqueos() {
-  const navigate = useNavigate();
-
   return (
     <Container sx={{
       padding: '5px',
@@ -62,7 +58,7 @@ function Desbloqueos() {
             },
           }}
           >
-            Unlock iPhone 15 Pro Max
+            ¿Listo para liberar su celular?
 
           </Typography>
           <Typography sx={{
@@ -70,32 +66,11 @@ function Desbloqueos() {
             fontSize: {
               xl: '30px', lg: '30px', md: '24px', sm: '24px', xs: '18px',
             },
+            marginBottom: '.6em',
           }}
           >
-            Unlock your iPhone 15 Pro Max to choose any operator in the world.
-
+            Comience aquí:
           </Typography>
-          <Button
-            variant="contained"
-            sx={{
-              marginTop: {
-                xl: '1em', lg: '1em', md: '.5em', sm: '.5em', xs: '2em',
-              },
-              backgroundColor: 'white',
-              color: '#051650',
-              marginBottom: '1em',
-              width: {
-                xl: '60%', lg: '60%', md: '60%', sm: '50%', xs: '50%',
-              },
-              '&:hover': { color: 'white' },
-            }}
-            onClick={() => {
-              navigate('/desbloqueos');
-            }}
-          >
-            {' '}
-            Start Today!
-          </Button>
           {checkedOptions.map((item) => (
             <Box sx={{
               display: 'flex', justifyContent: 'start', alignItems: 'center', flexDirection: 'row',
