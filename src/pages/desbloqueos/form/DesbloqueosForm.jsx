@@ -303,7 +303,7 @@ function DesbloqueosForm() {
             height: 'auto',
           }}
           >
-            {formActivePanel.formActivePanelId === 1 && !status && (
+            {formActivePanel.formActivePanelId === 1 && (
               <Card sx={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -387,7 +387,7 @@ function DesbloqueosForm() {
                 </IconButton>
               </Card>
             )}
-            {formActivePanel.formActivePanelId === 2 && !status && (
+            {formActivePanel.formActivePanelId === 2 && (
               <Card sx={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -457,7 +457,7 @@ function DesbloqueosForm() {
                 </Box>
               </Card>
             )}
-            {formActivePanel.formActivePanelId === 3 && !status && (
+            {formActivePanel.formActivePanelId === 3 && (
               <div>
                 <div>
                   <Card sx={{
@@ -572,7 +572,7 @@ function DesbloqueosForm() {
                 flexDirection: 'column',
               }}
               >
-                <ResumenPago> </ResumenPago>
+                <ResumenPago setFromActivePanel={setFromActivePanel} />
               </Box>
             </Card>
 

@@ -67,16 +67,16 @@ function ResumenPagoForm({ setButton }) {
   dispatch(setOpcionesStore(datosResumen));
   const opcionesString = useSelector((state) => state.opciones);
   const opciones = JSON.parse(opcionesString);
-  // console.log(opciones);
+
   useEffect(() => {
     const fetchData = async () => {
       if (status === 'success') {
         const ticket = await crearTicket(opciones);
         setResTicket(ticket);
-        setButton(false);
+        setButton({ activate: false, ticket: ticket.id });
       } else {
         setResTicket({ message: 'Lo sentimos, Tu Pago Fue Rechazado' });
-        setButton(true);
+        setButton({ activate: false, ticket: null });
       }
     };
     fetchData();
