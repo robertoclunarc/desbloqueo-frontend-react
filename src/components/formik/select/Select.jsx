@@ -38,7 +38,7 @@ function SelectInput({
     dispatch(setOpcionesGlobal({ [label]: event.target.value, id: `${id}`, idReg: `${opt.drSimID}` }));
   }
   return (
-    <FormControl color="formColor" sx={{ width: { xs: '100%', sm: '70%' } }} variant="filled">
+    <FormControl color="formColor" sx={{ width: { xs: '100%', sm: '70%' }, backgroundColor: '#fff' }} variant="filled">
       <InputLabel id={field.name}>{label}</InputLabel>
       <Select
         labelId={field.name}

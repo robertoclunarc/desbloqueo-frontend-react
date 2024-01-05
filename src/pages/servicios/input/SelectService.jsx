@@ -29,6 +29,7 @@ function SelectService({
   const opciones = useSelector((state) => state.opciones);
   const [options, setToolOptions] = useState([]);
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
 
   function buscarElementoAsync(services, idServ) {
     return new Promise((resolve) => {
@@ -111,14 +112,18 @@ function SelectService({
             return tool;
           });
           setToolOptions(tools);
+          setValueOptions(options[0]?.id); // Esto selecciona la primera opción
+          handleChange({ target: { value: options[0]?.id } });
         } catch (error) {
           console.log(error);
+        } finally {
+          setLoading(false);
         }
       }
     };
 
     fetchData();
-  }, []);
+  }, [loading]);
 
   useEffect(() => {
     if (options.length === 1 && options[0].name === 'Sin Servicio para este Terminal y/o Operadora') {
@@ -142,7 +147,7 @@ function SelectService({
       flexDirection: 'column',
     }}
     >
-      <FormControl sx={{ width: { xs: '80%', sm: '40%' } }} variant="filled">
+      <FormControl sx={{ width: { xs: '80%', sm: '40%' }, backgroundColor: '#fff' }} variant="filled">
         <InputLabel id={field.name}>{label}</InputLabel>
         <Select
           labelId={field.name}
@@ -162,7 +167,7 @@ function SelectService({
           <div className="error">{meta.error}</div>
         ) : null}
       </FormControl>
-      {currentOption && currentOption.name !== 'Sin Servicio para este Terminal y/o Operadora' && (
+      {currentOption && currentOption.name !== 'Sin Servicio para este Terminal y/o Operadora' ? (
         <Box sx={{
           background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)', width: { xs: '80%', sm: '60%' }, height: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: { xs: 'white', sm: '#2C5B97' }, flexWrap: 'wrap', border: { xs: '2px solid black', sm: '2px solid black' }, borderRadius: '15px', padding: '1em 0em 1em 0em', margin: { xs: 'none', sm: '1em 0em 0em 0em' },
         }}
@@ -214,15 +219,17 @@ function SelectService({
               : descriptionText}
           </Typography>
         </Box>
-      )}
-      <Typography sx={{
-        display: { xs: 'inline', sm: 'none' }, color: 'white', textAlign: 'left', width: '80%',
-      }}
-      >
-        {currentOption && currentOption.name === 'Sin Servicio para este Terminal y/o Operadora'
-          ? 'Sin Servicio para este Terminal y/o Operadora'
-          : descriptionText}
-      </Typography>
+      )
+        : (
+          <Box sx={{
+            background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)', width: { xs: '80%', sm: '60%' }, height: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: { xs: 'white', sm: '#2C5B97' }, flexWrap: 'wrap', border: { xs: '2px solid black', sm: '2px solid black' }, borderRadius: '15px', padding: '1em 0em 1em 0em', margin: { xs: 'none', sm: '1em 0em 0em 0em' },
+          }}
+          >
+            <Typography>
+              Sin Servicio para este Terminal y/o Operadora
+            </Typography>
+          </Box>
+        )}
     </Box>
   );
 }
