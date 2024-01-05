@@ -11,24 +11,24 @@ function Counter() {
 
   const statCounterItems = [
     {
-      title: 'lorem ipsum',
+      title: 'Celulares liberados',
       start: 0,
-      end: 1000,
+      end: 1500,
     },
     {
-      title: 'lorem ipsum',
+      title: 'Paises atendidos',
       start: 0,
       end: 100,
     },
     {
-      title: 'lorem ipsum',
+      title: 'Operadoras Telefónicas Compatibles',
       start: 0,
       end: 10000,
     },
     {
-      title: 'lorem ipsum',
+      title: 'Años de experiencia',
       start: 0,
-      end: 10000,
+      end: 10,
     },
   ];
 
@@ -45,7 +45,7 @@ function Counter() {
           xl: '78vw', lg: '100%', md: 'auto', sm: '90%', xs: '90%',
         },
         height: {
-          xl: '6em', lg: 'auto', md: 'auto', sm: 'auto', xs: 'auto',
+          xl: '12em', lg: 'auto', md: 'auto', sm: 'auto', xs: 'auto',
         },
         display: 'flex',
         flexDirection: {
@@ -60,7 +60,7 @@ function Counter() {
           xl: '1px solid white', lg: 'none', md: 'none', sm: 'none', xs: 'none',
         },
         gap: {
-          xl: '0px', lg: '0px', md: '30px', sm: '30px', xs: '30px',
+          xl: '0px', lg: '30px', md: '30px', sm: '30px', xs: '30px',
         },
         marginTop: {
           xl: '0px', lg: '0px', md: '30px', sm: '30px', xs: '30px',
@@ -81,6 +81,7 @@ function Counter() {
               flexDirection: 'column',
               justifyContent: 'center',
               alignItems: 'center',
+              textAlign: 'center',
               border: {
                 xl: 'none', lg: '1px solid white', md: '1px solid white', sm: '1px solid white', xs: '1px solid white',
               },
@@ -91,7 +92,9 @@ function Counter() {
               width: {
                 xl: 'none', lg: '300px', md: '500px', sm: '500px', xs: '90%',
               },
-              height: 'auto',
+              height: {
+                xl: 'auto', lg: '200px', md: '160px', sm: '160px', xs: '180px',
+              },
               '&:hover': { cursor: 'pointer' },
             }}
             onClick={() => {

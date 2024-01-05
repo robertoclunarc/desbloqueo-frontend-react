@@ -15,43 +15,43 @@ import { ReactComponent as Verified } from '../../../shared/image/verified.svg';
 const iconsOptions = [
   {
     logo: Award,
-    title: 'Trusty',
-    desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    title: 'Elegido por Expertos',
+    desc: 'El favorito de operadores y fabricantes',
   },
   {
     logo: Dollar,
-    title: 'Priced',
-    desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    title: 'Soporte Premium',
+    desc: 'Expertos disponibles para tu tranquilidad',
   },
   {
     logo: Globe,
-    title: 'Worldwide',
-    desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    title: 'Sin Límites',
+    desc: 'Usa tu móvil con cualquier operadora, en cualquier lugar',
   },
   {
     logo: Heart,
-    title: 'Passion',
-    desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    title: 'Desbloqueo Intuitivo',
+    desc: 'Su camino fácil hacia la liberación del móvil',
   },
   {
     logo: Lightening,
-    title: 'Quick',
-    desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    title: 'Velocidad Confiable',
+    desc: 'Libera tu celular rápido y legal, sin complicaciones',
   },
   {
     logo: LightBulb,
-    title: 'Tech',
-    desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    title: 'Sin Pausas',
+    desc: 'Usa tu móvil normalmente mientras lo liberamos',
   },
   {
     logo: Medal,
-    title: 'Top',
-    desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    title: 'Tu Móvil, Tu Control',
+    desc: 'Desbloqueo seguro sin desprenderte de él',
   },
   {
     logo: Verified,
-    title: 'Safe',
-    desc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    title: 'Su Garantía Intacta',
+    desc: 'Desbloqueo que respeta los términos de su móvil',
   },
 ];
 
@@ -77,9 +77,12 @@ const iconsWhy = () => {
         }}
       >
         {' '}
-        Why Unlock Your Phone With Desbloquea
+        ¿Porque
         {' '}
-
+        <span style={{ color: 'gold' }}>liberar</span>
+        {' '}
+        tu movil con Desbloquea Mi Cel?
+        {' '}
       </Typography>
 
       <Grid
@@ -100,10 +103,18 @@ const iconsWhy = () => {
             xs={10}
             sm={8}
             md={5}
-            lg={2.5}
+            lg={3}
             xl={2.5}
             sx={{
-              '&:hover': { cursor: 'pointer' }, padding: '1em', display: 'flex', alignItems: 'center', justifyContents: 'center', flexDirection: 'column', borderRadius: '15px', border: '3px solid white',
+              '&:hover': { cursor: 'pointer' },
+              padding: '1em',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContents: 'center',
+              flexDirection: 'column',
+              borderRadius: '15px',
+              border: '3px solid white',
+              height: '220px',
             }}
             onClick={() => {
               navigate('/desbloqueos');
@@ -113,6 +124,7 @@ const iconsWhy = () => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'start',
+              textAlign: 'center',
               width: '100%',
               height: 'auto',
               flexDirection: {
@@ -127,7 +139,7 @@ const iconsWhy = () => {
                   height: '50px',
                   width: '50px',
                   color: 'white',
-                  paddingBottom: '.5em',
+                  paddingBottom: '.2em',
                 }}
               />
               <Typography sx={{
@@ -175,7 +187,7 @@ const iconsWhy = () => {
         }}
       >
         {' '}
-        Start Today!
+        ¡Libera tu celular ya!
       </Button>
     </Box>
   );

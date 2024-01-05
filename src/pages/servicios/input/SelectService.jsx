@@ -53,15 +53,17 @@ function SelectService({
   const handleChange = async (event) => {
     setValueOptions(event.target.value);
     descripcion = await buscarElementoAsync(options, event.target.value);
+    console.log(descripcion, 'descripcion JDMA');
     if (descripcion) {
       descripcion.desc = resumir(descripcion?.desc);
       descripcion.desc = descripcion.desc.replace(/undefined/g, '').replace(/\s{2,}/g, ' ');
       descripcion.desc = descripcion.desc.replace(/[.!?]+$/, '.').trim();
+      const descripcionType = descripcion?.type ? descripcion?.type : 'dias';
       setDescriptionText(descripcion.desc);
       setPrice(descripcion?.price);
       setTimeMin(descripcion?.timeMin);
       setTimeMax(descripcion?.timeMax);
-      setType(descripcion?.type);
+      setType(descripcionType);
       setAvg(descripcion?.avg);
       setToolType(descripcion?.toolType);
     }
@@ -175,14 +177,14 @@ function SelectService({
             </span>
           </Typography>
           <Typography sx={{ color: 'black', padding: '10px' }}>
-            Timeo:
+            Tiempo Minimo y Maximo:
             <span style={{ fontWeight: 'bold' }}>
               {` ${timeMin} ${type} - ${timeMax} ${type}`}
               ,
             </span>
           </Typography>
           <Typography sx={{ color: 'black', padding: '10px' }}>
-            Promedio:
+            Tiempo Promedio:
             <span style={{ fontWeight: 'bold' }}>
               {' '}
               {avg}
@@ -190,7 +192,7 @@ function SelectService({
             </span>
           </Typography>
           <Typography sx={{ color: 'black', padding: '10px' }}>
-            Requiere:
+            Requerimientos:
             <span style={{ fontWeight: 'bold' }}>
               {' '}
               {toolType}
@@ -201,14 +203,14 @@ function SelectService({
             display: { xs: 'none', sm: 'inline' }, color: 'black', textAlign: 'center', width: '100%', borderTop: '1px solid black', padding: '1em',
           }}
           >
-            Description:
+            Descripción:
           </Typography>
           <Typography sx={{
             display: { xs: 'none', sm: 'inline' }, color: 'black', fontWeight: 'bold', textAlign: 'left', width: '80%',
           }}
           >
             {currentOption && currentOption.name === 'Sin Servicio para este Terminal y/o Operadora'
-              ? 'We do not provide this specific serivce. Try again with new inputs.'
+              ? 'Sin Servicio para este Terminal y/o Operadora'
               : descriptionText}
           </Typography>
         </Box>
@@ -218,7 +220,7 @@ function SelectService({
       }}
       >
         {currentOption && currentOption.name === 'Sin Servicio para este Terminal y/o Operadora'
-          ? 'We do not provide this specific serivce. Try again with new inputs.'
+          ? 'Sin Servicio para este Terminal y/o Operadora'
           : descriptionText}
       </Typography>
     </Box>

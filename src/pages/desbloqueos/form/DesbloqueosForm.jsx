@@ -7,18 +7,17 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import {
   Box,
-  Button,
   Card, Checkbox, Container, FormControlLabel, IconButton, Stack, Step, StepLabel, Stepper, Typography,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
 import Check from '@mui/icons-material/Check';
-import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 /* import PersonIcon from '@mui/icons-material/Person'; */
 import PaymentIcon from '@mui/icons-material/Payment';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import AppSettingsAltIcon from '@mui/icons-material/AppSettingsAlt';
+import EditNoteIcon from '@mui/icons-material/EditNote';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router';
 import axios from 'axios';
@@ -132,8 +131,8 @@ function ColorlibStepIcon(props) {
   } = props;
 
   const icons = {
-    1: <AppSettingsAltIcon name="services" />,
-    2: <LocalPhoneIcon name="imei" />,
+    1: <EditNoteIcon name="services" />,
+    2: <AddCircleIcon name="imei" />,
     /* 4: <PersonIcon name="Terms and Conditions" />, */
     3: <PaymentIcon name="Finish" />,
     4: <CheckCircleIcon name="payment" />,
@@ -160,7 +159,7 @@ ColorlibStepIcon.defaultProps = {
   icon: '',
 };
 
-const steps = ['Selecciona tu pais', 'Selecciona tu telefono', 'Pagar', 'Finalizado'];
+const steps = ['Información del Telefono', 'Elige tu Servicio', 'Verificación y Pago', 'Final'];
 
 function DesbloqueosForm() {
   const navigate = useNavigate();
@@ -256,7 +255,7 @@ function DesbloqueosForm() {
 
   const [aceptarTerminos, setAceptarTerminos] = useState(false);
   const [recibirBoletin, setRecibirBoletin] = useState(false);
-  const disabledButton = (aceptarTerminos && recibirBoletin);
+  const disabledButton = (aceptarTerminos);
 
   return (
     <Box sx={{
@@ -327,25 +326,25 @@ function DesbloqueosForm() {
                     sx={{ display: { xs: 'flex', sm: 'flex' } }}
                   >
                     {
-            steps.map((label) => (
-              <Step key={label}>
-                <StepLabel StepIconComponent={ColorlibStepIcon}>
-                  <Typography sx={{ fontSize: '12px', color: 'white' }}>
-                    {
-                    label
-                  }
-                  </Typography>
-                </StepLabel>
-              </Step>
-            ))
-          }
+                      steps.map((label) => (
+                        <Step key={label}>
+                          <StepLabel StepIconComponent={ColorlibStepIcon}>
+                            <Typography sx={{ fontSize: '12px', color: 'white' }}>
+                              {
+                                label
+                              }
+                            </Typography>
+                          </StepLabel>
+                        </Step>
+                      ))
+                    }
                   </Stepper>
                 </Stack>
                 <Box sx={{
                   border: '2px solid white', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'absolute', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)', width: { xs: '100px', sm: '150px' }, height: { xs: '100px', sm: '150px' }, top: { xs: '-8%', sm: '-11%' }, borderRadius: '50%',
                 }}
                 >
-                  <AppSettingsAltIcon name="services" sx={{ height: { xs: '50px', sm: '100px' }, width: { xs: '50px', sm: '100px' }, color: 'black' }} />
+                  <EditNoteIcon name="services" sx={{ height: { xs: '50px', sm: '100px' }, width: { xs: '50px', sm: '100px' }, color: 'black' }} />
 
                 </Box>
                 <Box sx={{
@@ -411,25 +410,25 @@ function DesbloqueosForm() {
                     sx={{ display: { xs: 'flex', sm: 'flex' } }}
                   >
                     {
-            steps.map((label) => (
-              <Step key={label}>
-                <StepLabel StepIconComponent={ColorlibStepIcon}>
-                  <Typography sx={{ fontSize: '12px', color: 'white' }}>
-                    {
-                    label
-                  }
-                  </Typography>
-                </StepLabel>
-              </Step>
-            ))
-          }
+                      steps.map((label) => (
+                        <Step key={label}>
+                          <StepLabel StepIconComponent={ColorlibStepIcon}>
+                            <Typography sx={{ fontSize: '12px', color: 'white' }}>
+                              {
+                                label
+                              }
+                            </Typography>
+                          </StepLabel>
+                        </Step>
+                      ))
+                    }
                   </Stepper>
                 </Stack>
                 <Box sx={{
                   border: '2px solid white', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'absolute', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)', width: { xs: '100px', sm: '150px' }, height: { xs: '100px', sm: '150px' }, top: { xs: '-6%', sm: '-13%' }, borderRadius: '50%',
                 }}
                 >
-                  <LocalPhoneIcon name="imei" sx={{ height: { xs: '50px', sm: '100px' }, width: { xs: '50px', sm: '100px' }, color: 'black' }} />
+                  <AddCircleIcon name="imei" sx={{ height: { xs: '50px', sm: '100px' }, width: { xs: '50px', sm: '100px' }, color: 'black' }} />
 
                 </Box>
                 <Box sx={{
@@ -443,7 +442,7 @@ function DesbloqueosForm() {
                 >
                   <SelectService
                     name="tools"
-                    label="Servicio"
+                    label="Servicios"
                     id={7}
                   />
                 </Box>
@@ -482,18 +481,18 @@ function DesbloqueosForm() {
                         sx={{ display: { xs: 'flex', sm: 'flex' } }}
                       >
                         {
-            steps.map((label) => (
-              <Step key={label}>
-                <StepLabel StepIconComponent={ColorlibStepIcon}>
-                  <Typography sx={{ fontSize: '12px', color: 'white' }}>
-                    {
-                    label
-                  }
-                  </Typography>
-                </StepLabel>
-              </Step>
-            ))
-          }
+                          steps.map((label) => (
+                            <Step key={label}>
+                              <StepLabel StepIconComponent={ColorlibStepIcon}>
+                                <Typography sx={{ fontSize: '12px', color: 'white' }}>
+                                  {
+                                    label
+                                  }
+                                </Typography>
+                              </StepLabel>
+                            </Step>
+                          ))
+                        }
                       </Stepper>
                     </Stack>
                     <Box sx={{
