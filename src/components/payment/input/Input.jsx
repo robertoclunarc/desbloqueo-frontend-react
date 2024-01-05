@@ -12,12 +12,19 @@ function Input() {
   const dispatch = useDispatch();
 
   const handleChangeImei = (event) => {
-    setValueOptions(event.target.value);
-    dispatch(setOpcionesGlobal({ id: '5', imei: event.target.value }));
+    const inputValue = event.target.value;
+    if (inputValue.length >= 15) {
+      setValueOptions(inputValue);
+      dispatch(setOpcionesGlobal({ id: '5', imei: inputValue }));
+    }
   };
   const handleChangeEmail = (event) => {
-    setValueOptionsEmail(event.target.value);
-    dispatch(setOpcionesGlobal({ id: '6', email: event.target.value }));
+    const inputValue = event.target.value;
+    const emailPattern = /^\S+@\S+\.\S+$/;
+    if (emailPattern.test(inputValue)) {
+      setValueOptionsEmail(inputValue);
+      dispatch(setOpcionesGlobal({ id: '6', email: inputValue }));
+    }
   };
 
   return (

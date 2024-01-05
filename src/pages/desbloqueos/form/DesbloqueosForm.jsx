@@ -252,7 +252,6 @@ function DesbloqueosForm() {
   let disabledServicio = opciones[4] ? undefined : 'disabled';
 
   if (opciones[4]?.Servicios == 'Sin Servicio para este Terminal y/o Operadora') {
-    console.log('hola');
     disabledServicio = 'disabled';
   }
   if (opciones[3]?.Modelo === 'No hay dispósitivos disponibles') {
@@ -261,7 +260,7 @@ function DesbloqueosForm() {
 
   const [aceptarTerminos, setAceptarTerminos] = useState(false);
   const [recibirBoletin, setRecibirBoletin] = useState(false);
-  const disabledButton = (aceptarTerminos);
+  const disabledButton = (aceptarTerminos && opciones[10] && opciones[11]);
   return (
     <Box sx={{
       display: 'flex',
