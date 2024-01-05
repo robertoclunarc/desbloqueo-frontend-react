@@ -255,7 +255,7 @@ function DesbloqueosForm() {
 
   const [aceptarTerminos, setAceptarTerminos] = useState(false);
   const [recibirBoletin, setRecibirBoletin] = useState(false);
-  const disabledButton = (aceptarTerminos && recibirBoletin);
+  const disabledButton = (aceptarTerminos);
 
   console.log(disabledButton);
   return (
