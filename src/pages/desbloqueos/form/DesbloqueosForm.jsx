@@ -20,10 +20,12 @@ import PaymentIcon from '@mui/icons-material/Payment';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import AppSettingsAltIcon from '@mui/icons-material/AppSettingsAlt';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import axios from 'axios';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
+import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import Pagar from '../../pagar/Pagar';
 import Select from '../../../components/formik/select/Select';
 import Input from '../../../components/payment/input/Input';
@@ -163,7 +165,7 @@ const steps = ['Selecciona tu pais', 'Selecciona tu telefono', 'Pagar', 'Finaliz
 function DesbloqueosForm() {
   const navigate = useNavigate();
   const statusDesbloqueos = useSelector((state) => state.status);
-  // handleCreateData();
+  const { status } = useParams();
   const [formActivePanel, setFromActivePanel] = useState({
     formActivePanelId: statusDesbloqueos,
     formActivePanelChange: false,
@@ -255,7 +257,7 @@ function DesbloqueosForm() {
   const [aceptarTerminos, setAceptarTerminos] = useState(false);
   const [recibirBoletin, setRecibirBoletin] = useState(false);
   const disabledButton = (aceptarTerminos && recibirBoletin);
-  console.log(`tab: ${formActivePanel.formActivePanelId}`);
+
   return (
     <Box sx={{
       display: 'flex',
@@ -301,7 +303,7 @@ function DesbloqueosForm() {
             height: 'auto',
           }}
           >
-            {formActivePanel.formActivePanelId === 1 && (
+            {formActivePanel.formActivePanelId === 1 && !status && (
               <Card sx={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -385,7 +387,7 @@ function DesbloqueosForm() {
                 </IconButton>
               </Card>
             )}
-            {formActivePanel.formActivePanelId === 2 && (
+            {formActivePanel.formActivePanelId === 2 && !status && (
               <Card sx={{
                 display: 'flex',
                 flexDirection: 'column',
@@ -455,7 +457,7 @@ function DesbloqueosForm() {
                 </Box>
               </Card>
             )}
-            {formActivePanel.formActivePanelId === 3 && (
+            {formActivePanel.formActivePanelId === 3 && !status && (
               <div>
                 <div>
                   <Card sx={{
@@ -513,42 +515,67 @@ function DesbloqueosForm() {
                 </div>
               </div>
             )}
-            { formActivePanel.formActivePanelId === 4 && (
-              <Card sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '20px',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: '20px',
+            { status && (
+            <Card sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              paddingBottom: '30px',
+              borderRadius: '35px',
+              backgroundColor: '#2c5b97',
+              height: { xs: 'auto', sm: 'auto' },
+              border: '2px solid white',
+              justifyContent: 'end',
+              boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+              paddingTop: '6em',
+
+            }}
+            >
+              <Stack sx={{ width: '100%', paddingBottom: '1em' }} spacing={4}>
+                <Stepper
+                  alternativeLabel
+                  activeStep={3}
+                  connector={<ColorlibConnector />}
+                  sx={{ display: { xs: 'flex', sm: 'flex' } }}
+                >
+                  {
+          steps.map((label) => (
+            <Step key={label}>
+              <StepLabel StepIconComponent={ColorlibStepIcon}>
+                <Typography sx={{ fontSize: '12px', color: 'white' }}>
+                  {
+                  label
+                }
+                </Typography>
+              </StepLabel>
+            </Step>
+          ))
+        }
+                </Stepper>
+              </Stack>
+              <Box sx={{
+                border: '2px solid white', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'absolute', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)', width: { xs: '100px', sm: '150px' }, height: { xs: '100px', sm: '150px' }, top: { xs: '-6%', sm: '-13%' }, borderRadius: '50%',
               }}
               >
-                {/* <Typography variant="h6">Completado!</Typography>
-                { idTicket !== undefined ? (
-                  <div>
-                    <Typography textAlign="center">
-                      <strong>{`Solicitud Creada. Nro. Ticket: ${idTicket}.`}</strong>
-                      <br />
-                      <strong>Pronto estará recibiendo en su correo el estatus de su solicitud.</strong>
-                    </Typography>
-                    <Box sx={{
-                      display: 'flex', gap: { xs: '10px', sm: '100px' }, flexDirection: { xs: 'column', sm: 'row' }, justifyContent: 'center', marginTop: '20px',
-                    }}
-                    >
-                      {' '}
-                      <Button variant="contained" onClick={() => handleSubmission()}>Submit</Button>
-                    </Box>
-                  </div>
-                ) : (
-                  // This block will be executed if idTicket is undefined
-                  <Typography variant="body1" textAlign="center">
-                    <strong>No se ha recibido un número de ticket válido.</strong>
-                    <br />
-                    <strong>Por favor, inténtelo nuevamente más tarde o contactenos.</strong>
-                  </Typography>
-                )} */}
+                { status === 'success' ? (
+                  <DoneOutlineIcon name="completed" sx={{ height: { xs: '50px', sm: '100px' }, width: { xs: '50px', sm: '100px' }, color: 'black' }} />
+                )
+                  : (<CancelOutlinedIcon name="canceled" sx={{ height: { xs: '50px', sm: '100px' }, width: { xs: '50px', sm: '100px' }, color: 'black' }} />)}
+
+              </Box>
+              <Box sx={{
+                display: 'flex',
+                gap: '30px',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: { xs: '100%', sm: '100%' },
+                flexDirection: 'column',
+              }}
+              >
                 <ResumenPago> </ResumenPago>
-              </Card>
+              </Box>
+            </Card>
+
             )}
           </Container>
         </Form>
