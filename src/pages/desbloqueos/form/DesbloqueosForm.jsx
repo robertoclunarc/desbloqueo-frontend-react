@@ -243,8 +243,7 @@ function DesbloqueosForm() {
     navigate('/');
   };
 
-  const disabledPais = opciones[0] && opciones[1] ? undefined : 'disabled';
-  const disabledMarca = opciones[2] && opciones[3] ? undefined : 'disabled';
+  const disabledPais = opciones[0] && opciones[1] && opciones[2] && opciones[3] ? undefined : 'disabled';
   let disabledServicio = 'disabled';
 
   if (opciones[4]?.Servicio !== 'Sin Servicio para este Terminal y/o Operadora') {

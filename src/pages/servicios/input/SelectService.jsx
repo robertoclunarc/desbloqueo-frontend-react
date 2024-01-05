@@ -142,7 +142,7 @@ function SelectService({
       flexDirection: 'column',
     }}
     >
-      <FormControl sx={{ width: { xs: '80%', sm: '40%' } }} variant="filled">
+      <FormControl sx={{ width: { xs: '80%', sm: '40%' }, backgroundColor: '#fff' }} variant="filled">
         <InputLabel id={field.name}>{label}</InputLabel>
         <Select
           labelId={field.name}
