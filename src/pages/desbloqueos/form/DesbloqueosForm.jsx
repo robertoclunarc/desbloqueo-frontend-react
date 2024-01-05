@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 /* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 /* eslint-disable no-console */
@@ -223,8 +224,12 @@ function DesbloqueosForm() {
   let opcionesDevicesFilter = [];
   if (opciones[2]?.idReg) {
     const opcionesDevices = devicesOptions?.filter((item) => item.brandDrSimID === opciones[2].idReg);
-    // eslint-disable-next-line no-unused-vars
-    opcionesDevicesFilter = opcionesDevices;
+
+    if (opcionesDevices?.length > 0) {
+      opcionesDevicesFilter = opcionesDevices;
+    } else {
+      opcionesDevicesFilter = [{ name: 'No hay dispósitivos disponibles' }];
+    }
   }
   const handleNextPrevClick = (active) => {
     setFromActivePanel({
@@ -243,20 +248,20 @@ function DesbloqueosForm() {
     navigate('/');
   };
 
-  const disabledPais = opciones[0] && opciones[1] && opciones[2] && opciones[3] ? undefined : 'disabled';
-  let disabledServicio = 'disabled';
+  let disabledPais = opciones[0] && opciones[1] && opciones[2] && opciones[3] ? undefined : 'disabled';
+  let disabledServicio = opciones[4] ? undefined : 'disabled';
 
-  if (opciones[4]?.Servicio !== 'Sin Servicio para este Terminal y/o Operadora') {
-    disabledServicio = undefined;
-  } else {
+  if (opciones[4]?.Servicios == 'Sin Servicio para este Terminal y/o Operadora') {
+    console.log('hola');
     disabledServicio = 'disabled';
+  }
+  if (opciones[3]?.Modelo === 'No hay dispósitivos disponibles') {
+    disabledPais = 'disabled';
   }
 
   const [aceptarTerminos, setAceptarTerminos] = useState(false);
   const [recibirBoletin, setRecibirBoletin] = useState(false);
   const disabledButton = (aceptarTerminos);
-
-  console.log(disabledButton);
   return (
     <Box sx={{
       display: 'flex',
