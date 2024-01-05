@@ -50,8 +50,6 @@ const CheckoutForm = ({ next, disabledButton }) => {
     }
   }, [disabledButton]);
 
-  console.log(loadingButton);
-
   let buttonText = '';
 
   if (loadingButton) {
@@ -67,7 +65,7 @@ const CheckoutForm = ({ next, disabledButton }) => {
     // console.log(urlApiStripe);
     setLoading(true);
     const { data } = await axios.post(urlApiStripe, {
-      urlDomain: `${window.location.origin}/resumenPago`,
+      urlDomain: `${window.location.origin}/desbloqueos`,
       id_terminal: idTerminal,
       id_operador: idOperador,
       id_service: idService,

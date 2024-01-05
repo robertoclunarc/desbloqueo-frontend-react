@@ -29,6 +29,7 @@ import Select from '../../../components/formik/select/Select';
 import Input from '../../../components/payment/input/Input';
 import SelectService from '../../servicios/input/SelectService';
 import Resumen from '../../resumen/Resumen';
+import ResumenPago from '../../resumenPago/resumenPago';
 
 const QontoStepIconRoot = styled('div')(({ theme, ownerState }) => ({
   color: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#eaeaf0',
@@ -238,8 +239,6 @@ function DesbloqueosForm() {
       formActivePanelId: formActivePanel.formActivePanelId + 1,
       formActivePanelChange: true,
     });
-    // eslint-disable-next-line no-alert
-    console.log('Form submitted!');
     navigate('/');
   };
 
@@ -256,8 +255,7 @@ function DesbloqueosForm() {
   const [aceptarTerminos, setAceptarTerminos] = useState(false);
   const [recibirBoletin, setRecibirBoletin] = useState(false);
   const disabledButton = (aceptarTerminos && recibirBoletin);
-
-  console.log(disabledButton);
+  console.log(`tab: ${formActivePanel.formActivePanelId}`);
   return (
     <Box sx={{
       display: 'flex',
@@ -525,7 +523,7 @@ function DesbloqueosForm() {
                 padding: '20px',
               }}
               >
-                <Typography variant="h6">Completado!</Typography>
+                {/* <Typography variant="h6">Completado!</Typography>
                 { idTicket !== undefined ? (
                   <div>
                     <Typography textAlign="center">
@@ -548,7 +546,8 @@ function DesbloqueosForm() {
                     <br />
                     <strong>Por favor, inténtelo nuevamente más tarde o contactenos.</strong>
                   </Typography>
-                )}
+                )} */}
+                <ResumenPago> </ResumenPago>
               </Card>
             )}
           </Container>
