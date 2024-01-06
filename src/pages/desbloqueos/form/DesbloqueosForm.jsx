@@ -169,14 +169,13 @@ function DesbloqueosForm() {
     formActivePanelId: statusDesbloqueos,
     formActivePanelChange: false,
   });
-
   const [countriesOptions, setCountriesOptions] = useState();
   const [networkOptions, setNetworkOptions] = useState();
   const [brandOptions, setBrandOptions] = useState();
   const [devicesOptions, setDevicesOptions] = useState();
   // const [networksOptionsFilter, setNetworksOptionsFilter] = useState();
   const opciones = useSelector((state) => state.opciones);
-  const idTicket = opciones[11]?.id_ticket;
+  const idTicket = opciones[12]?.id_ticket;
 
   const countries = () => {
     const URL = 'https://2pr78ypovg.execute-api.us-east-1.amazonaws.com/items';
@@ -234,6 +233,12 @@ function DesbloqueosForm() {
       formActivePanelChange: true,
     });
   };
+
+  useEffect(() => {
+    if (status) {
+      handleNextPrevClick(4);
+    }
+  }, [status]);
 
   const handleSubmission = () => {
     setFromActivePanel({
@@ -510,11 +515,14 @@ function DesbloqueosForm() {
                     <FormControlLabel control={<Checkbox color="secondary" checked={aceptarTerminos} onChange={(e) => setAceptarTerminos(e.target.checked)} />} label="Aceptar los términos  y condiciones" style={{ color: 'white' }} id="checkbox" />
                     <FormControlLabel control={<Checkbox color="secondary" checked={recibirBoletin} onChange={(e) => setRecibirBoletin(e.target.checked)} />} label="Recibir boletín informativo" style={{ color: 'white' }} id="checkbox2" />
                     <Pagar disabledButton={disabledButton} next={handleNextPrevClick} />
+                    <IconButton onClick={() => handleNextPrevClick(2)} sx={{ marginTop: '20px', border: '1px solid white', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)' }}>
+                      <ArrowBackIcon sx={{ color: 'black' }} fontSize="large" />
+                    </IconButton>
                   </Card>
                 </div>
               </div>
             )}
-            { status && (
+            {formActivePanel.formActivePanelId === 4 && status && (
             <Card sx={{
               display: 'flex',
               flexDirection: 'column',
@@ -571,7 +579,12 @@ function DesbloqueosForm() {
                 flexDirection: 'column',
               }}
               >
-                <ResumenPago setFromActivePanel={setFromActivePanel} />
+                <ResumenPago />
+                {!idTicket && (
+                  <IconButton onClick={() => handleNextPrevClick(3)} sx={{ marginTop: '20px', border: '1px solid white', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)' }}>
+                    <ArrowBackIcon sx={{ color: 'black' }} fontSize="large" />
+                  </IconButton>
+                )}
               </Box>
             </Card>
 

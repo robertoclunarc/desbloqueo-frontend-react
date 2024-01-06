@@ -9,7 +9,7 @@ export const opcionesSlice = createSlice({
     setOpcionesGlobal: (state, action) => {
       const index = state?.findIndex((e) => e.id === action.payload.id);
       if (index === -1) {
-        state.push(action.payload);
+        state?.push(action.payload);
       } else {
         // eslint-disable-next-line no-param-reassign
         state[index] = action.payload;

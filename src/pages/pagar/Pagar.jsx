@@ -3,8 +3,6 @@
 /* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { IconButton } from '@mui/material';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import axios from 'axios';
 import { environments } from '../../environments/environment';
 import '../../assets/formPayment.css';
@@ -19,7 +17,7 @@ const urlApiStripe = `${env.apiStripeUrl}/create-checkout-session`;
   return t.match(regex)[0];
 } */
 
-const CheckoutForm = ({ next, disabledButton }) => {
+const CheckoutForm = ({ disabledButton }) => {
   const opcion = useSelector((state) => state.opciones);
   const idTerminal = opcion[3].idReg;
   const idOperador = opcion[1].idReg;
@@ -87,9 +85,6 @@ const CheckoutForm = ({ next, disabledButton }) => {
           {buttonText}
         </button>
       </section>
-      <IconButton disabled={loading} onClick={() => next(2)} sx={{ marginTop: '20px', border: '1px solid white', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)' }}>
-        <ArrowBackIcon sx={{ color: 'black' }} fontSize="large" />
-      </IconButton>
     </div>
   );
 };
@@ -129,7 +124,7 @@ function Pagar({ next, disabledButton }) {
   return message ? (
     <Message message={message} />
   ) : (
-    <CheckoutForm disabledButton={disabledButton} />
+    <CheckoutForm next={next} disabledButton={disabledButton} />
   );
 }
 
