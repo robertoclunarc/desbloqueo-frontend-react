@@ -8,7 +8,7 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import {
   Box,
-  Card, Checkbox, Container, FormControlLabel, IconButton, Stack, Step, StepLabel, Stepper, Typography,
+  Card, Checkbox, Container, FormControlLabel, IconButton, Popper, Stack, Step, StepLabel, Stepper, Typography,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector';
@@ -19,7 +19,7 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 import PaymentIcon from '@mui/icons-material/Payment';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import EditNoteIcon from '@mui/icons-material/EditNote';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router';
 import axios from 'axios';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -32,6 +32,7 @@ import Input from '../../../components/payment/input/Input';
 import SelectService from '../../servicios/input/SelectService';
 import Resumen from '../../resumen/Resumen';
 import ResumenPago from '../../resumenPago/resumenPago';
+import { setStatusStore } from '../../../store/slices/statusDesbloqueo.slice';
 
 const QontoStepIconRoot = styled('div')(({ theme, ownerState }) => ({
   color: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#eaeaf0',
@@ -163,9 +164,14 @@ ColorlibStepIcon.defaultProps = {
 const steps = ['Información del Telefono', 'Elige tu Servicio', 'Verificación y Pago', 'Final'];
 
 function DesbloqueosForm() {
-  const navigate = useNavigate();
   const statusDesbloqueos = useSelector((state) => state.status);
   const { status } = useParams();
+  const [nextPag, setNextPag] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [nextPagServices, setNextPagServices] = useState(false);
+  const [anchorElServices, setAnchorElServices] = useState(null);
+  const dispatch = useDispatch();
+
   const [formActivePanel, setFromActivePanel] = useState({
     formActivePanelId: statusDesbloqueos,
     formActivePanelChange: false,
@@ -238,6 +244,12 @@ function DesbloqueosForm() {
       formActivePanelChange: true,
     });
   };
+  useEffect(() => {
+    console.log(statusDesbloqueos);
+    if (statusDesbloqueos == 1) {
+      handleNextPrevClick(statusDesbloqueos);
+    }
+  }, [statusDesbloqueos]);
 
   useEffect(() => {
     if (status) {
@@ -245,24 +257,35 @@ function DesbloqueosForm() {
     }
   }, [status]);
 
-  const handleSubmission = () => {
-    setFromActivePanel({
-      formActivePanelId: formActivePanel.formActivePanelId + 1,
-      formActivePanelChange: true,
-    });
-    navigate('/');
+  const goNextServices = (event) => {
+    if (opciones[4]) {
+      if (opciones[4]?.Servicios == 'Sin Servicio para este Terminal y/o Operadora') {
+        setNextPagServices(!nextPagServices);
+        setAnchorElServices(event.currentTarget);
+      } else {
+        handleNextPrevClick(3);
+      }
+    } else {
+      setNextPagServices(!nextPagServices);
+      setAnchorElServices(event.currentTarget);
+    }
   };
-
-  let disabledPais = opciones[0] && opciones[1] && opciones[2] && opciones[3] ? undefined : 'disabled';
-  let disabledServicio = opciones[4] ? undefined : 'disabled';
-
-  if (opciones[4]?.Servicios == 'Sin Servicio para este Terminal y/o Operadora') {
-    disabledServicio = 'disabled';
-  }
-  if (opciones[3]?.Modelo === 'No hay dispósitivos disponibles') {
-    disabledPais = 'disabled';
-  }
-
+  const goNext = (event) => {
+    if (opciones[0] && opciones[1] && opciones[2] && opciones[3]) {
+      if (opciones[3]?.Modelo === 'No hay dispósitivos disponibles') {
+        setNextPag(!nextPag);
+        setAnchorEl(event.currentTarget);
+      } else {
+        setNextPag(!nextPag);
+        setAnchorEl(event.currentTarget);
+        handleNextPrevClick(2);
+        dispatch(setStatusStore(2));
+      }
+    } else {
+      setAnchorEl(event.currentTarget);
+      setNextPag(!nextPag);
+    }
+  };
   const [aceptarTerminos, setAceptarTerminos] = useState(false);
   const [recibirBoletin, setRecibirBoletin] = useState(false);
   const disabledButton = (aceptarTerminos && opciones[10] && opciones[11]);
@@ -390,9 +413,20 @@ function DesbloqueosForm() {
                     id={4}
                   />
                 </Box>
-                <IconButton disabled={disabledPais} onClick={() => handleNextPrevClick(2)} sx={{ marginTop: '20px', border: '1px solid white', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)' }}>
+                <IconButton
+                  onClick={goNext}
+                  sx={{ marginTop: '20px', border: '1px solid white', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)' }}
+                >
                   <ArrowForwardIcon sx={{ color: 'black' }} fontSize="large" />
                 </IconButton>
+                <Popper open={nextPag} anchorEl={anchorEl} placement="bottom">
+                  <Box sx={{
+                    border: 1, p: 1, background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)', borderRadius: '5px', marginTop: '5px',
+                  }}
+                  >
+                    Debe llenar todos los campos
+                  </Box>
+                </Popper>
               </Card>
             )}
             {formActivePanel.formActivePanelId === 2 && (
@@ -459,10 +493,18 @@ function DesbloqueosForm() {
                   <IconButton onClick={() => handleNextPrevClick(1)} sx={{ marginTop: '20px', border: '1px solid white', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)' }}>
                     <ArrowBackIcon sx={{ color: 'black' }} fontSize="large" />
                   </IconButton>
-                  <IconButton disabled={disabledServicio} onClick={() => handleNextPrevClick(3)} sx={{ marginTop: '20px', border: '1px solid white', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)' }}>
+                  <IconButton onClick={goNextServices} sx={{ marginTop: '20px', border: '1px solid white', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)' }}>
                     <ArrowForwardIcon sx={{ color: 'black' }} fontSize="large" />
                   </IconButton>
                 </Box>
+                <Popper open={nextPagServices} anchorEl={anchorElServices} placement="bottom">
+                  <Box sx={{
+                    border: 1, p: 1, background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)', borderRadius: '5px', marginTop: '5px',
+                  }}
+                  >
+                    No hay servicio para este terminal
+                  </Box>
+                </Popper>
               </Card>
             )}
             {formActivePanel.formActivePanelId === 3 && (

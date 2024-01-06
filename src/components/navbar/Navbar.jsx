@@ -15,8 +15,11 @@ import {
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import MenuIcon from '@mui/icons-material/Menu';
+import { useDispatch } from 'react-redux';
 import { PATHS } from '../../shared/constants/Constants';
 import logo from '../../shared/image/LogoTransparente.png';
+import { setOpcionesStore } from '../../store/slices/opciones.slice';
+import { setStatusStore } from '../../store/slices/statusDesbloqueo.slice';
 
 const StyledToolbar = styled(Toolbar)({
   display: 'flex',
@@ -26,6 +29,7 @@ const StyledToolbar = styled(Toolbar)({
 
 function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const dispatch = useDispatch();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -56,6 +60,10 @@ function Navbar() {
               <ListItemText
                 primary={item.name}
                 onClick={() => {
+                  if (item.name === 'Inicio' || item.name === 'Desbloqueos') {
+                    dispatch(setOpcionesStore([]));
+                    dispatch(setStatusStore(1));
+                  }
                   navigate(item.path);
                   handleDrawerToggle();
                 }}
@@ -142,6 +150,10 @@ function Navbar() {
                 key={item.name}
                 color="otherColor"
                 onClick={() => {
+                  if (item.name === 'Inicio' || item.name === 'Desbloqueos') {
+                    dispatch(setOpcionesStore([]));
+                    dispatch(setStatusStore(1));
+                  }
                   navigate(item.path);
                 }}
                 sx={{
