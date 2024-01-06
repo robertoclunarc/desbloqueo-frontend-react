@@ -8,7 +8,6 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import {
   Box,
-  Button,
   Card, Checkbox, Container, FormControlLabel, IconButton, Stack, Step, StepLabel, Stepper, Typography,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -21,15 +20,18 @@ import PaymentIcon from '@mui/icons-material/Payment';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import axios from 'axios';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
+import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import Pagar from '../../pagar/Pagar';
 import Select from '../../../components/formik/select/Select';
 import Input from '../../../components/payment/input/Input';
 import SelectService from '../../servicios/input/SelectService';
 import Resumen from '../../resumen/Resumen';
+import ResumenPago from '../../resumenPago/resumenPago';
 
 const QontoStepIconRoot = styled('div')(({ theme, ownerState }) => ({
   color: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#eaeaf0',
@@ -163,19 +165,18 @@ const steps = ['Información del Telefono', 'Elige tu Servicio', 'Verificación 
 function DesbloqueosForm() {
   const navigate = useNavigate();
   const statusDesbloqueos = useSelector((state) => state.status);
-  // handleCreateData();
+  const { status } = useParams();
   const [formActivePanel, setFromActivePanel] = useState({
     formActivePanelId: statusDesbloqueos,
     formActivePanelChange: false,
   });
-
   const [countriesOptions, setCountriesOptions] = useState();
   const [networkOptions, setNetworkOptions] = useState();
   const [brandOptions, setBrandOptions] = useState();
   const [devicesOptions, setDevicesOptions] = useState();
   // const [networksOptionsFilter, setNetworksOptionsFilter] = useState();
   const opciones = useSelector((state) => state.opciones);
-  const idTicket = opciones[11]?.id_ticket;
+  const idTicket = opciones[12]?.id_ticket;
 
   const countries = () => {
     const URL = 'https://2pr78ypovg.execute-api.us-east-1.amazonaws.com/items';
@@ -238,13 +239,17 @@ function DesbloqueosForm() {
     });
   };
 
+  useEffect(() => {
+    if (status) {
+      handleNextPrevClick(4);
+    }
+  }, [status]);
+
   const handleSubmission = () => {
     setFromActivePanel({
       formActivePanelId: formActivePanel.formActivePanelId + 1,
       formActivePanelChange: true,
     });
-    // eslint-disable-next-line no-alert
-    console.log('Form submitted!');
     navigate('/');
   };
 
@@ -514,45 +519,79 @@ function DesbloqueosForm() {
                     <FormControlLabel control={<Checkbox color="secondary" checked={aceptarTerminos} onChange={(e) => setAceptarTerminos(e.target.checked)} />} label="Aceptar los términos  y condiciones" style={{ color: 'white' }} id="checkbox" />
                     <FormControlLabel control={<Checkbox color="secondary" checked={recibirBoletin} onChange={(e) => setRecibirBoletin(e.target.checked)} />} label="Recibir boletín informativo" style={{ color: 'white' }} id="checkbox2" />
                     <Pagar disabledButton={disabledButton} next={handleNextPrevClick} />
+                    <IconButton onClick={() => handleNextPrevClick(2)} sx={{ marginTop: '20px', border: '1px solid white', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)' }}>
+                      <ArrowBackIcon sx={{ color: 'black' }} fontSize="large" />
+                    </IconButton>
                   </Card>
                 </div>
               </div>
             )}
-            {formActivePanel.formActivePanelId === 4 && (
-              <Card sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '20px',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: '20px',
+            {formActivePanel.formActivePanelId === 4 && status && (
+            <Card sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              paddingBottom: '30px',
+              borderRadius: '35px',
+              backgroundColor: '#2c5b97',
+              height: { xs: 'auto', sm: 'auto' },
+              border: '2px solid white',
+              justifyContent: 'end',
+              boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+              paddingTop: '6em',
+
+            }}
+            >
+              <Stack sx={{ width: '100%', paddingBottom: '1em' }} spacing={4}>
+                <Stepper
+                  alternativeLabel
+                  activeStep={3}
+                  connector={<ColorlibConnector />}
+                  sx={{ display: { xs: 'flex', sm: 'flex' } }}
+                >
+                  {
+          steps.map((label) => (
+            <Step key={label}>
+              <StepLabel StepIconComponent={ColorlibStepIcon}>
+                <Typography sx={{ fontSize: '12px', color: 'white' }}>
+                  {
+                  label
+                }
+                </Typography>
+              </StepLabel>
+            </Step>
+          ))
+        }
+                </Stepper>
+              </Stack>
+              <Box sx={{
+                border: '2px solid white', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'absolute', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)', width: { xs: '100px', sm: '150px' }, height: { xs: '100px', sm: '150px' }, top: { xs: '-6%', sm: '-13%' }, borderRadius: '50%',
               }}
               >
-                <Typography variant="h6">Completado!</Typography>
-                {idTicket !== undefined ? (
-                  <div>
-                    <Typography textAlign="center">
-                      <strong>{`Solicitud Creada. Nro. Ticket: ${idTicket}.`}</strong>
-                      <br />
-                      <strong>Pronto estará recibiendo en su correo el estatus de su solicitud.</strong>
-                    </Typography>
-                    <Box sx={{
-                      display: 'flex', gap: { xs: '10px', sm: '100px' }, flexDirection: { xs: 'column', sm: 'row' }, justifyContent: 'center', marginTop: '20px',
-                    }}
-                    >
-                      {' '}
-                      <Button variant="contained" onClick={() => handleSubmission()}>Submit</Button>
-                    </Box>
-                  </div>
-                ) : (
-                  // This block will be executed if idTicket is undefined
-                  <Typography variant="body1" textAlign="center">
-                    <strong>No se ha recibido un número de ticket válido.</strong>
-                    <br />
-                    <strong>Por favor, inténtelo nuevamente más tarde o contactenos.</strong>
-                  </Typography>
+                { status === 'success' ? (
+                  <DoneOutlineIcon name="completed" sx={{ height: { xs: '50px', sm: '100px' }, width: { xs: '50px', sm: '100px' }, color: 'black' }} />
+                )
+                  : (<CancelOutlinedIcon name="canceled" sx={{ height: { xs: '50px', sm: '100px' }, width: { xs: '50px', sm: '100px' }, color: 'black' }} />)}
+
+              </Box>
+              <Box sx={{
+                display: 'flex',
+                gap: '30px',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: { xs: '100%', sm: '100%' },
+                flexDirection: 'column',
+              }}
+              >
+                <ResumenPago />
+                {!idTicket && (
+                  <IconButton onClick={() => handleNextPrevClick(3)} sx={{ marginTop: '20px', border: '1px solid white', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)' }}>
+                    <ArrowBackIcon sx={{ color: 'black' }} fontSize="large" />
+                  </IconButton>
                 )}
-              </Card>
+              </Box>
+            </Card>
+
             )}
           </Container>
         </Form>

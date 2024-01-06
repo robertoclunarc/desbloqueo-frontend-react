@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
-import { setOpcionesStore/* , setOpcionesGlobal */ } from '../../store/slices/opciones.slice';
+import { setOpcionesStore /* setOpcionesGlobal */ } from '../../store/slices/opciones.slice';
 import postCreateOrdenDrSim from '../../api/drsimcreateordenes';
 import putDynamobdOrden from '../../api/putDynamodbOrden';
 
@@ -61,27 +61,28 @@ async function crearTicket(opciones) {
 
 function ResumenPagoForm({ setButton }) {
   const { status } = useParams();
-  const datosResumen = localStorage.getItem('datosResumen');
   const dispatch = useDispatch();
-  const [resTicket, setResTicket] = useState(null);
+  const datosResumen = localStorage.getItem('datosResumen');
   dispatch(setOpcionesStore(datosResumen));
+  const [resTicket, setResTicket] = useState(null);
   const opcionesString = useSelector((state) => state.opciones);
   const opciones = JSON.parse(opcionesString);
-  // console.log(opciones);
+
   useEffect(() => {
     const fetchData = async () => {
       if (status === 'success') {
         const ticket = await crearTicket(opciones);
+
         setResTicket(ticket);
-        setButton(false);
+        setButton({ activate: false, ticket: ticket.id });
       } else {
         setResTicket({ message: 'Lo sentimos, Tu Pago Fue Rechazado' });
-        setButton(true);
+        setButton({ activate: false, ticket: null });
       }
     };
     fetchData();
   }, []);
-
+  // dispatch(setOpcionesGlobal({ id: '12', id_ticket: `${resTicket?.id}` }));
   return (
     <>
       <Box
@@ -95,7 +96,7 @@ function ResumenPagoForm({ setButton }) {
           Pais:
           <span>  </span>
           <span style={{ fontWeight: 'bold' }}>
-            {opciones[0].Pais}
+            {opciones[0]?.Pais}
             ,
           </span>
 
