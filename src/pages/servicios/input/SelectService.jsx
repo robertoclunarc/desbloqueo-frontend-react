@@ -112,8 +112,13 @@ function SelectService({
             return tool;
           });
           setToolOptions(tools);
-          setValueOptions(options[0]?.id); // Esto selecciona la primera opción
-          handleChange({ target: { value: options[0]?.id } });
+          if (opciones[4]) {
+            setValueOptions(opciones[4]?.idReg); // Esto selecciona la primera opción
+            handleChange({ target: { value: opciones[4]?.idReg } });
+          } else {
+            setValueOptions(options[0]?.id); // Esto selecciona la primera opción
+            handleChange({ target: { value: options[0]?.id } });
+          }
         } catch (error) {
           console.log(error);
         } finally {

@@ -19,11 +19,11 @@ const urlApiStripe = `${env.apiStripeUrl}/create-checkout-session`;
 
 const CheckoutForm = ({ disabledButton }) => {
   const opcion = useSelector((state) => state.opciones);
-  const idTerminal = opcion[3].idReg;
-  const idOperador = opcion[1].idReg;
+  const idTerminal = opcion[3]?.idReg;
+  const idOperador = opcion[1]?.idReg;
   // const { imei } = opcion[9] !== undefined ? opcion[9] : '';
   // const { email } = opcion[10] !== undefined ? opcion[10] : '';
-  const idService = opcion[4].idReg;
+  const idService = opcion[4]?.idReg;
   // const prdName = opcion[3].Modelo !== undefined ? opcion[3].Modelo : 'Modelo no especificado';
   // const dscService = opcion[4].Servicio !== undefined ? opcion[4].Servicio : 'Servicio sin especificacion';
   const displayPrice = `${opcion[5]?.price}`;
