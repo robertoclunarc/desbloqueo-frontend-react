@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { Box, Typography } from '@mui/material';
 import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
-import { setOpcionesStore /* setOpcionesGlobal */ } from '../../store/slices/opciones.slice';
+import { setOpcionesStore, setOpcionesGlobal } from '../../store/slices/opciones.slice';
 import postCreateOrdenDrSim from '../../api/drsimcreateordenes';
 import putDynamobdOrden from '../../api/putDynamodbOrden';
 
@@ -26,12 +26,12 @@ async function crearTicket(opciones) {
   const { imei } = opciones[10] || '';
   const { email } = opciones[11] || '';
   const idService = opciones[4]?.idReg;
+  const timestamp = Date.now();
+  const fecha = new Date(timestamp);
+  const hoy = fecha.toISOString();
   try {
     const ticket = await createOrden(idTerminal, idOperador, imei, idService);
     if (ticket?.res?.id_ticket) {
-      const timestamp = Date.now();
-      const fecha = new Date(timestamp);
-      const hoy = fecha.toISOString();
       putDynamobdOrden(timestamp, `${ticket.id}`, hoy, email, `${imei}`, idService, `${price}`, 'PENDIENTE');
       return {
         message: `Solicitud Procesada con el Nro. de Ticket: ${ticket?.res.id_ticket}`,
@@ -40,16 +40,19 @@ async function crearTicket(opciones) {
     } if (ticket && (ticket?.info || ticket?.error || ticket?.message)) {
       // eslint-disable-next-line max-len, no-nested-ternary
       const msg = ticket?.info !== undefined ? ticket?.info : ticket?.error === undefined ? ticket?.message : ticket?.error;
+      putDynamobdOrden(timestamp, 'none', hoy, email, `${imei}`, idService, `${price}`, msg);
       return {
         message: `Solicitud NO Procesada: ${msg}`,
         id: null,
       };
     }
+    putDynamobdOrden(timestamp, 'none', hoy, email, `${imei}`, idService, `${price}`, 'Solicitud NO Procesada');
     return {
-      message: 'Solicitud NO Procesada.',
+      message: 'Solicitud NO Procesada',
       id: null,
     };
   } catch (error) {
+    putDynamobdOrden(timestamp, 'none', hoy, email, `${imei}`, idService, `${price}`, error);
     console.error(error);
     // eslint-disable-next-line no-return-assign
     return {
@@ -63,16 +66,30 @@ function ResumenPagoForm({ setButton }) {
   const { status } = useParams();
   const dispatch = useDispatch();
   const datosResumen = localStorage.getItem('datosResumen');
-  dispatch(setOpcionesStore(datosResumen));
-  const [resTicket, setResTicket] = useState(null);
+  console.log(datosResumen);
+  const datosResumenArray = JSON.parse(datosResumen);
+  console.log(datosResumenArray);
+
+  if (Array.isArray(datosResumenArray)) {
+    // eslint-disable-next-line no-unused-vars
+    const datosResumenAjustado = datosResumenArray.map((item) => ({
+      ...item,
+    }));
+  }
+
+  // eslint-disable-next-line no-undef
+  dispatch(setOpcionesStore(datosResumenAjustado));
+
   const opcionesString = useSelector((state) => state.opciones);
   const opciones = JSON.parse(opcionesString);
+
+  const [resTicket, setResTicket] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       if (status === 'success') {
         const ticket = await crearTicket(opciones);
-
+        dispatch(setOpcionesGlobal({ id: '13', id_ticket: `${ticket?.id}` }));
         setResTicket(ticket);
         setButton({ activate: false, ticket: ticket.id });
       } else {
@@ -82,7 +99,7 @@ function ResumenPagoForm({ setButton }) {
     };
     fetchData();
   }, []);
-  // dispatch(setOpcionesGlobal({ id: '12', id_ticket: `${resTicket?.id}` }));
+
   return (
     <>
       <Box

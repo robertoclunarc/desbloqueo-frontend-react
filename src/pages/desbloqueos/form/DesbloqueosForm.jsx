@@ -182,7 +182,6 @@ function DesbloqueosForm() {
   const [devicesOptions, setDevicesOptions] = useState();
   // const [networksOptionsFilter, setNetworksOptionsFilter] = useState();
   const opciones = useSelector((state) => state.opciones);
-  const idTicket = opciones[12]?.id_ticket;
 
   const countries = () => {
     const URL = 'https://2pr78ypovg.execute-api.us-east-1.amazonaws.com/items';
@@ -289,6 +288,9 @@ function DesbloqueosForm() {
   const [aceptarTerminos, setAceptarTerminos] = useState(false);
   const [recibirBoletin, setRecibirBoletin] = useState(false);
   const disabledButton = (aceptarTerminos && opciones[10] && opciones[11]);
+  const idTicket = opciones[12]?.id_ticket;
+  console.log(idTicket);
+  console.log(opciones);
   return (
     <Box sx={{
       display: 'flex',
