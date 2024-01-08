@@ -54,7 +54,7 @@ function SelectService({
   const handleChange = async (event) => {
     setValueOptions(event.target.value);
     descripcion = await buscarElementoAsync(options, event.target.value);
-    console.log(descripcion, 'descripcion JDMA');
+
     if (descripcion) {
       descripcion.desc = resumir(descripcion?.desc);
       descripcion.desc = descripcion.desc.replace(/undefined/g, '').replace(/\s{2,}/g, ' ');

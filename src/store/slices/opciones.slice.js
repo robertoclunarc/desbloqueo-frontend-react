@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable max-len */
 import { createSlice } from '@reduxjs/toolkit';
 
