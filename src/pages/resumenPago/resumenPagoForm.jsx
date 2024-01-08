@@ -41,19 +41,19 @@ async function crearTicket(opciones) {
     } if (ticket && (ticket?.info || ticket?.error || ticket?.message)) {
       // eslint-disable-next-line max-len, no-nested-ternary
       const msg = ticket?.info !== undefined ? ticket?.info : ticket?.error === undefined ? ticket?.message : ticket?.error;
-      putDynamobdOrden(timestamp, 'none', hoy, email, `${imei}`, idService, `${price}`, msg);
+      putDynamobdOrden(timestamp, 'none', hoy, email, `${imei}`, idService, `${price}`, `NO PROCESADO: ${msg}. Operadora:${idOperador}, Terminal:${idTerminal}`);
       return {
         message: 'Pronto estará recibiendo respuesta al correo que usted suministró. ¡Gracias!',
         id: null,
       };
     }
-    putDynamobdOrden(timestamp, 'none', hoy, email, `${imei}`, idService, `${price}`, 'Solicitud NO Procesada');
+    putDynamobdOrden(timestamp, 'none', hoy, email, `${imei}`, idService, `${price}`, `NO PROCESADO. Operadora:${idOperador}, Terminal: ${idTerminal}`);
     return {
       message: 'Pronto estará recibiendo respuesta al correo que usted suministró. ¡Gracias!',
       id: null,
     };
   } catch (error) {
-    putDynamobdOrden(timestamp, 'none', hoy, email, `${imei}`, idService, `${price}`, error);
+    putDynamobdOrden(timestamp, 'none', hoy, email, `${imei}`, idService, `${price}`, `${error}. Operadora:${idOperador}, Terminal: ${idTerminal}`);
     console.error(error);
     // eslint-disable-next-line no-return-assign
     return {
