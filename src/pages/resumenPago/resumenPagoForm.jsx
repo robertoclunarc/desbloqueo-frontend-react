@@ -3,8 +3,9 @@
 /* eslint-disable react/forbid-prop-types */
 import React, { useEffect, useState } from 'react';
 import { Box, Typography } from '@mui/material';
-import { useSelector, useDispatch } from 'react-redux';
+// import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
+// eslint-disable-next-line no-unused-vars
 import { setOpcionesStore, setOpcionesGlobal } from '../../store/slices/opciones.slice';
 import postCreateOrdenDrSim from '../../api/drsimcreateordenes';
 import putDynamobdOrden from '../../api/putDynamodbOrden';
@@ -42,13 +43,13 @@ async function crearTicket(opciones) {
       const msg = ticket?.info !== undefined ? ticket?.info : ticket?.error === undefined ? ticket?.message : ticket?.error;
       putDynamobdOrden(timestamp, 'none', hoy, email, `${imei}`, idService, `${price}`, msg);
       return {
-        message: `Solicitud NO Procesada: ${msg}`,
+        message: 'Pronto estará recibiendo respuesta al correo que usted suministró. ¡Gracias!',
         id: null,
       };
     }
     putDynamobdOrden(timestamp, 'none', hoy, email, `${imei}`, idService, `${price}`, 'Solicitud NO Procesada');
     return {
-      message: 'Solicitud NO Procesada',
+      message: 'Pronto estará recibiendo respuesta al correo que usted suministró. ¡Gracias!',
       id: null,
     };
   } catch (error) {
@@ -56,7 +57,7 @@ async function crearTicket(opciones) {
     console.error(error);
     // eslint-disable-next-line no-return-assign
     return {
-      message: 'Lo sentimos, Hubo un Problema Para Crear la Orden',
+      message: 'Pronto estará recibiendo respuesta al correo que usted suministró. ¡Gracias!',
       id: null,
     };
   }
@@ -64,24 +65,9 @@ async function crearTicket(opciones) {
 
 function ResumenPagoForm({ setButton }) {
   const { status } = useParams();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const datosResumen = localStorage.getItem('datosResumen');
-  console.log(datosResumen);
-  const datosResumenArray = JSON.parse(datosResumen);
-  console.log(datosResumenArray);
-
-  if (Array.isArray(datosResumenArray)) {
-    // eslint-disable-next-line no-unused-vars
-    const datosResumenAjustado = datosResumenArray.map((item) => ({
-      ...item,
-    }));
-  }
-
-  // eslint-disable-next-line no-undef
-  dispatch(setOpcionesStore(datosResumenAjustado));
-
-  const opcionesString = useSelector((state) => state.opciones);
-  const opciones = JSON.parse(opcionesString);
+  const opciones = JSON.parse(datosResumen);
 
   const [resTicket, setResTicket] = useState(null);
 
@@ -89,7 +75,7 @@ function ResumenPagoForm({ setButton }) {
     const fetchData = async () => {
       if (status === 'success') {
         const ticket = await crearTicket(opciones);
-        dispatch(setOpcionesGlobal({ id: '13', id_ticket: `${ticket?.id}` }));
+        setOpcionesGlobal({ id: '13', id_ticket: `${ticket?.id}` });
         setResTicket(ticket);
         setButton({ activate: false, ticket: ticket.id });
       } else {
@@ -172,6 +158,28 @@ function ResumenPagoForm({ setButton }) {
         <Typography
           sx={{ color: 'black' }}
         >
+          IMEI:
+          <span>  </span>
+          <span style={{ fontWeight: 'bold' }}>
+            {opciones[10]?.imei}
+            ,
+          </span>
+
+        </Typography>
+        <Typography
+          sx={{ color: 'black' }}
+        >
+          E-Mail:
+          <span>  </span>
+          <span style={{ fontWeight: 'bold' }}>
+            {opciones[11]?.email}
+            ,
+          </span>
+
+        </Typography>
+        <Typography
+          sx={{ color: 'black' }}
+        >
           Monto Pagado:
           <span>  </span>
           <span style={{ fontWeight: 'bold' }}>
@@ -197,7 +205,7 @@ function ResumenPagoForm({ setButton }) {
           color: '#f0a919',
         }}
       >
-        {resTicket && resTicket.message ? (
+        {resTicket ? (
           <span style={{ fontWeight: 'bold' }}>
             {resTicket.message}
           </span>

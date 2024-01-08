@@ -1,26 +1,14 @@
 /* eslint-disable max-len */
-import {
-  Typography, Button,
-} from '@mui/material';
+import { Typography } from '@mui/material';
 import React, { useState } from 'react';
-import { useParams, useNavigate } from 'react-router';
-import HomeIcon from '@mui/icons-material/Home';
-import { useDispatch } from 'react-redux';
+import { useParams } from 'react-router';
 import ResumenPagoForm from './resumenPagoForm';
-import { setOpcionesStore } from '../../store/slices/opciones.slice';
 
 // eslint-disable-next-line react/prop-types
 function ResumenPago() {
   const { status } = useParams();
   const [button, setButton] = useState({ activate: false, ticket: null });
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
-  const goHome = () => {
-    navigate('/');
-    dispatch(setOpcionesStore([]));
-  };
   return (
     <>
       <Typography
@@ -39,11 +27,8 @@ function ResumenPago() {
             color: 'white',
           }}
         >
-          Pronto estara recibiendo respuesta al correo que usted suministro. Gracias!
+          Pronto estará recibiendo respuesta al correo que usted suministró. ¡Gracias!
         </Typography>
-      )}
-      { status && status === 'success' && button.ticket && (
-        <Button color="otherColor" disabled={button.activate} onClick={goHome} sx={{ backgroundColor: '#E1A73E', marginTop: '30px', '&:hover': { backgroundColor: '#E1851f', transition: '0.8s' } }} startIcon={<HomeIcon />} on>Inicio</Button>
       )}
     </>
   );

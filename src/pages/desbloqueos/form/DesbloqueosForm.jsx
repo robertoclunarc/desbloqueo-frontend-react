@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import {
-  Box,
+  Box, Button,
   Card, Checkbox, Container, FormControlLabel, IconButton, Popper, Stack, Step, StepLabel, Stepper, Typography,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
@@ -15,7 +15,7 @@ import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector
 import LocationCityIcon from '@mui/icons-material/LocationCity';
 import Check from '@mui/icons-material/Check';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-/* import PersonIcon from '@mui/icons-material/Person'; */
+import HomeIcon from '@mui/icons-material/Home';
 import PaymentIcon from '@mui/icons-material/Payment';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import EditNoteIcon from '@mui/icons-material/EditNote';
@@ -33,6 +33,7 @@ import SelectService from '../../servicios/input/SelectService';
 import Resumen from '../../resumen/Resumen';
 import ResumenPago from '../../resumenPago/resumenPago';
 import { setStatusStore } from '../../../store/slices/statusDesbloqueo.slice';
+import { setOpcionesStore } from '../../../store/slices/opciones.slice';
 
 const QontoStepIconRoot = styled('div')(({ theme, ownerState }) => ({
   color: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#eaeaf0',
@@ -244,7 +245,6 @@ function DesbloqueosForm() {
     });
   };
   useEffect(() => {
-    console.log(statusDesbloqueos);
     if (statusDesbloqueos == 1) {
       handleNextPrevClick(statusDesbloqueos);
     }
@@ -289,8 +289,12 @@ function DesbloqueosForm() {
   const [recibirBoletin, setRecibirBoletin] = useState(false);
   const disabledButton = (aceptarTerminos && opciones[10] && opciones[11]);
   const idTicket = opciones[12]?.id_ticket;
-  console.log(idTicket);
-  console.log(opciones);
+
+  const navigate = useNavigate();
+  const goHome = () => {
+    navigate('/');
+    dispatch(setOpcionesStore([]));
+  };
   return (
     <Box sx={{
       display: 'flex',
@@ -629,9 +633,12 @@ function DesbloqueosForm() {
               >
                 <ResumenPago />
                 {!idTicket && (
-                  <IconButton onClick={() => handleNextPrevClick(3)} sx={{ marginTop: '20px', border: '1px solid white', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)' }}>
-                    <ArrowBackIcon sx={{ color: 'black' }} fontSize="large" />
-                  </IconButton>
+                  <>
+                    <Button color="otherColor" onClick={goHome} sx={{ backgroundColor: '#E1A73E', marginTop: '30px', '&:hover': { backgroundColor: '#E1851f', transition: '0.8s' } }} startIcon={<HomeIcon />} on>Inicio</Button>
+                    {/* <IconButton onClick={() => handleNextPrevClick(3)} sx={{ marginTop: '20px', border: '1px solid white', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)' }}>
+                      <ArrowBackIcon sx={{ color: 'black' }} fontSize="large" />
+                    </IconButton> */}
+                  </>
                 )}
               </Box>
             </Card>

@@ -8,10 +8,7 @@ export const opcionesSlice = createSlice({
   initialState: [],
   reducers: {
     setOpcionesGlobal: (state, action) => {
-      console.log(state);
-      console.log(action);
       const index = state?.findIndex((e) => e.id === action.payload.id);
-      console.log(index);
       if (index === -1) {
         state?.push(action.payload);
       } else {
