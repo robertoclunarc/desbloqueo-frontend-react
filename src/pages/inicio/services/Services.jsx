@@ -95,7 +95,11 @@ function Servicios() {
               backgroundColor: 'white',
               padding: '20px',
               borderRadius: '10px',
-              '&:hover': { cursor: 'pointer' },
+              '&:hover': {
+                transform: 'translateY(-3%)',
+                transition: 'all 400ms ease',
+                cursor: 'pointer',
+              },
               boxShadow: 'rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px',
             }}
             onClick={() => {
@@ -106,7 +110,11 @@ function Servicios() {
               component="img"
               image={logo}
               alt="precios competitivos.img"
-              sx={{ width: { sm: 150, xs: 100 }, height: { sm: 150, xs: 100 }, margin: 'auto' }}
+              sx={{
+                width: { sm: 150, xs: 100 },
+                height: { sm: 150, xs: 100 },
+                margin: 'auto',
+              }}
             />
           </Grid>
         ))}
