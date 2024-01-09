@@ -21,9 +21,9 @@ function Counter() {
       end: 100,
     },
     {
-      title: 'Operadoras Telefónicas Compatibles',
+      title: 'Operadoras Telefónicas',
       start: 0,
-      end: 10000,
+      end: 5000,
     },
     {
       title: 'Años de experiencia',

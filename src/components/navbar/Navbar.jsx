@@ -68,7 +68,7 @@ function Navbar() {
                   handleDrawerToggle();
                 }}
               >
-                hola
+                {item.name}
               </ListItemText>
             </ListItemButton>
           </ListItem>
@@ -90,7 +90,7 @@ function Navbar() {
               handleDrawerToggle();
             }}
           >
-            Desbloquea mi cel ya
+            ¡Libera mi cel ya!
           </ListItemText>
         </ListItemButton>
       </ListItem>
