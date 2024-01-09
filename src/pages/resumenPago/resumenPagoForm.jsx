@@ -3,9 +3,10 @@
 /* eslint-disable react/forbid-prop-types */
 import React, { useEffect, useState } from 'react';
 import { Box, Typography } from '@mui/material';
-import { useSelector, useDispatch } from 'react-redux';
+// import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router';
-import { setOpcionesStore /* setOpcionesGlobal */ } from '../../store/slices/opciones.slice';
+// eslint-disable-next-line no-unused-vars
+import { setOpcionesStore, setOpcionesGlobal } from '../../store/slices/opciones.slice';
 import postCreateOrdenDrSim from '../../api/drsimcreateordenes';
 import putDynamobdOrden from '../../api/putDynamodbOrden';
 
@@ -26,12 +27,12 @@ async function crearTicket(opciones) {
   const { imei } = opciones[10] || '';
   const { email } = opciones[11] || '';
   const idService = opciones[4]?.idReg;
+  const timestamp = Date.now();
+  const fecha = new Date(timestamp);
+  const hoy = fecha.toISOString();
   try {
     const ticket = await createOrden(idTerminal, idOperador, imei, idService);
     if (ticket?.res?.id_ticket) {
-      const timestamp = Date.now();
-      const fecha = new Date(timestamp);
-      const hoy = fecha.toISOString();
       putDynamobdOrden(timestamp, `${ticket.id}`, hoy, email, `${imei}`, idService, `${price}`, 'PENDIENTE');
       return {
         message: `Solicitud Procesada con el Nro. de Ticket: ${ticket?.res.id_ticket}`,
@@ -40,20 +41,23 @@ async function crearTicket(opciones) {
     } if (ticket && (ticket?.info || ticket?.error || ticket?.message)) {
       // eslint-disable-next-line max-len, no-nested-ternary
       const msg = ticket?.info !== undefined ? ticket?.info : ticket?.error === undefined ? ticket?.message : ticket?.error;
+      putDynamobdOrden(timestamp, 'none', hoy, email, `${imei}`, idService, `${price}`, `NO PROCESADO: ${msg}. Operadora:${idOperador}, Terminal:${idTerminal}`);
       return {
-        message: `Solicitud NO Procesada: ${msg}`,
+        message: 'Pronto estará recibiendo respuesta al correo que usted suministró. ¡Gracias!',
         id: null,
       };
     }
+    putDynamobdOrden(timestamp, 'none', hoy, email, `${imei}`, idService, `${price}`, `NO PROCESADO. Operadora:${idOperador}, Terminal: ${idTerminal}`);
     return {
-      message: 'Solicitud NO Procesada.',
+      message: 'Pronto estará recibiendo respuesta al correo que usted suministró. ¡Gracias!',
       id: null,
     };
   } catch (error) {
+    putDynamobdOrden(timestamp, 'none', hoy, email, `${imei}`, idService, `${price}`, `${error}. Operadora:${idOperador}, Terminal: ${idTerminal}`);
     console.error(error);
     // eslint-disable-next-line no-return-assign
     return {
-      message: 'Lo sentimos, Hubo un Problema Para Crear la Orden',
+      message: 'Pronto estará recibiendo respuesta al correo que usted suministró. ¡Gracias!',
       id: null,
     };
   }
@@ -61,18 +65,17 @@ async function crearTicket(opciones) {
 
 function ResumenPagoForm({ setButton }) {
   const { status } = useParams();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const datosResumen = localStorage.getItem('datosResumen');
-  dispatch(setOpcionesStore(datosResumen));
+  const opciones = JSON.parse(datosResumen);
+
   const [resTicket, setResTicket] = useState(null);
-  const opcionesString = useSelector((state) => state.opciones);
-  const opciones = JSON.parse(opcionesString);
 
   useEffect(() => {
     const fetchData = async () => {
       if (status === 'success') {
         const ticket = await crearTicket(opciones);
-
+        setOpcionesGlobal({ id: '13', id_ticket: `${ticket?.id}` });
         setResTicket(ticket);
         setButton({ activate: false, ticket: ticket.id });
       } else {
@@ -82,7 +85,7 @@ function ResumenPagoForm({ setButton }) {
     };
     fetchData();
   }, []);
-  // dispatch(setOpcionesGlobal({ id: '12', id_ticket: `${resTicket?.id}` }));
+
   return (
     <>
       <Box
@@ -155,6 +158,28 @@ function ResumenPagoForm({ setButton }) {
         <Typography
           sx={{ color: 'black' }}
         >
+          IMEI:
+          <span>  </span>
+          <span style={{ fontWeight: 'bold' }}>
+            {opciones[10]?.imei}
+            ,
+          </span>
+
+        </Typography>
+        <Typography
+          sx={{ color: 'black' }}
+        >
+          E-Mail:
+          <span>  </span>
+          <span style={{ fontWeight: 'bold' }}>
+            {opciones[11]?.email}
+            ,
+          </span>
+
+        </Typography>
+        <Typography
+          sx={{ color: 'black' }}
+        >
           Monto Pagado:
           <span>  </span>
           <span style={{ fontWeight: 'bold' }}>
@@ -180,7 +205,7 @@ function ResumenPagoForm({ setButton }) {
           color: '#f0a919',
         }}
       >
-        {resTicket && resTicket.message ? (
+        {resTicket ? (
           <span style={{ fontWeight: 'bold' }}>
             {resTicket.message}
           </span>

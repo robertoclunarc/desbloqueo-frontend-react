@@ -23,7 +23,15 @@ function MediaCard({
   return (
     <Card
       sx={{
-        backgroundColor: '#2586AF', borderRadius: '20px', width: '250px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
+        backgroundColor: '#2586AF',
+        borderRadius: '20px',
+        width: '250px',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        '&:hover': {
+          transform: 'translateY(-3%)', transition: 'all 400ms ease', cursor: 'pointer', boxShadow: '5px 5px 20px rgba(0,0,0,0.4)',
+        },
       }}
       onClick={() => {
         navigate(`/telefonos/${id}`);

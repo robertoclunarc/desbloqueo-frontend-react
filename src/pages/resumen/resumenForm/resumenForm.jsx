@@ -19,7 +19,7 @@ function ResumenForm() {
         Pais:
         <span>  </span>
         <span style={{ fontWeight: 'bold' }}>
-          {opciones[0].Pais}
+          {opciones[0]?.Pais}
           ,
         </span>
 
@@ -30,7 +30,7 @@ function ResumenForm() {
         Operadora:
         <span>  </span>
         <span style={{ fontWeight: 'bold' }}>
-          {opciones[1]['Compañia telefonica']}
+          {opciones[1] && opciones[1]['Compañia telefonica'] ? opciones[1]['Compañia telefonica'] : ''}
           ,
         </span>
       </Typography>
