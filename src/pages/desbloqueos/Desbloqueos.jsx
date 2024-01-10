@@ -72,9 +72,11 @@ function Desbloqueos() {
             Comience aquí:
           </Typography>
           {checkedOptions.map((item) => (
-            <Box sx={{
-              display: 'flex', justifyContent: 'start', alignItems: 'center', flexDirection: 'row',
-            }}
+            <Box
+              key={item.title}
+              sx={{
+                display: 'flex', justifyContent: 'start', alignItems: 'center', flexDirection: 'row',
+              }}
             >
               <SvgIcon
                 component={item.icon}
@@ -98,7 +100,6 @@ function Desbloqueos() {
               }}
               >
                 {item.title}
-
               </Typography>
             </Box>
           ))}

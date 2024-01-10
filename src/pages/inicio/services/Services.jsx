@@ -83,6 +83,7 @@ function Servicios() {
       >
         {logotipos.map((logo) => (
           <Grid
+            key={logo}
             item
             xs={5}
             sm={4}
