@@ -76,6 +76,7 @@ function Counter() {
       >
         {statCounterItems.map(({ title, start, end }) => (
           <Box
+            key={title}
             sx={{
               display: 'flex',
               flexDirection: 'column',

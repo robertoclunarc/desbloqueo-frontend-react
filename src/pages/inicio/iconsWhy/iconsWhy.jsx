@@ -99,6 +99,7 @@ const iconsWhy = () => {
       >
         {iconsOptions.map(({ logo, title, desc }) => (
           <Grid
+            key={title}
             item
             xs={10}
             sm={8}
