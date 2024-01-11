@@ -21,8 +21,9 @@ afterEach(() => {
 
 
 it("renders", () => {
-  act(() => {    
-      render(<WhyUs />, container);  });
-    let title = screen.getByText("¿Por qué escoger a DesbloqueaTuCel?")
+  act(() => {
+    render(<WhyUs />, container);
+  });
+  let title = screen.getByText("¿Por qué escoger a DesbloqueaMiCel?")
   expect(title).toBeTruthy();
 });

@@ -6,13 +6,13 @@ import Navbar from "./Navbar";
 
 
 afterEach(() => {
- cleanup()
+  cleanup()
 });
 
 
 it("renders", () => {
-  const{ getByText } = render(<Router><Navbar /></Router>);
+  const { getByText } = render(<Router><Navbar /></Router>);
 
-  expect(getByText("DesbloqueaTuCel")).toBeTruthy();
+  expect(getByText("DesbloqueaMiCel")).toBeTruthy();
 
 });

@@ -9,15 +9,15 @@ import { environments } from '../environments/environment';
 const env = environments;
 
 const getToolsDrSim = async (id_terminal, id_operador) => {
-  console.log(`terminal: ${id_terminal}, operador: ${id_operador}`);
+  // console.log(`terminal: ${id_terminal}, operador: ${id_operador}`);
   let tools = [];
   try {
     const { data } = await axios.get(`${env.apiDrSimTools}/${id_terminal}/${id_operador}`);
     // console.log(data);
     if (data.status === 'OK'){
-       console.log({
+       /* console.log({
  code: data.code, status: data.estatus, info: data.info, services: 'Available',
-});
+}); */
       tools = data.res.tools;
     } else {
       console.log(data);
@@ -32,7 +32,7 @@ const getToolsDrSim = async (id_terminal, id_operador) => {
       };
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 
   return tools;

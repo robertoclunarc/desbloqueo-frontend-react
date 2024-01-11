@@ -7,10 +7,7 @@ export const countries = () => {
   const URL = 'https://2pr78ypovg.execute-api.us-east-1.amazonaws.com/items';
 
   axios.get(URL)
-    .then((response) => {
-      console.log(response.data);
-      return response.data;
-    })
+    .then((response) => response.data)
     .catch((error) => error.data);
 };
 

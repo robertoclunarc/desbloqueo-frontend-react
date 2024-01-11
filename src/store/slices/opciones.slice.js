@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable max-len */
 import { createSlice } from '@reduxjs/toolkit';
 
@@ -7,17 +8,18 @@ export const opcionesSlice = createSlice({
   initialState: [],
   reducers: {
     setOpcionesGlobal: (state, action) => {
-      const index = state.findIndex((e) => (e.id === action.payload.id));
+      const index = state?.findIndex((e) => e.id === action.payload.id);
       if (index === -1) {
-        state.push(action.payload);
+        state?.push(action.payload);
       } else {
         // eslint-disable-next-line no-param-reassign
         state[index] = action.payload;
       }
     },
+    setOpcionesStore: (state, action) => action.payload,
   },
 });
 
 export const { setOpcionesGlobal } = opcionesSlice.actions;
-
+export const { setOpcionesStore } = opcionesSlice.actions;
 export default opcionesSlice.reducer;

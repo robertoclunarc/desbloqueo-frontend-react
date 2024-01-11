@@ -1,5 +1,5 @@
 export const CONSTANTS = {
-  DESBLOQUEATUCELULAR: 'Desbloquea tu Celular',
+  desbloqueamicelULAR: 'Desbloquea mi Celular',
 
 };
 

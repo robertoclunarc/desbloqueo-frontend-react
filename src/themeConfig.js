@@ -12,7 +12,7 @@ const theme = createTheme({
       main: '#E1A73E',
     },
     tertiaryColor: {
-      main: '#2586AF',
+      main: '#1F9CC8',
     },
     formColor: {
       main: '#000000',

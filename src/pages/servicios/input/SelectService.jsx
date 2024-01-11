@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import { useField } from 'formik';
 import {
-  Box, FormControl, InputLabel, MenuItem, TextField, Typography,
+  Box, FormControl, InputLabel, MenuItem, Typography,
 } from '@mui/material';
 import PropTypes from 'prop-types';
 import Select from '@mui/material/Select';
@@ -17,16 +17,19 @@ function SelectService({
 }) {
   let tools = [];
   let descripcion;
+  const [descriptionText, setDescriptionText] = useState('Please choose a Servico before continuing.');
   const [field, meta] = useField(props);
   const [valueOptions, setValueOptions] = useState('');
   const [price, setPrice] = useState('');
   const [timeMin, setTimeMin] = useState('');
   const [timeMax, setTimeMax] = useState('');
+  const [type, setType] = useState('');
   const [avg, setAvg] = useState('');
   const [toolType, setToolType] = useState('');
   const opciones = useSelector((state) => state.opciones);
   const [options, setToolOptions] = useState([]);
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
 
   function buscarElementoAsync(services, idServ) {
     return new Promise((resolve) => {
@@ -51,17 +54,26 @@ function SelectService({
   const handleChange = async (event) => {
     setValueOptions(event.target.value);
     descripcion = await buscarElementoAsync(options, event.target.value);
-    descripcion.desc = resumir(descripcion?.desc);
-    setPrice(descripcion?.price);
-    setTimeMin(descripcion?.timeMin);
-    setTimeMax(descripcion?.timeMax);
-    setAvg(descripcion?.avg);
-    setToolType(descripcion?.toolType);
+
+    if (descripcion) {
+      descripcion.desc = resumir(descripcion?.desc);
+      descripcion.desc = descripcion.desc.replace(/undefined/g, '').replace(/\s{2,}/g, ' ');
+      descripcion.desc = descripcion.desc.replace(/[.!?]+$/, '.').trim();
+      const descripcionType = descripcion?.type ? descripcion?.type : 'dias';
+      setDescriptionText(descripcion.desc);
+      setPrice(descripcion?.price);
+      setTimeMin(descripcion?.timeMin);
+      setTimeMax(descripcion?.timeMax);
+      setType(descripcionType);
+      setAvg(descripcion?.avg);
+      setToolType(descripcion?.toolType);
+    }
     dispatch(setOpcionesGlobal({ [label]: descripcion.name, id: `${id}`, idReg: `${event.target.value}` }));
     dispatch(setOpcionesGlobal({ id: '8', price: `${descripcion.price}` }));
     dispatch(setOpcionesGlobal({ id: '9', timeMin: `${descripcion.timeMin}` }));
     dispatch(setOpcionesGlobal({ id: '10', timeMax: `${descripcion.timeMax}` }));
     dispatch(setOpcionesGlobal({ id: '11', avg: `${descripcion.avg}` }));
+    dispatch(setOpcionesGlobal({ id: '12', type: `${descripcion.type}` }));
   };
 
   const getTools = async () => {
@@ -93,35 +105,54 @@ function SelectService({
               price: opt.price,
               timeMin: opt.time.min,
               timeMax: opt.time.max,
+              type: opt.time.type,
               avg: opt.avg,
               toolType: opt.tool_type,
             };
             return tool;
           });
           setToolOptions(tools);
+          if (opciones[4]) {
+            setValueOptions(opciones[4]?.idReg); // Esto selecciona la primera opción
+            handleChange({ target: { value: opciones[4]?.idReg } });
+          } else {
+            setValueOptions(options[0]?.id); // Esto selecciona la primera opción
+            handleChange({ target: { value: options[0]?.id } });
+          }
         } catch (error) {
           console.log(error);
+        } finally {
+          setLoading(false);
         }
       }
     };
 
     fetchData();
-  }, []);
+  }, [loading]);
+
+  useEffect(() => {
+    if (options.length === 1 && options[0].name === 'Sin Servicio para este Terminal y/o Operadora') {
+      setValueOptions(options[0].id);
+    }
+  }, [options]);
 
   // eslint-disable-next-line eqeqeq
   descripcion = options?.find((descrip) => descrip.id == valueOptions);
   // descripcion = buscarElementoAsync(options, valueOptions);
+  const currentOption = options.find((option) => option.id === valueOptions);
+
   return (
     <Box sx={{
       display: 'flex',
       gap: '10px',
       padding: '20px',
-      justifyContent: 'center',
+      justifyContent: 'start',
+      alignItems: 'center',
       width: '100%',
-      flexDirection: { xs: 'column', md: 'row' },
+      flexDirection: 'column',
     }}
     >
-      <FormControl sx={{ width: { xs: '80%', sm: '40%' } }}>
+      <FormControl sx={{ width: { xs: '80%', sm: '40%' }, backgroundColor: '#fff' }} variant="filled">
         <InputLabel id={field.name}>{label}</InputLabel>
         <Select
           labelId={field.name}
@@ -131,28 +162,79 @@ function SelectService({
           label={label}
           sx={{ backgroundColor: 'white' }}
         >
-          {
-          options?.map((option) => (
+          {options?.map((option) => (
             <MenuItem key={option.id} value={option.id}>
               {option.name}
             </MenuItem>
-          ))
-        }
+          ))}
         </Select>
-        <TextField sx={{ backgroundColor: 'white' }} id="txtPrice" label="Precio $" variant="filled" value={price} InputProps={{ readOnly: true }} />
-        <TextField sx={{ backgroundColor: 'white' }} id="txtTimeMin" label="Dias Minimo" variant="filled" value={timeMin} InputProps={{ readOnly: true }} />
-        <TextField sx={{ backgroundColor: 'white' }} id="txtTimeMax" label="Dias Maximo" variant="filled" value={timeMax} InputProps={{ readOnly: true }} />
-        <TextField sx={{ backgroundColor: 'white' }} id="txtAvg" label="Promedio" variant="filled" value={avg} InputProps={{ readOnly: true }} />
-        <TextField sx={{ backgroundColor: 'white' }} id="txtRequiere" label="Requiere" variant="filled" value={toolType} InputProps={{ readOnly: true }} />
         {meta.touched && meta.error ? (
           <div className="error">{meta.error}</div>
         ) : null}
       </FormControl>
-      <Typography color="white" sx={{ width: { xs: '80%', sm: '50%' } }}>
-        {
-          descripcion?.desc
-        }
-      </Typography>
+      {currentOption && currentOption.name !== 'Sin Servicio para este Terminal y/o Operadora' ? (
+        <Box sx={{
+          background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)', width: { xs: '80%', sm: '60%' }, height: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: { xs: 'white', sm: '#2C5B97' }, flexWrap: 'wrap', border: { xs: '2px solid black', sm: '2px solid black' }, borderRadius: '15px', padding: '1em 0em 1em 0em', margin: { xs: 'none', sm: '1em 0em 0em 0em' },
+        }}
+        >
+          <Typography sx={{ color: 'black', padding: '10px' }}>
+            Precio:
+            {' '}
+            <span style={{ fontWeight: 'bold' }}>
+              $
+              {price}
+              ,
+            </span>
+          </Typography>
+          <Typography sx={{ color: 'black', padding: '10px' }}>
+            Tiempo Minimo y Maximo:
+            <span style={{ fontWeight: 'bold' }}>
+              {` ${timeMin} ${type} - ${timeMax} ${type}`}
+              ,
+            </span>
+          </Typography>
+          <Typography sx={{ color: 'black', padding: '10px' }}>
+            Tiempo Promedio:
+            <span style={{ fontWeight: 'bold' }}>
+              {' '}
+              {avg}
+              ,
+            </span>
+          </Typography>
+          <Typography sx={{ color: 'black', padding: '10px' }}>
+            Requerimientos:
+            <span style={{ fontWeight: 'bold' }}>
+              {' '}
+              {toolType}
+            </span>
+          </Typography>
+          {' '}
+          <Typography sx={{
+            display: { xs: 'none', sm: 'inline' }, color: 'black', textAlign: 'center', width: '100%', borderTop: '1px solid black', padding: '1em',
+          }}
+          >
+            Descripción:
+          </Typography>
+          <Typography sx={{
+            display: { xs: 'none', sm: 'inline' }, color: 'black', fontWeight: 'bold', textAlign: 'left', width: '80%',
+          }}
+          >
+            {currentOption && currentOption.name === 'Sin Servicio para este Terminal y/o Operadora'
+              ? 'Sin Servicio para este Terminal y/o Operadora'
+              : descriptionText}
+          </Typography>
+        </Box>
+      )
+        : (
+          <Box sx={{
+            background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)', width: { xs: '80%', sm: '60%' }, height: 'auto', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: { xs: 'white', sm: '#2C5B97' }, flexWrap: 'wrap', border: { xs: '2px solid black', sm: '2px solid black' }, borderRadius: '15px', padding: '1em 0em 1em 0em', margin: { xs: 'none', sm: '1em 0em 0em 0em' },
+          }}
+          >
+            <Typography>
+              Sin Servicio para este Terminal y/o Operadora
+            </Typography>
+          </Box>
+        )}
     </Box>
   );
 }

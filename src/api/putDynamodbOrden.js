@@ -17,13 +17,13 @@ const putDynamobdOrden = async (id, id_ticket, date, email, imei, id_payment, pr
     price,
     estatus,
   };
-  console.log(ticket);
+  // console.log(ticket);
   try {
     const { data } = await axios.put(`${env.apiGatewayOrdenTicket}`, ticket);
-    console.log(data);
+    // console.log(data);
     orden = data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 
   return orden;

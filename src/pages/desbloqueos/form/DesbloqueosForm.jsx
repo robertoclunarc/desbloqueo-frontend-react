@@ -1,3 +1,4 @@
+/* eslint-disable eqeqeq */
 /* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 /* eslint-disable no-console */
@@ -6,28 +7,33 @@ import PropTypes from 'prop-types';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import {
-  Box,
-  Button,
-  Card, Checkbox, Container, FormControlLabel, IconButton, Stack, Step, StepLabel, Stepper, Typography,
+  Box, Button,
+  Card, Checkbox, Container, FormControlLabel, IconButton, Popper, Stack, Step, StepLabel, Stepper, Typography,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector';
 import LocationCityIcon from '@mui/icons-material/LocationCity';
 import Check from '@mui/icons-material/Check';
-import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
-/* import PersonIcon from '@mui/icons-material/Person'; */
+import AddCircleIcon from '@mui/icons-material/AddCircle';
+import HomeIcon from '@mui/icons-material/Home';
 import PaymentIcon from '@mui/icons-material/Payment';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import AppSettingsAltIcon from '@mui/icons-material/AppSettingsAlt';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router';
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router';
 import axios from 'axios';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
+import CancelOutlinedIcon from '@mui/icons-material/CancelOutlined';
 import Pagar from '../../pagar/Pagar';
 import Select from '../../../components/formik/select/Select';
 import Input from '../../../components/payment/input/Input';
 import SelectService from '../../servicios/input/SelectService';
+import Resumen from '../../resumen/Resumen';
+import ResumenPago from '../../resumenPago/resumenPago';
+import { setStatusStore } from '../../../store/slices/statusDesbloqueo.slice';
+import { setOpcionesStore } from '../../../store/slices/opciones.slice';
 
 const QontoStepIconRoot = styled('div')(({ theme, ownerState }) => ({
   color: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#eaeaf0',
@@ -128,13 +134,11 @@ function ColorlibStepIcon(props) {
   } = props;
 
   const icons = {
-    1: <LocationCityIcon name="Compañia Télefonica" />,
-    2: <LocalPhoneIcon name="Personal Data" />,
-    3: <AppSettingsAltIcon name="services" />,
-    4: <LocalPhoneIcon name="imei" />,
+    1: <EditNoteIcon name="services" />,
+    2: <AddCircleIcon name="imei" />,
     /* 4: <PersonIcon name="Terms and Conditions" />, */
-    5: <PaymentIcon name="Finish" />,
-    6: <CheckCircleIcon name="payment" />,
+    3: <PaymentIcon name="Finish" />,
+    4: <CheckCircleIcon name="payment" />,
   };
 
   return (
@@ -158,30 +162,33 @@ ColorlibStepIcon.defaultProps = {
   icon: '',
 };
 
-const steps = ['Selecciona tu pais', 'Selecciona tu telefono', 'Servicio', 'Imei', 'Pagar', 'Finalizado'];
+const steps = ['Información del Telefono', 'Elige tu Servicio', 'Verificación y Pago', 'Final'];
 
 function DesbloqueosForm() {
-  const navigate = useNavigate();
-  const options = useSelector((state) => state.opciones);
-  // handleCreateData();
+  const statusDesbloqueos = useSelector((state) => state.status);
+  const { status } = useParams();
+  const [nextPag, setNextPag] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [nextPagServices, setNextPagServices] = useState(false);
+  const [anchorElServices, setAnchorElServices] = useState(null);
+  const dispatch = useDispatch();
+
   const [formActivePanel, setFromActivePanel] = useState({
-    formActivePanelId: 1,
+    formActivePanelId: statusDesbloqueos,
     formActivePanelChange: false,
   });
-
   const [countriesOptions, setCountriesOptions] = useState();
   const [networkOptions, setNetworkOptions] = useState();
   const [brandOptions, setBrandOptions] = useState();
   const [devicesOptions, setDevicesOptions] = useState();
   // const [networksOptionsFilter, setNetworksOptionsFilter] = useState();
   const opciones = useSelector((state) => state.opciones);
-  const idTicket = opciones[11]?.id_ticket;
 
   const countries = () => {
     const URL = 'https://2pr78ypovg.execute-api.us-east-1.amazonaws.com/items';
 
     axios.get(URL)
-      .then((response) => setCountriesOptions(response.data))
+      .then((response) => setCountriesOptions(response.data.sort((a, b) => { if (a.name < b.name) { return -1; } if (a.name > b.name) { return 1; } return 0; })))
       .catch((error) => error.data);
   };
 
@@ -189,7 +196,7 @@ function DesbloqueosForm() {
     const URL = 'https://omb7k0gyvj.execute-api.us-east-1.amazonaws.com/items';
 
     axios.get(URL)
-      .then((response) => setNetworkOptions(response.data))
+      .then((response) => setNetworkOptions(response.data.sort((a, b) => { if (a.name < b.name) { return -1; } if (a.name > b.name) { return 1; } return 0; })))
       .catch((error) => error.data);
   };
 
@@ -197,7 +204,7 @@ function DesbloqueosForm() {
     const URL = 'https://mbt0pse1f1.execute-api.us-east-1.amazonaws.com/items';
 
     axios.get(URL)
-      .then((response) => setBrandOptions(response.data))
+      .then((response) => setBrandOptions(response.data.sort((a, b) => { if (a.name < b.name) { return -1; } if (a.name > b.name) { return 1; } return 0; })))
       .catch((error) => error.data);
   };
 
@@ -205,7 +212,7 @@ function DesbloqueosForm() {
     const URL = 'https://eb5dut1866.execute-api.us-east-1.amazonaws.com/items';
 
     axios.get(URL)
-      .then((response) => setDevicesOptions(response.data))
+      .then((response) => setDevicesOptions(response.data.sort((a, b) => { if (a.name < b.name) { return -1; } if (a.name > b.name) { return 1; } return 0; })))
       .catch((error) => error.data);
   };
 
@@ -224,8 +231,12 @@ function DesbloqueosForm() {
   let opcionesDevicesFilter = [];
   if (opciones[2]?.idReg) {
     const opcionesDevices = devicesOptions?.filter((item) => item.brandDrSimID === opciones[2].idReg);
-    // eslint-disable-next-line no-unused-vars
-    opcionesDevicesFilter = opcionesDevices;
+
+    if (opcionesDevices?.length > 0) {
+      opcionesDevicesFilter = opcionesDevices;
+    } else {
+      opcionesDevicesFilter = [{ name: 'No hay dispósitivos disponibles' }];
+    }
   }
   const handleNextPrevClick = (active) => {
     setFromActivePanel({
@@ -233,59 +244,68 @@ function DesbloqueosForm() {
       formActivePanelChange: true,
     });
   };
+  useEffect(() => {
+    if (statusDesbloqueos == 1) {
+      handleNextPrevClick(statusDesbloqueos);
+    }
+  }, [statusDesbloqueos]);
 
-  const handleSubmission = () => {
-    setFromActivePanel({
-      formActivePanelId: formActivePanel.formActivePanelId + 1,
-      formActivePanelChange: true,
-    });
-    // eslint-disable-next-line no-alert
-    console.log('Form submitted!');
-    navigate('/');
+  useEffect(() => {
+    if (status) {
+      handleNextPrevClick(4);
+    }
+  }, [status]);
+
+  const goNextServices = (event) => {
+    if (opciones[4]) {
+      if (opciones[4]?.Servicios == 'Sin Servicio para este Terminal y/o Operadora') {
+        setNextPagServices(!nextPagServices);
+        setAnchorElServices(event.currentTarget);
+      } else {
+        handleNextPrevClick(3);
+      }
+    } else {
+      setNextPagServices(!nextPagServices);
+      setAnchorElServices(event.currentTarget);
+    }
   };
-
-  const disabledPais = options[0] && options[1] ? undefined : 'disabled';
-  const disabledMarca = options[2] && options[3] ? undefined : 'disabled';
-  let disabledServicio = 'disabled';
-
-  if (options[4]?.Servicio !== 'Sin Servicio para este Terminal y/o Operadora') {
-    disabledServicio = undefined;
-  } else {
-    disabledServicio = 'disabled';
-  }
-
+  const goNext = (event) => {
+    if (opciones[0] && opciones[1] && opciones[2] && opciones[3]) {
+      if (opciones[3]?.Modelo === 'No hay dispósitivos disponibles') {
+        setNextPag(!nextPag);
+        setAnchorEl(event.currentTarget);
+      } else {
+        setNextPag(!nextPag);
+        setAnchorEl(event.currentTarget);
+        handleNextPrevClick(2);
+        dispatch(setStatusStore(2));
+      }
+    } else {
+      setAnchorEl(event.currentTarget);
+      setNextPag(!nextPag);
+    }
+  };
   const [aceptarTerminos, setAceptarTerminos] = useState(false);
   const [recibirBoletin, setRecibirBoletin] = useState(false);
-  const disabledButton = (aceptarTerminos && recibirBoletin);
+  const disabledButton = (aceptarTerminos && opciones[10] && opciones[11]);
+  const idTicket = opciones[12]?.id_ticket;
+
+  const navigate = useNavigate();
+  const goHome = () => {
+    navigate('/');
+    dispatch(setOpcionesStore([]));
+  };
   return (
     <Box sx={{
       display: 'flex',
       flexDirection: 'column',
-      gap: '50px',
+      gap: '150px',
       textAlign: 'center',
+      height: 'auto',
     }}
     >
-      <Stack sx={{ width: '100%' }} spacing={4}>
-        <Stepper
-          alternativeLabel
-          activeStep={formActivePanel.formActivePanelId - 1}
-          connector={<ColorlibConnector />}
-          sx={{ display: { xs: 'none', sm: 'flex' } }}
-        >
-          {
-            steps.map((label) => (
-              <Step key={label}>
-                <StepLabel StepIconComponent={ColorlibStepIcon}>
-                  {
-                    label
-                  }
-                </StepLabel>
-              </Step>
-            ))
-          }
-        </Stepper>
-      </Stack>
       <Formik
+        style={{ height: 'auto' }}
         initialValues={{
           country: '',
           network: '',
@@ -313,7 +333,11 @@ function DesbloqueosForm() {
       >
         <Form>
           <Container sx={{
-            width: { xs: '100%', sm: '60%' },
+            width: {
+              xs: '100%', sm: '100%', md: '80%', lg: '80%', xl: '80%',
+            },
+            position: 'relative',
+            height: 'auto',
           }}
           >
             {formActivePanel.formActivePanelId === 1 && (
@@ -321,19 +345,53 @@ function DesbloqueosForm() {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                padding: '10px',
+                paddingBottom: '30px',
                 borderRadius: '35px',
-                backgroundColor: '#2586AF',
+                backgroundColor: '#224776',
+                height: { xs: '500px', sm: 'auto' },
+                border: '2px solid white',
+                justifyContent: 'end',
+                boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+                paddingTop: '8em',
+
               }}
               >
-                <Typography variant="h5" fontWeight="700" color="white"> Pais y operadora </Typography>
+                <Stack sx={{ width: '100%', paddingBottom: '4em' }} spacing={4}>
+                  <Stepper
+                    alternativeLabel
+                    activeStep={formActivePanel.formActivePanelId - 1}
+                    connector={<ColorlibConnector />}
+                    sx={{ display: { xs: 'flex', sm: 'flex' } }}
+                  >
+                    {
+                      steps.map((label) => (
+                        <Step key={label}>
+                          <StepLabel StepIconComponent={ColorlibStepIcon}>
+                            <Typography sx={{ fontSize: '12px', color: 'white' }}>
+                              {
+                                label
+                              }
+                            </Typography>
+                          </StepLabel>
+                        </Step>
+                      ))
+                    }
+                  </Stepper>
+                </Stack>
+                <Box sx={{
+                  border: '2px solid white', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'absolute', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)', width: { xs: '100px', sm: '150px' }, height: { xs: '100px', sm: '150px' }, top: { xs: '-8%', sm: '-11%' }, borderRadius: '50%',
+                }}
+                >
+                  <EditNoteIcon name="services" sx={{ height: { xs: '50px', sm: '100px' }, width: { xs: '50px', sm: '100px' }, color: 'black' }} />
+
+                </Box>
                 <Box sx={{
                   display: 'flex',
                   gap: '30px',
-                  padding: '20px',
                   justifyContent: 'center',
-                  width: { xs: '100%', sm: '80%' },
-                  flexDirection: { xs: 'column', sm: 'row' },
+                  alignItems: 'center',
+                  width: { xs: '90%', sm: '100%' },
+                  flexDirection: 'column',
                 }}
                 >
                   <Select
@@ -348,32 +406,6 @@ function DesbloqueosForm() {
                     label="Compañia telefonica"
                     id={2}
                   />
-                </Box>
-                <IconButton disabled={disabledPais} onClick={() => handleNextPrevClick(2)}>
-                  <ArrowForwardIcon color="secondary" fontSize="large" />
-                </IconButton>
-              </Card>
-            )}
-            {formActivePanel.formActivePanelId === 2 && (
-              <Card sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                padding: '10px',
-                borderRadius: '35px',
-                backgroundColor: '#2586AF',
-              }}
-              >
-                <Typography variant="h5" fontWeight="700" color="white"> Telefono </Typography>
-                <Box sx={{
-                  display: 'flex',
-                  gap: '30px',
-                  padding: '20px',
-                  justifyContent: 'center',
-                  width: { xs: '100%', sm: '80%' },
-                  flexDirection: { xs: 'column', sm: 'row' },
-                }}
-                >
                   <Select
                     name="brand"
                     options={brandOptions}
@@ -387,135 +419,230 @@ function DesbloqueosForm() {
                     id={4}
                   />
                 </Box>
-                <Box sx={{ display: 'flex', gap: { xs: '10px', sm: '100px' }, flexDirection: 'row' }}>
-                  <IconButton onClick={() => handleNextPrevClick(1)}>
-                    <ArrowBackIcon color="secondary" fontSize="large" />
-                  </IconButton>
-                  <IconButton disabled={disabledMarca} onClick={() => handleNextPrevClick(3)}>
-                    <ArrowForwardIcon color="secondary" fontSize="large" />
-                  </IconButton>
-                </Box>
+                <IconButton
+                  onClick={goNext}
+                  sx={{ marginTop: '20px', border: '1px solid white', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)' }}
+                >
+                  <ArrowForwardIcon sx={{ color: 'black' }} fontSize="large" />
+                </IconButton>
+                <Popper open={nextPag} anchorEl={anchorEl} placement="bottom">
+                  <Box sx={{
+                    border: 1, p: 1, background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)', borderRadius: '5px', marginTop: '5px',
+                  }}
+                  >
+                    Debe llenar todos los campos
+                  </Box>
+                </Popper>
               </Card>
             )}
-            {formActivePanel.formActivePanelId === 3 && (
+            {formActivePanel.formActivePanelId === 2 && (
               <Card sx={{
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                padding: '10px',
+                paddingBottom: '30px',
                 borderRadius: '35px',
-                backgroundColor: '#2586AF',
+                backgroundColor: '#2c5b97',
+                height: { xs: 'auto', sm: 'auto' },
+                border: '2px solid white',
+                justifyContent: 'end',
+                boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+                paddingTop: '6em',
+
               }}
               >
-                <Typography variant="h5" fontWeight="700" color="white"> Servicios </Typography>
+                <Stack sx={{ width: '100%', paddingBottom: '1em' }} spacing={4}>
+                  <Stepper
+                    alternativeLabel
+                    activeStep={formActivePanel.formActivePanelId - 1}
+                    connector={<ColorlibConnector />}
+                    sx={{ display: { xs: 'flex', sm: 'flex' } }}
+                  >
+                    {
+                      steps.map((label) => (
+                        <Step key={label}>
+                          <StepLabel StepIconComponent={ColorlibStepIcon}>
+                            <Typography sx={{ fontSize: '12px', color: 'white' }}>
+                              {
+                                label
+                              }
+                            </Typography>
+                          </StepLabel>
+                        </Step>
+                      ))
+                    }
+                  </Stepper>
+                </Stack>
+                <Box sx={{
+                  border: '2px solid white', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'absolute', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)', width: { xs: '100px', sm: '150px' }, height: { xs: '100px', sm: '150px' }, top: { xs: '-6%', sm: '-13%' }, borderRadius: '50%',
+                }}
+                >
+                  <AddCircleIcon name="imei" sx={{ height: { xs: '50px', sm: '100px' }, width: { xs: '50px', sm: '100px' }, color: 'black' }} />
+
+                </Box>
                 <Box sx={{
                   display: 'flex',
-                  gap: '10px',
-                  padding: '20px',
+                  gap: '30px',
                   justifyContent: 'center',
-                  width: '100%',
-                  flexDirection: { xs: 'column', sm: 'row' },
+                  alignItems: 'center',
+                  width: { xs: '100%', sm: '100%' },
+                  flexDirection: 'column',
                 }}
                 >
                   <SelectService
                     name="tools"
-                    label="Servicio"
+                    label="Servicios"
                     id={7}
                   />
                 </Box>
                 <Box sx={{ display: 'flex', gap: { xs: '10px', sm: '100px' }, flexDirection: 'row' }}>
-                  <IconButton onClick={() => handleNextPrevClick(2)}>
-                    <ArrowBackIcon color="secondary" fontSize="large" />
+                  <IconButton onClick={() => handleNextPrevClick(1)} sx={{ marginTop: '20px', border: '1px solid white', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)' }}>
+                    <ArrowBackIcon sx={{ color: 'black' }} fontSize="large" />
                   </IconButton>
-                  <IconButton disabled={disabledServicio} onClick={() => handleNextPrevClick(4)}>
-                    <ArrowForwardIcon color="secondary" fontSize="large" />
+                  <IconButton onClick={goNextServices} sx={{ marginTop: '20px', border: '1px solid white', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)' }}>
+                    <ArrowForwardIcon sx={{ color: 'black' }} fontSize="large" />
                   </IconButton>
                 </Box>
+                <Popper open={nextPagServices} anchorEl={anchorElServices} placement="bottom">
+                  <Box sx={{
+                    border: 1, p: 1, background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)', borderRadius: '5px', marginTop: '5px',
+                  }}
+                  >
+                    No hay servicio para este terminal
+                  </Box>
+                </Popper>
               </Card>
             )}
-            { formActivePanel.formActivePanelId === 44 && (
-              <Card sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '20px',
-                alignItems: 'center',
-                padding: '20px',
-              }}
-              >
-                <Typography variant="h6">
-                  Servicios de desbloqueos
-                </Typography>
-                <FormControlLabel control={<Checkbox />} label="I agreee to the terms and conditions" id="checkbox" />
-                <FormControlLabel control={<Checkbox />} label="I want to receive newsletter" id="checkbox2" />
-                <Box sx={{ display: 'flex', gap: { xs: '10px', sm: '100px' }, flexDirection: { xs: 'column', sm: 'row' } }}>
-                  <Button variant="contained" onClick={() => handleNextPrevClick(3)}> Anterior </Button>
-                  <Button variant="contained" onClick={() => handleNextPrevClick(5)}> Siguiente </Button>
-                </Box>
-              </Card>
-            )}
-            { formActivePanel.formActivePanelId === 4 && (
-              // eslint-disable-next-line max-len
-              <Input Next={handleNextPrevClick} />
-            )}
-            { formActivePanel.formActivePanelId === 5 && (
+            {formActivePanel.formActivePanelId === 3 && (
               <div>
                 <div>
                   <Card sx={{
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
-                    padding: '10px',
+                    paddingBottom: '30px',
                     borderRadius: '35px',
-                    backgroundColor: '#2586AF',
-                    gap: '20px',
-                    width: '100%',
+                    backgroundColor: '#2c5b97',
+                    height: { xs: 'auto', sm: 'auto' },
+                    border: '2px solid white',
+                    justifyContent: 'end',
+                    boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+                    paddingTop: '8em',
                   }}
                   >
+                    <Stack sx={{ width: '100%', paddingBottom: '4em' }} spacing={4}>
+                      <Stepper
+                        alternativeLabel
+                        activeStep={formActivePanel.formActivePanelId - 1}
+                        connector={<ColorlibConnector />}
+                        sx={{ display: { xs: 'flex', sm: 'flex' } }}
+                      >
+                        {
+                          steps.map((label) => (
+                            <Step key={label}>
+                              <StepLabel StepIconComponent={ColorlibStepIcon}>
+                                <Typography sx={{ fontSize: '12px', color: 'white' }}>
+                                  {
+                                    label
+                                  }
+                                </Typography>
+                              </StepLabel>
+                            </Step>
+                          ))
+                        }
+                      </Stepper>
+                    </Stack>
+                    <Box sx={{
+                      border: '2px solid white', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'absolute', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)', width: { xs: '100px', sm: '150px' }, height: { xs: '100px', sm: '150px' }, top: { xs: '-4%', sm: '-6%' }, borderRadius: '50%',
+                    }}
+                    >
+                      <PaymentIcon name="Finish" sx={{ height: { xs: '50px', sm: '100px' }, width: { xs: '50px', sm: '100px' }, color: 'black' }} />
+
+                    </Box>
+                    <Resumen />
+                    <Input Next={handleNextPrevClick} />
                     <Typography variant="h5" fontWeight="700" color="white">
                       Servicios de desbloqueos
                     </Typography>
                     <FormControlLabel control={<Checkbox color="secondary" checked={aceptarTerminos} onChange={(e) => setAceptarTerminos(e.target.checked)} />} label="Aceptar los términos  y condiciones" style={{ color: 'white' }} id="checkbox" />
                     <FormControlLabel control={<Checkbox color="secondary" checked={recibirBoletin} onChange={(e) => setRecibirBoletin(e.target.checked)} />} label="Recibir boletín informativo" style={{ color: 'white' }} id="checkbox2" />
                     <Pagar disabledButton={disabledButton} next={handleNextPrevClick} />
+                    <IconButton onClick={() => handleNextPrevClick(2)} sx={{ marginTop: '20px', border: '1px solid white', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)' }}>
+                      <ArrowBackIcon sx={{ color: 'black' }} fontSize="large" />
+                    </IconButton>
                   </Card>
                 </div>
               </div>
             )}
-            { formActivePanel.formActivePanelId === 6 && (
-              <Card sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '20px',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: '20px',
+            {formActivePanel.formActivePanelId === 4 && status && (
+            <Card sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              paddingBottom: '30px',
+              borderRadius: '35px',
+              backgroundColor: '#2c5b97',
+              height: { xs: 'auto', sm: 'auto' },
+              border: '2px solid white',
+              justifyContent: 'end',
+              boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+              paddingTop: '6em',
+
+            }}
+            >
+              <Stack sx={{ width: '100%', paddingBottom: '1em' }} spacing={4}>
+                <Stepper
+                  alternativeLabel
+                  activeStep={3}
+                  connector={<ColorlibConnector />}
+                  sx={{ display: { xs: 'flex', sm: 'flex' } }}
+                >
+                  {
+          steps.map((label) => (
+            <Step key={label}>
+              <StepLabel StepIconComponent={ColorlibStepIcon}>
+                <Typography sx={{ fontSize: '12px', color: 'white' }}>
+                  {
+                  label
+                }
+                </Typography>
+              </StepLabel>
+            </Step>
+          ))
+        }
+                </Stepper>
+              </Stack>
+              <Box sx={{
+                border: '2px solid white', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'absolute', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)', width: { xs: '100px', sm: '150px' }, height: { xs: '100px', sm: '150px' }, top: { xs: '-6%', sm: '-13%' }, borderRadius: '50%',
               }}
               >
-                <Typography variant="h6">Completado!</Typography>
-                { idTicket !== undefined ? (
-                  <div>
-                    <Typography textAlign="center">
-                      <strong>{`Solicitud Creada. Nro. Ticket: ${idTicket}.`}</strong>
-                      <br />
-                      <strong>Pronto estará recibiendo en su correo el estatus de su solicitud.</strong>
-                    </Typography>
-                    <Box sx={{
-                      display: 'flex', gap: { xs: '10px', sm: '100px' }, flexDirection: { xs: 'column', sm: 'row' }, justifyContent: 'center', marginTop: '20px',
-                    }}
-                    >
-                      {' '}
-                      <Button variant="contained" onClick={() => handleSubmission()}>Submit</Button>
-                    </Box>
-                  </div>
-                ) : (
-                  // This block will be executed if idTicket is undefined
-                  <Typography variant="body1" textAlign="center">
-                    <strong>No se ha recibido un número de ticket válido.</strong>
-                    <br />
-                    <strong>Por favor, inténtelo nuevamente más tarde o contactenos.</strong>
-                  </Typography>
+                { status === 'success' ? (
+                  <DoneOutlineIcon name="completed" sx={{ height: { xs: '50px', sm: '100px' }, width: { xs: '50px', sm: '100px' }, color: 'black' }} />
+                )
+                  : (<CancelOutlinedIcon name="canceled" sx={{ height: { xs: '50px', sm: '100px' }, width: { xs: '50px', sm: '100px' }, color: 'black' }} />)}
+
+              </Box>
+              <Box sx={{
+                display: 'flex',
+                gap: '30px',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: { xs: '100%', sm: '100%' },
+                flexDirection: 'column',
+              }}
+              >
+                <ResumenPago />
+                {!idTicket && (
+                  <>
+                    <Button color="otherColor" onClick={goHome} sx={{ backgroundColor: '#E1A73E', marginTop: '30px', '&:hover': { backgroundColor: '#E1851f', transition: '0.8s' } }} startIcon={<HomeIcon />} on>Inicio</Button>
+                    {/* <IconButton onClick={() => handleNextPrevClick(3)} sx={{ marginTop: '20px', border: '1px solid white', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)' }}>
+                      <ArrowBackIcon sx={{ color: 'black' }} fontSize="large" />
+                    </IconButton> */}
+                  </>
                 )}
-              </Card>
+              </Box>
+            </Card>
+
             )}
           </Container>
         </Form>

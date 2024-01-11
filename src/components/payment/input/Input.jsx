@@ -1,47 +1,66 @@
 /* eslint-disable react/prop-types */
 import {
-  Box, IconButton, TextField,
+  Box, TextField, Typography,
 } from '@mui/material';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { setOpcionesGlobal } from '../../../store/slices/opciones.slice';
 
-function Input({ Next }) {
+function Input() {
   const [valueOptions, setValueOptions] = useState('');
   const [valueOptionsEmail, setValueOptionsEmail] = useState('');
   const dispatch = useDispatch();
   const opciones = useSelector((state) => state.opciones);
+  const [msgImei, setMsgImei] = useState('');
+  const [msgCorreo, setMsgCorreo] = useState('');
 
   const handleChangeImei = (event) => {
-    setValueOptions(event.target.value);
-    dispatch(setOpcionesGlobal({ id: '5', imei: event.target.value }));
+    const inputValue = event.target.value;
+    if (inputValue.length >= 15) {
+      setValueOptions(inputValue);
+      dispatch(setOpcionesGlobal({ id: '5', imei: inputValue }));
+      setMsgImei('');
+    } else {
+      setMsgImei('Por favor ingrese un imei valido');
+    }
   };
   const handleChangeEmail = (event) => {
-    setValueOptionsEmail(event.target.value);
-    dispatch(setOpcionesGlobal({ id: '6', email: event.target.value }));
+    const inputValue = event.target.value;
+    const emailPattern = /^\S+@\S+\.\S+$/;
+    if (emailPattern.test(inputValue)) {
+      setValueOptionsEmail(inputValue);
+      dispatch(setOpcionesGlobal({ id: '6', email: inputValue }));
+      setMsgCorreo('');
+    } else {
+      setMsgCorreo('Por favor ingresa un Correo electronico valido');
+    }
   };
 
-  const disabledImei = opciones[9] && opciones[10] ? undefined : 'disabled';
   return (
     <Box sx={{
-      display: 'flex', flexDirection: 'column', gap: '50px', backgroundColor: '#2586AF', padding: '20px', borderRadius: '15px',
+      display: 'flex', width: { xs: '90%', sm: '60%' }, flexDirection: 'column', padding: '20px', borderRadius: '15px',
     }}
     >
-      <TextField sx={{ backgroundColor: 'white' }} color="secondary" id="imei" label="IMEI" variant="filled" onChange={handleChangeImei} defaultValue={valueOptions} />
-      <TextField sx={{ backgroundColor: 'white' }} color="secondary" id="email" label="Correo electronico" variant="filled" onChange={handleChangeEmail} defaultValue={valueOptionsEmail} />
-      <Box sx={{
-        display: 'flex', gap: '30px', justifyContent: 'center', width: '100%',
+      <Typography sx={{ color: 'white', fontSize: '20px', textAlign: 'left' }}>
+        {' '}
+        Ingresa tu IMEI
+        {' '}
+        <span style={{ color: 'red' }}>*</span>
+        {' '}
+      </Typography>
+      <Typography sx={{ color: '#C62907', fontSize: '15px' }}>{msgImei}</Typography>
+      <TextField sx={{ backgroundColor: 'white' }} color="secondary" id="imei" label="IMEI" variant="filled" onChange={handleChangeImei} defaultValue={opciones[10]?.imei || valueOptions} />
+      <Typography sx={{
+        color: 'white', fontSize: '20px', paddingTop: '15px', textAlign: 'left',
       }}
       >
-        <IconButton onClick={() => Next(3)}>
-          <ArrowBackIcon color="secondary" fontSize="large" />
-        </IconButton>
-        <IconButton disabled={disabledImei} onClick={() => Next(5)}>
-          <ArrowForwardIcon color="secondary" fontSize="large" />
-        </IconButton>
-      </Box>
+        {' '}
+        Ingresa tu Correo electronico
+        <span style={{ color: 'red' }}>*</span>
+        {' '}
+      </Typography>
+      <Typography sx={{ color: '#C62907', fontSize: '15px' }}>{msgCorreo}</Typography>
+      <TextField sx={{ backgroundColor: 'white' }} color="secondary" id="email" label="Correo electronico" variant="filled" onChange={handleChangeEmail} defaultValue={opciones[11]?.email || valueOptionsEmail} />
     </Box>
   );
 }
