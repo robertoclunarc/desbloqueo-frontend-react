@@ -1,83 +1,24 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable no-console */
 /* eslint-disable react/forbid-prop-types */
 import React, { useEffect, useState } from 'react';
-import { Box, Typography } from '@mui/material';
-// import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router';
-// eslint-disable-next-line no-unused-vars
-import { setOpcionesStore, setOpcionesGlobal } from '../../store/slices/opciones.slice';
-import postCreateOrdenDrSim from '../../api/drsimcreateordenes';
-import putDynamobdOrden from '../../api/putDynamodbOrden';
-
-async function createOrden(idTerminal, idOperador, imei, idService) {
-  try {
-    const respuesta = await postCreateOrdenDrSim(idTerminal, idOperador, imei, idService);
-    return respuesta;
-  } catch (error) {
-    console.error(error);
-    throw error;
-  }
-}
-
-async function crearTicket(opciones) {
-  const price = opciones[5]?.price;
-  const idTerminal = opciones[3]?.idReg;
-  const idOperador = opciones[1]?.idReg;
-  const { imei } = opciones[10] || '';
-  const { email } = opciones[11] || '';
-  const idService = opciones[4]?.idReg;
-  const timestamp = Date.now();
-  const fecha = new Date(timestamp);
-  const hoy = fecha.toISOString();
-  try {
-    const ticket = await createOrden(idTerminal, idOperador, imei, idService);
-    if (ticket?.res?.id_ticket) {
-      putDynamobdOrden(timestamp, `${ticket.id}`, hoy, email, `${imei}`, idService, `${price}`, 'PENDIENTE');
-      return {
-        message: `Solicitud Procesada con el Nro. de Ticket: ${ticket?.res.id_ticket}`,
-        id: ticket?.res.id_ticket,
-      };
-    } if (ticket && (ticket?.info || ticket?.error || ticket?.message)) {
-      // eslint-disable-next-line max-len, no-nested-ternary
-      const msg = ticket?.info !== undefined ? ticket?.info : ticket?.error === undefined ? ticket?.message : ticket?.error;
-      putDynamobdOrden(timestamp, 'none', hoy, email, `${imei}`, idService, `${price}`, `NO PROCESADO: ${msg}. Operadora:${idOperador}, Terminal:${idTerminal}`);
-      return {
-        message: 'Pronto estará recibiendo respuesta al correo que usted suministró. ¡Gracias!',
-        id: null,
-      };
-    }
-    putDynamobdOrden(timestamp, 'none', hoy, email, `${imei}`, idService, `${price}`, `NO PROCESADO. Operadora:${idOperador}, Terminal: ${idTerminal}`);
-    return {
-      message: 'Pronto estará recibiendo respuesta al correo que usted suministró. ¡Gracias!',
-      id: null,
-    };
-  } catch (error) {
-    putDynamobdOrden(timestamp, 'none', hoy, email, `${imei}`, idService, `${price}`, `${error}. Operadora:${idOperador}, Terminal: ${idTerminal}`);
-    console.error(error);
-    // eslint-disable-next-line no-return-assign
-    return {
-      message: 'Pronto estará recibiendo respuesta al correo que usted suministró. ¡Gracias!',
-      id: null,
-    };
-  }
-}
+import { Box, Typography, Button } from '@mui/material';
+import { useNavigate, useParams } from 'react-router';
+import { useDispatch } from 'react-redux';
+import HomeIcon from '@mui/icons-material/Home';
+import { setOpcionesStore } from '../../store/slices/opciones.slice';
 
 function ResumenPagoForm({ setButton }) {
   const { status } = useParams();
-  // const dispatch = useDispatch();
   const datosResumen = localStorage.getItem('datosResumen');
   const opciones = JSON.parse(datosResumen);
-
+  const dispatch = useDispatch();
   const [resTicket, setResTicket] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       if (status === 'success') {
-        const ticket = await crearTicket(opciones);
-        setOpcionesGlobal({ id: '13', id_ticket: `${ticket?.id}` });
-        setResTicket(ticket);
-        setButton({ activate: false, ticket: ticket.id });
+        setButton({ activate: false, ticket: 1 });
+        setResTicket({ message: 'La orden se procesó con éxito.' });
       } else {
         setResTicket({ message: 'Lo sentimos, Tu Pago Fue Rechazado' });
         setButton({ activate: false, ticket: null });
@@ -85,6 +26,13 @@ function ResumenPagoForm({ setButton }) {
     };
     fetchData();
   }, []);
+
+  const navigate = useNavigate();
+
+  const goHome = () => {
+    navigate('/');
+    dispatch(setOpcionesStore([]));
+  };
 
   return (
     <>
@@ -187,17 +135,6 @@ function ResumenPagoForm({ setButton }) {
             {opciones[5]?.price}
           </span>
         </Typography>
-        {resTicket && resTicket.id && (
-          <Typography
-            sx={{ color: 'black' }}
-          >
-            Nro. Ticket:
-            <span>  </span>
-            <span style={{ fontWeight: 'bold' }}>
-              {resTicket.id}
-            </span>
-          </Typography>
-        )}
       </Box>
       <Typography
         variant="h6"
@@ -206,9 +143,20 @@ function ResumenPagoForm({ setButton }) {
         }}
       >
         {resTicket ? (
-          <span style={{ fontWeight: 'bold' }}>
-            {resTicket.message}
-          </span>
+          <Box sx={{
+            display: 'flex',
+            gap: '1px',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: { xs: '100%', sm: '100%' },
+            flexDirection: 'column',
+          }}
+          >
+            <span style={{ fontWeight: 'bold' }}>
+              {resTicket.message}
+            </span>
+            <Button color="otherColor" onClick={goHome} sx={{ backgroundColor: '#E1A73E', marginTop: '30px', '&:hover': { backgroundColor: '#E1851f', transition: '0.8s' } }} startIcon={<HomeIcon />} on>Inicio</Button>
+          </Box>
         )
           : (
             <span style={{ fontWeight: 'bold' }}>

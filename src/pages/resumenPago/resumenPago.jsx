@@ -20,7 +20,7 @@ function ResumenPago() {
         {status}
       </Typography>
       <ResumenPagoForm setButton={setButton} />
-      {button.ticket && (
+      {button.ticket && button.ticket === 1 && (
         <Typography
           variant="h6"
           sx={{
