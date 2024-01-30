@@ -7,6 +7,7 @@ import ResumenPagoForm from './resumenPagoForm';
 // eslint-disable-next-line react/prop-types
 function ResumenPago() {
   const { status } = useParams();
+
   const [button, setButton] = useState({ activate: false, ticket: null });
 
   return (
@@ -17,10 +18,12 @@ function ResumenPago() {
           color: 'white',
         }}
       >
-        {status}
+        { status !== 'cancel' ? (
+          'Completado'
+        ) : 'Cancelado' }
       </Typography>
       <ResumenPagoForm setButton={setButton} />
-      {button.ticket && (
+      {button.ticket && button.ticket === 1 && (
         <Typography
           variant="h6"
           sx={{

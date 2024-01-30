@@ -7,20 +7,18 @@ import PropTypes from 'prop-types';
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import {
-  Box, Button,
-  Card, Checkbox, Container, FormControlLabel, IconButton, Popper, Stack, Step, StepLabel, Stepper, Typography,
+  Box, Card, Checkbox, Container, FormControlLabel,
+  IconButton, Popper, Stack, Step, StepLabel, Stepper, Typography,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector';
-import LocationCityIcon from '@mui/icons-material/LocationCity';
 import Check from '@mui/icons-material/Check';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
-import HomeIcon from '@mui/icons-material/Home';
 import PaymentIcon from '@mui/icons-material/Payment';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import EditNoteIcon from '@mui/icons-material/EditNote';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import axios from 'axios';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -33,7 +31,6 @@ import SelectService from '../../servicios/input/SelectService';
 import Resumen from '../../resumen/Resumen';
 import ResumenPago from '../../resumenPago/resumenPago';
 import { setStatusStore } from '../../../store/slices/statusDesbloqueo.slice';
-import { setOpcionesStore } from '../../../store/slices/opciones.slice';
 
 const QontoStepIconRoot = styled('div')(({ theme, ownerState }) => ({
   color: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#eaeaf0',
@@ -288,13 +285,7 @@ function DesbloqueosForm() {
   const [aceptarTerminos, setAceptarTerminos] = useState(false);
   const [recibirBoletin, setRecibirBoletin] = useState(false);
   const disabledButton = (aceptarTerminos && opciones[10] && opciones[11]);
-  const idTicket = opciones[12]?.id_ticket;
 
-  const navigate = useNavigate();
-  const goHome = () => {
-    navigate('/');
-    dispatch(setOpcionesStore([]));
-  };
   return (
     <Box sx={{
       display: 'flex',
@@ -616,7 +607,7 @@ function DesbloqueosForm() {
                 border: '2px solid white', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'absolute', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)', width: { xs: '100px', sm: '150px' }, height: { xs: '100px', sm: '150px' }, top: { xs: '-6%', sm: '-13%' }, borderRadius: '50%',
               }}
               >
-                { status === 'success' ? (
+                { status !== 'cancel' ? (
                   <DoneOutlineIcon name="completed" sx={{ height: { xs: '50px', sm: '100px' }, width: { xs: '50px', sm: '100px' }, color: 'black' }} />
                 )
                   : (<CancelOutlinedIcon name="canceled" sx={{ height: { xs: '50px', sm: '100px' }, width: { xs: '50px', sm: '100px' }, color: 'black' }} />)}
@@ -632,14 +623,11 @@ function DesbloqueosForm() {
               }}
               >
                 <ResumenPago />
-                {!idTicket && (
-                  <>
-                    <Button color="otherColor" onClick={goHome} sx={{ backgroundColor: '#E1A73E', marginTop: '30px', '&:hover': { backgroundColor: '#E1851f', transition: '0.8s' } }} startIcon={<HomeIcon />} on>Inicio</Button>
-                    {/* <IconButton onClick={() => handleNextPrevClick(3)} sx={{ marginTop: '20px', border: '1px solid white', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)' }}>
-                      <ArrowBackIcon sx={{ color: 'black' }} fontSize="large" />
-                    </IconButton> */}
-                  </>
-                )}
+
+                {/* <IconButton onClick={() => handleNextPrevClick(3)} sx={{ marginTop: '20px', border: '1px solid white', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)' }}>
+                  <ArrowBackIcon sx={{ color: 'black' }} fontSize="large" />
+                </IconButton> */}
+
               </Box>
             </Card>
 

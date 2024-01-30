@@ -21,8 +21,8 @@ const CheckoutForm = ({ disabledButton }) => {
   const opcion = useSelector((state) => state.opciones);
   const idTerminal = opcion[3]?.idReg;
   const idOperador = opcion[1]?.idReg;
-  // const { imei } = opcion[9] !== undefined ? opcion[9] : '';
-  // const { email } = opcion[10] !== undefined ? opcion[10] : '';
+  const inpImei = opcion[10]?.imei !== undefined ? opcion[10].imei : '';
+  const inpEmail = opcion[11]?.email !== undefined ? opcion[11].email : '';
   const idService = opcion[4]?.idReg;
   // const prdName = opcion[3].Modelo !== undefined ? opcion[3].Modelo : 'Modelo no especificado';
   // const dscService = opcion[4].Servicio !== undefined ? opcion[4].Servicio : 'Servicio sin especificacion';
@@ -32,6 +32,7 @@ const CheckoutForm = ({ disabledButton }) => {
   price = parseInt(price.toString(), 10); */
   const [loading, setLoading] = useState(false);
   const [loadingButton, setLoadingButton] = useState(false);
+  // console.log(opcion);
 
   useEffect(() => {
     if (disabledButton) {
@@ -60,6 +61,8 @@ const CheckoutForm = ({ disabledButton }) => {
       id_terminal: idTerminal,
       id_operador: idOperador,
       id_service: idService,
+      imei: inpImei,
+      email: inpEmail,
     });
     // Redirige a la URL de Stripe Checkout
     window.location.replace(data.sessionId);
