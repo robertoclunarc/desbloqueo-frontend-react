@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable react/prop-types */
 /* eslint-disable react/forbid-prop-types */
 import React, { useEffect, useState } from 'react';
@@ -6,6 +7,19 @@ import { useNavigate, useParams } from 'react-router';
 import { useDispatch } from 'react-redux';
 import HomeIcon from '@mui/icons-material/Home';
 import { setOpcionesStore } from '../../store/slices/opciones.slice';
+import getCheckoutSession from '../../api/stripe';
+
+async function createOrden(idReg) {
+  let servicios;
+  await getCheckoutSession(idReg)
+    .then((respuesta) => {
+      servicios = respuesta;
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  return servicios;
+}
 
 function ResumenPagoForm({ setButton }) {
   const { status } = useParams();
@@ -13,10 +27,12 @@ function ResumenPagoForm({ setButton }) {
   const opciones = JSON.parse(datosResumen);
   const dispatch = useDispatch();
   const [resTicket, setResTicket] = useState(null);
-
+  // eslint-disable-next-line no-console
+  console.log(`propst: ${status}`);
   useEffect(() => {
     const fetchData = async () => {
-      if (status === 'success') {
+      if (status !== 'cancel') {
+        await createOrden(status);
         setButton({ activate: false, ticket: 1 });
         setResTicket({ message: 'La orden se procesó con éxito.' });
       } else {
