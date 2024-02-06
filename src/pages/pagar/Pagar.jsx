@@ -19,8 +19,6 @@ const urlApiStripe = `${env.apiStripeUrl}/create-checkout-session`;
 
 const CheckoutForm = ({ disabledButton }) => {
   const opcion = useSelector((state) => state.opciones);
-  const isImeiValid = opcion[5]?.imeiValid || false;
-  const isEmailValid = opcion[6]?.emailValid || false;
   const idTerminal = opcion[3]?.idReg;
   const idOperador = opcion[1]?.idReg;
   const inpImei = opcion[10]?.imei !== undefined ? opcion[10].imei : '';
@@ -34,7 +32,6 @@ const CheckoutForm = ({ disabledButton }) => {
   price = parseInt(price.toString(), 10); */
   const [loading, setLoading] = useState(false);
   const [loadingButton, setLoadingButton] = useState(false);
-
   // console.log(opcion);
 
   useEffect(() => {
@@ -48,7 +45,7 @@ const CheckoutForm = ({ disabledButton }) => {
   let buttonText = '';
 
   if (loadingButton) {
-    buttonText = 'Por favor cumpla con los requisitos';
+    buttonText = 'Acepte los Terminos y condiciones';
   } else if (loading) {
     buttonText = 'Cargando ...';
   } else {
@@ -87,7 +84,7 @@ const CheckoutForm = ({ disabledButton }) => {
             </h5>
           </div>
         </div>
-        <button onClick={handleSubmit} className="buttonStripe" type="submit" disabled={loading || loadingButton || !isImeiValid || !isEmailValid}>
+        <button onClick={handleSubmit} className="buttonStripe" type="submit" disabled={loading || loadingButton}>
           {buttonText}
         </button>
       </section>
