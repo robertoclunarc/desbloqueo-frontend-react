@@ -12,12 +12,6 @@ import imgStripe from '../../shared/image/stripe-for-wordpress.png';
 const env = environments;
 const urlApiStripe = `${env.apiStripeUrl}/create-checkout-session`;
 
-/* function dosDecimales(n) {
-  const t = n.toString();
-  const regex = /(\d*.\d{0,2})/;
-  return t.match(regex)[0];
-} */
-
 const CheckoutForm = ({ disabledButton }) => {
   const opcion = useSelector((state) => state.opciones);
   let posImei = -1;
@@ -40,17 +34,9 @@ const CheckoutForm = ({ disabledButton }) => {
   const inpImei = opcion[10]?.imei !== undefined ? opcion[10].imei : '';
   const inpEmail = opcion[11]?.email !== undefined ? opcion[11].email : '';
   const idService = opcion[4]?.idReg;
-  // const prdName = opcion[3].Modelo !== undefined ? opcion[3].Modelo : 'Modelo no especificado';
-  // const dscService = opcion[4].Servicio !== undefined ? opcion[4].Servicio : 'Servicio sin especificacion';
   const displayPrice = `${opcion[5]?.price}`;
-  /* let price = opcion[5]?.price;
-  price = price ? dosDecimales(price) * 100 : 0;
-  price = parseInt(price.toString(), 10); */
   const [loading, setLoading] = useState(false);
   const [loadingButton, setLoadingButton] = useState(false);
-
-  // eslint-disable-next-line no-console
-  // console.log(opcion);
 
   useEffect(() => {
     if (disabledButton) {
