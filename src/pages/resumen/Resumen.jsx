@@ -31,7 +31,8 @@ function Resumen() {
           color: 'white',
         }}
       >
-        If everything here looks correct, please fill out your IMEI and Email to finish the process.
+        Por favor verifique que todo esta correcto en este resumen y llene su
+        IMEI y su correo electrónico.
       </Typography>
     </Container>
   );

@@ -2,6 +2,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
+import { Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { environments } from '../../environments/environment';
@@ -11,28 +12,31 @@ import imgStripe from '../../shared/image/stripe-for-wordpress.png';
 const env = environments;
 const urlApiStripe = `${env.apiStripeUrl}/create-checkout-session`;
 
-/* function dosDecimales(n) {
-  const t = n.toString();
-  const regex = /(\d*.\d{0,2})/;
-  return t.match(regex)[0];
-} */
-
 const CheckoutForm = ({ disabledButton }) => {
   const opcion = useSelector((state) => state.opciones);
+  let posImei = -1;
+  if (opcion[10]?.id === '5') {
+    posImei = 10;
+  } else if (opcion[11]?.id === '5') {
+    posImei = 11;
+  }
+  let posEmail = -1;
+  if (opcion[10]?.id === '6') {
+    posEmail = 10;
+  } else if (opcion[11]?.id === '6') {
+    posEmail = 11;
+  }
+
+  const isImeiValid = opcion[posImei]?.imeiValid || false;
+  const isEmailValid = opcion[posEmail]?.emailValid || false;
   const idTerminal = opcion[3]?.idReg;
   const idOperador = opcion[1]?.idReg;
   const inpImei = opcion[10]?.imei !== undefined ? opcion[10].imei : '';
   const inpEmail = opcion[11]?.email !== undefined ? opcion[11].email : '';
   const idService = opcion[4]?.idReg;
-  // const prdName = opcion[3].Modelo !== undefined ? opcion[3].Modelo : 'Modelo no especificado';
-  // const dscService = opcion[4].Servicio !== undefined ? opcion[4].Servicio : 'Servicio sin especificacion';
   const displayPrice = `${opcion[5]?.price}`;
-  /* let price = opcion[5]?.price;
-  price = price ? dosDecimales(price) * 100 : 0;
-  price = parseInt(price.toString(), 10); */
   const [loading, setLoading] = useState(false);
   const [loadingButton, setLoadingButton] = useState(false);
-  // console.log(opcion);
 
   useEffect(() => {
     if (disabledButton) {
@@ -43,15 +47,30 @@ const CheckoutForm = ({ disabledButton }) => {
   }, [disabledButton]);
 
   let buttonText = '';
+  let mensajeError = '';
+
+  if (isImeiValid === false) {
+    mensajeError = 'Por favor complete toda la información';
+  }
+  if (isEmailValid === false) {
+    mensajeError = 'Por favor complete toda la información';
+  }
+  if (loadingButton) {
+    mensajeError = 'Por favor complete la información y acepte los términos y condiciones';
+  }
+  if (loading) {
+    mensajeError = 'Por Favor Espere...';
+  }
 
   if (loadingButton) {
-    buttonText = 'Acepte los Terminos y condiciones';
+    buttonText = 'Por favor acepta los términos y condiciones';
   } else if (loading) {
     buttonText = 'Cargando ...';
   } else {
     buttonText = 'Pagar';
   }
-
+  // eslint-disable-next-line no-console
+  // console.log(`loading: ${loading} || loadinButon: ${loadingButton} || isImeiValid: ${isImeiValid} || isEmailValid: ${isEmailValid}`);
   const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log(urlApiStripe);
@@ -69,6 +88,18 @@ const CheckoutForm = ({ disabledButton }) => {
   };
   return (
     <div className="div_payment-cardElement">
+      {mensajeError !== '' && (
+        <Typography
+          sx={{
+            color: '#f0a919',
+            fontSize: '18px',
+            paddingTop: '5px',
+            textAlign: 'center',
+          }}
+        >
+          {mensajeError}
+        </Typography>
+      )}
       <section>
         <div className="product">
           <img
@@ -84,7 +115,7 @@ const CheckoutForm = ({ disabledButton }) => {
             </h5>
           </div>
         </div>
-        <button onClick={handleSubmit} className="buttonStripe" type="submit" disabled={loading || loadingButton}>
+        <button onClick={handleSubmit} className="buttonStripe" type="submit" disabled={(loading || loadingButton || !isImeiValid || !isEmailValid)}>
           {buttonText}
         </button>
       </section>
