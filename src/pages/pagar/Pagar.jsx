@@ -50,7 +50,7 @@ const CheckoutForm = ({ disabledButton }) => {
   const [loadingButton, setLoadingButton] = useState(false);
 
   // eslint-disable-next-line no-console
-  console.log(opcion);
+  // console.log(opcion);
 
   useEffect(() => {
     if (disabledButton) {
@@ -84,7 +84,7 @@ const CheckoutForm = ({ disabledButton }) => {
     buttonText = 'Pagar';
   }
   // eslint-disable-next-line no-console
-  console.log(`loading: ${loading} || loadinButon: ${loadingButton} || isImeiValid: ${isImeiValid} || isEmailValid: ${isEmailValid}`);
+  // console.log(`loading: ${loading} || loadinButon: ${loadingButton} || isImeiValid: ${isImeiValid} || isEmailValid: ${isEmailValid}`);
   const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log(urlApiStripe);
