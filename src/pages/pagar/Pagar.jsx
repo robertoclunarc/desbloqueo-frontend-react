@@ -103,16 +103,16 @@ const CheckoutForm = ({ disabledButton }) => {
   return (
     <div className="div_payment-cardElement">
       {mensajeError !== '' && (
-      <Typography
-        sx={{
-          color: '#f0a919',
-          fontSize: '18px',
-          paddingTop: '5px',
-          textAlign: 'center',
-        }}
-      >
-        {mensajeError}
-      </Typography>
+        <Typography
+          sx={{
+            color: '#f0a919',
+            fontSize: '18px',
+            paddingTop: '5px',
+            textAlign: 'center',
+          }}
+        >
+          {mensajeError}
+        </Typography>
       )}
       <section>
         <div className="product">
