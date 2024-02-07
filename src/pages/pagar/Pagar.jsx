@@ -64,13 +64,13 @@ const CheckoutForm = ({ disabledButton }) => {
   let mensajeError = '';
 
   if (isImeiValid === false) {
-    mensajeError = 'Complete La Información';
+    mensajeError = 'Por favor complete toda la información';
   }
   if (isEmailValid === false) {
-    mensajeError = 'Complete La Información';
+    mensajeError = 'Por favor complete toda la información';
   }
   if (loadingButton) {
-    mensajeError = 'Por Favor acepta los términos y condiciones';
+    mensajeError = 'Por favor complete la información y acepte los términos y condiciones';
   }
   if (loading) {
     mensajeError = 'Por Favor Espere...';

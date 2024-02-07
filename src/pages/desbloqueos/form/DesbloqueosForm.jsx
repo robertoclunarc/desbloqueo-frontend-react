@@ -555,7 +555,7 @@ function DesbloqueosForm() {
                     <Typography variant="h5" fontWeight="700" color="white">
                       Servicios de desbloqueos
                     </Typography>
-                    <FormControlLabel control={<Checkbox color="secondary" checked={aceptarTerminos} onChange={(e) => setAceptarTerminos(e.target.checked)} />} label="Aceptar los términos  y condiciones" style={{ color: 'white' }} id="checkbox" />
+                    <FormControlLabel control={<Checkbox color="secondary" checked={aceptarTerminos} onChange={(e) => setAceptarTerminos(e.target.checked)} />} label="Aceptar los términos  y condiciones *" style={{ color: 'white' }} id="checkbox" />
                     <FormControlLabel control={<Checkbox color="secondary" checked={recibirBoletin} onChange={(e) => setRecibirBoletin(e.target.checked)} />} label="Recibir boletín informativo" style={{ color: 'white' }} id="checkbox2" />
                     <Pagar disabledButton={disabledButton} next={handleNextPrevClick} />
                     <IconButton onClick={() => handleNextPrevClick(2)} sx={{ marginTop: '20px', border: '1px solid white', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)' }}>
@@ -566,70 +566,70 @@ function DesbloqueosForm() {
               </div>
             )}
             {formActivePanel.formActivePanelId === 4 && status && (
-            <Card sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              paddingBottom: '30px',
-              borderRadius: '35px',
-              backgroundColor: '#2c5b97',
-              height: { xs: 'auto', sm: 'auto' },
-              border: '2px solid white',
-              justifyContent: 'end',
-              boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
-              paddingTop: '6em',
-
-            }}
-            >
-              <Stack sx={{ width: '100%', paddingBottom: '1em' }} spacing={4}>
-                <Stepper
-                  alternativeLabel
-                  activeStep={3}
-                  connector={<ColorlibConnector />}
-                  sx={{ display: { xs: 'flex', sm: 'flex' } }}
-                >
-                  {
-          steps.map((label) => (
-            <Step key={label}>
-              <StepLabel StepIconComponent={ColorlibStepIcon}>
-                <Typography sx={{ fontSize: '12px', color: 'white' }}>
-                  {
-                  label
-                }
-                </Typography>
-              </StepLabel>
-            </Step>
-          ))
-        }
-                </Stepper>
-              </Stack>
-              <Box sx={{
-                border: '2px solid white', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'absolute', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)', width: { xs: '100px', sm: '150px' }, height: { xs: '100px', sm: '150px' }, top: { xs: '-6%', sm: '-13%' }, borderRadius: '50%',
-              }}
-              >
-                { status !== 'cancel' ? (
-                  <DoneOutlineIcon name="completed" sx={{ height: { xs: '50px', sm: '100px' }, width: { xs: '50px', sm: '100px' }, color: 'black' }} />
-                )
-                  : (<CancelOutlinedIcon name="canceled" sx={{ height: { xs: '50px', sm: '100px' }, width: { xs: '50px', sm: '100px' }, color: 'black' }} />)}
-
-              </Box>
-              <Box sx={{
+              <Card sx={{
                 display: 'flex',
-                gap: '30px',
-                justifyContent: 'center',
-                alignItems: 'center',
-                width: { xs: '100%', sm: '100%' },
                 flexDirection: 'column',
+                alignItems: 'center',
+                paddingBottom: '30px',
+                borderRadius: '35px',
+                backgroundColor: '#2c5b97',
+                height: { xs: 'auto', sm: 'auto' },
+                border: '2px solid white',
+                justifyContent: 'end',
+                boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px',
+                paddingTop: '6em',
+
               }}
               >
-                <ResumenPago />
+                <Stack sx={{ width: '100%', paddingBottom: '1em' }} spacing={4}>
+                  <Stepper
+                    alternativeLabel
+                    activeStep={3}
+                    connector={<ColorlibConnector />}
+                    sx={{ display: { xs: 'flex', sm: 'flex' } }}
+                  >
+                    {
+                      steps.map((label) => (
+                        <Step key={label}>
+                          <StepLabel StepIconComponent={ColorlibStepIcon}>
+                            <Typography sx={{ fontSize: '12px', color: 'white' }}>
+                              {
+                                label
+                              }
+                            </Typography>
+                          </StepLabel>
+                        </Step>
+                      ))
+                    }
+                  </Stepper>
+                </Stack>
+                <Box sx={{
+                  border: '2px solid white', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'absolute', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)', width: { xs: '100px', sm: '150px' }, height: { xs: '100px', sm: '150px' }, top: { xs: '-6%', sm: '-13%' }, borderRadius: '50%',
+                }}
+                >
+                  {status !== 'cancel' ? (
+                    <DoneOutlineIcon name="completed" sx={{ height: { xs: '50px', sm: '100px' }, width: { xs: '50px', sm: '100px' }, color: 'black' }} />
+                  )
+                    : (<CancelOutlinedIcon name="canceled" sx={{ height: { xs: '50px', sm: '100px' }, width: { xs: '50px', sm: '100px' }, color: 'black' }} />)}
 
-                {/* <IconButton onClick={() => handleNextPrevClick(3)} sx={{ marginTop: '20px', border: '1px solid white', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)' }}>
+                </Box>
+                <Box sx={{
+                  display: 'flex',
+                  gap: '30px',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  width: { xs: '100%', sm: '100%' },
+                  flexDirection: 'column',
+                }}
+                >
+                  <ResumenPago />
+
+                  {/* <IconButton onClick={() => handleNextPrevClick(3)} sx={{ marginTop: '20px', border: '1px solid white', background: 'linear-gradient(90deg, hsla(1, 84%, 80%, 1) 0%, hsla(56, 100%, 50%, 1) 100%)' }}>
                   <ArrowBackIcon sx={{ color: 'black' }} fontSize="large" />
                 </IconButton> */}
 
-              </Box>
-            </Card>
+                </Box>
+              </Card>
 
             )}
           </Container>
