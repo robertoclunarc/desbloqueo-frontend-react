@@ -52,9 +52,9 @@ function Input() {
       dispatch(
         setOpcionesGlobal({ id: '6', email: inputValue, emailValid: true }),
       );
-      setMsgCorreo('Gracias!');
+      setMsgCorreo('Correcto!');
     } else {
-      setMsgCorreo('Por favor ingresa un Correo electronico valido');
+      setMsgCorreo('Escribe un Correo electronico válido');
       dispatch(
         setOpcionesGlobal({ id: '6', email: inputValue, emailValid: false }),
       );
@@ -69,9 +69,9 @@ function Input() {
       dispatch(
         setOpcionesGlobal({ id: '5', imei: inputValue, imeiValid: true }),
       );
-      setMsgImei('Gracias!');
+      setMsgImei('Correcto!');
     } else {
-      setMsgImei('Por favor ingrese un imei valido');
+      setMsgImei('Escribe tu numero de imei válido');
       dispatch(
         setOpcionesGlobal({ id: '5', imei: inputValue, imeiValid: false }),
       );
@@ -91,11 +91,10 @@ function Input() {
       <Typography sx={{ color: 'white', fontSize: '20px', textAlign: 'left' }}>
         {' '}
         Ingresa tu IMEI
-        {' '}
         <span style={{ color: 'red' }}>*</span>
         {' '}
       </Typography>
-      <Typography sx={{ color: '#C62907', fontSize: '15px' }}>
+      <Typography sx={{ color: '#f0a919', fontSize: '15px' }}>
         {msgImei}
       </Typography>
       <TextField
@@ -104,6 +103,9 @@ function Input() {
         id="imei"
         label="IMEI"
         variant="filled"
+        placeholder="Ejemplo: 123456789123456"
+        helperText="Solo Caracteres Numéricos"
+        type="number"
         onChange={handleChangeImei}
         defaultValue={opciones[10]?.imei || valueOptions}
       />
@@ -116,11 +118,11 @@ function Input() {
         }}
       >
         {' '}
-        Ingresa tu Correo electronico
+        Ingresa Tu Correo Electronico
         <span style={{ color: 'red' }}>*</span>
         {' '}
       </Typography>
-      <Typography sx={{ color: '#C62907', fontSize: '15px' }}>
+      <Typography sx={{ color: '#f0a919', fontSize: '15px' }}>
         {msgCorreo}
       </Typography>
       <TextField
@@ -129,6 +131,8 @@ function Input() {
         id="email"
         label="Correo electronico"
         variant="filled"
+        helperText="ejemplo@example.com"
+        placeholder="juancito@tudominio.com"
         onChange={handleChangeEmail}
         defaultValue={opciones[11]?.email || valueOptionsEmail}
       />

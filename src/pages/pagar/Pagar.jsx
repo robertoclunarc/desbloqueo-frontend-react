@@ -2,6 +2,7 @@
 /* eslint-disable react/prop-types */
 /* eslint-disable max-len */
 import React, { useState, useEffect } from 'react';
+import { Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import { environments } from '../../environments/environment';
@@ -19,8 +20,21 @@ const urlApiStripe = `${env.apiStripeUrl}/create-checkout-session`;
 
 const CheckoutForm = ({ disabledButton }) => {
   const opcion = useSelector((state) => state.opciones);
-  const isImeiValid = opcion[5]?.imeiValid || false;
-  const isEmailValid = opcion[6]?.emailValid || false;
+  let posImei = -1;
+  if (opcion[10]?.id === '5') {
+    posImei = 10;
+  } else if (opcion[11]?.id === '5') {
+    posImei = 11;
+  }
+  let posEmail = -1;
+  if (opcion[10]?.id === '6') {
+    posEmail = 10;
+  } else if (opcion[11]?.id === '6') {
+    posEmail = 11;
+  }
+
+  const isImeiValid = opcion[posImei]?.imeiValid || false;
+  const isEmailValid = opcion[posEmail]?.emailValid || false;
   const idTerminal = opcion[3]?.idReg;
   const idOperador = opcion[1]?.idReg;
   const inpImei = opcion[10]?.imei !== undefined ? opcion[10].imei : '';
@@ -35,7 +49,8 @@ const CheckoutForm = ({ disabledButton }) => {
   const [loading, setLoading] = useState(false);
   const [loadingButton, setLoadingButton] = useState(false);
 
-  // console.log(opcion);
+  // eslint-disable-next-line no-console
+  console.log(opcion);
 
   useEffect(() => {
     if (disabledButton) {
@@ -46,15 +61,30 @@ const CheckoutForm = ({ disabledButton }) => {
   }, [disabledButton]);
 
   let buttonText = '';
+  let mensajeError = '';
+
+  if (isImeiValid === false) {
+    mensajeError = 'Complete La Información';
+  }
+  if (isEmailValid === false) {
+    mensajeError = 'Complete La Información';
+  }
+  if (loadingButton) {
+    mensajeError = 'Por Favor acepta los términos y condiciones';
+  }
+  if (loading) {
+    mensajeError = 'Por Favor Espere...';
+  }
 
   if (loadingButton) {
-    buttonText = 'Por favor cumpla con los requisitos';
+    buttonText = 'Por favor acepta los términos y condiciones';
   } else if (loading) {
     buttonText = 'Cargando ...';
   } else {
     buttonText = 'Pagar';
   }
-
+  // eslint-disable-next-line no-console
+  console.log(`loading: ${loading} || loadinButon: ${loadingButton} || isImeiValid: ${isImeiValid} || isEmailValid: ${isEmailValid}`);
   const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log(urlApiStripe);
@@ -72,6 +102,18 @@ const CheckoutForm = ({ disabledButton }) => {
   };
   return (
     <div className="div_payment-cardElement">
+      {mensajeError !== '' && (
+      <Typography
+        sx={{
+          color: '#f0a919',
+          fontSize: '18px',
+          paddingTop: '5px',
+          textAlign: 'center',
+        }}
+      >
+        {mensajeError}
+      </Typography>
+      )}
       <section>
         <div className="product">
           <img
@@ -87,7 +129,7 @@ const CheckoutForm = ({ disabledButton }) => {
             </h5>
           </div>
         </div>
-        <button onClick={handleSubmit} className="buttonStripe" type="submit" disabled={loading || loadingButton || !isImeiValid || !isEmailValid}>
+        <button onClick={handleSubmit} className="buttonStripe" type="submit" disabled={(loading || loadingButton || !isImeiValid || !isEmailValid)}>
           {buttonText}
         </button>
       </section>
