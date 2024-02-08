@@ -9,6 +9,7 @@ import { ReactComponent as Three } from '../../../shared/image/three.svg';
 import fillingOutForm from '../../../shared/image/fillingOutForm.png';
 import gettingOrder from '../../../shared/image/gettingOrder.png';
 import completingOrder from '../../../shared/image/completingOrder.png';
+import PointerFingerImage from '../../../shared/image/pointerfinger.png';
 
 const steps = [
   {
@@ -57,7 +58,7 @@ const newWhyUs = () => {
           color: 'white',
           textAlign: 'center',
           fontSize: {
-            xl: '54px', lg: '54px', md: '32px', sm: '36px', xs: '30px',
+            xl: '64px', lg: '64px', md: '54px', sm: '36px', xs: '24px',
           },
           paddingBottom: '.5em',
           borderBottom: '1px solid #1F9CC8',
@@ -137,6 +138,7 @@ const newWhyUs = () => {
               sx={{
                 color: 'white',
                 paddingBottom: '.5em',
+                textAlign: 'center',
               }}
             >
               {' '}
@@ -144,15 +146,34 @@ const newWhyUs = () => {
               {' '}
             </Typography>
             {toggleCardContent ? (
-              <img
-                src={`${image}`}
-                alt={imageTitle}
-                style={{
-                  width: '100%',
-                  height: 'auto',
-                  objectFit: 'cover',
-                }}
-              />
+              <Box sx={{
+                display: 'flex', width: 'auto', height: 'auto', position: 'relative',
+              }}
+              >
+                <img
+                  src={`${image}`}
+                  alt={imageTitle}
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                    objectFit: 'cover',
+                    border: '2px solid gold',
+                    filter: 'brightness(70%)',
+                  }}
+                />
+                <img
+                  src={`${PointerFingerImage}`}
+                  alt="Press here to view text"
+                  style={{
+                    width: '50px',
+                    height: '50px',
+                    objectFit: 'cover',
+                    position: 'absolute',
+                    right: '0px',
+                    bottom: '10px',
+                  }}
+                />
+              </Box>
             ) : (
               <Typography
                 variant="h6"
