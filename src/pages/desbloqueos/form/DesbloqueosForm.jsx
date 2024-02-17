@@ -513,6 +513,7 @@ function DesbloqueosForm() {
                     alignItems: 'center',
                     paddingBottom: '30px',
                     borderRadius: '35px',
+                    width: '100%',
                     backgroundColor: '#2c5b97',
                     height: { xs: 'auto', sm: 'auto' },
                     border: '2px solid white',
