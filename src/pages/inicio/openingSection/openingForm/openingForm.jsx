@@ -161,6 +161,7 @@ const openingForm = () => {
             label="Marca"
             id={3}
           />
+
           <Select
             name="device"
             options={opcionesDevicesFilter}
