@@ -55,7 +55,7 @@ function SelectInput({
           label={label}
           sx={{ backgroundColor: 'white' }}
         >
-          <CircularProgress />
+          <CircularProgress sx={{ marginLeft: '42%' }} />
         </Select>
         {meta.touched && meta.error ? (
           <div className="error">{meta.error}</div>
