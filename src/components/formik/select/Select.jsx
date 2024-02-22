@@ -5,6 +5,7 @@
 import React, { useEffect, useState } from 'react';
 import { useField } from 'formik';
 import { FormControl, InputLabel, MenuItem } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
 import PropTypes from 'prop-types';
 import Select from '@mui/material/Select';
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,6 +16,7 @@ function SelectInput({
 }) {
   const [field, meta] = useField(props);
   const [valueOptions, setValueOptions] = useState('');
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const opciones = useSelector((state) => state.opciones);
 
@@ -33,9 +35,34 @@ function SelectInput({
   }
   let opt = [];
   async function handleChange(event) {
+    setLoading(true);
     opt = await findAsync(options, event.target.value);
     setValueOptions(event.target.value);
     dispatch(setOpcionesGlobal({ [label]: event.target.value, id: `${id}`, idReg: `${opt.drSimID}` }));
+    setLoading(false);
+  }
+
+  if (loading || !options || options.length === 0) {
+    return (
+      <FormControl color="formColor" sx={{ width: { xs: '100%', sm: '70%' }, backgroundColor: '#fff' }} variant="filled">
+        <InputLabel id={field.name}>{label}</InputLabel>
+        <Select
+          labelId={field.name}
+          id={field.name}
+          value={valueOptions}
+        // eslint-disable-next-line react/jsx-no-bind
+          onChange={handleChange}
+          label={label}
+          sx={{ backgroundColor: 'white' }}
+        >
+          <CircularProgress sx={{ marginLeft: '42%' }} />
+        </Select>
+        {meta.touched && meta.error ? (
+          <div className="error">{meta.error}</div>
+        ) : null}
+
+      </FormControl>
+    );
   }
   return (
     <FormControl color="formColor" sx={{ width: { xs: '100%', sm: '70%' }, backgroundColor: '#fff' }} variant="filled">
