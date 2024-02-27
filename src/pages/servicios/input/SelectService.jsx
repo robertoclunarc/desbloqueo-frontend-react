@@ -9,6 +9,7 @@ import {
 import PropTypes from 'prop-types';
 import Select from '@mui/material/Select';
 import { useDispatch, useSelector } from 'react-redux';
+import CircularProgress from '@mui/material/CircularProgress';
 import { setOpcionesGlobal } from '../../../store/slices/opciones.slice';
 import getToolsDrSim from '../../../api/drsimtools';
 
@@ -30,6 +31,7 @@ function SelectService({
   const [options, setToolOptions] = useState([]);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
+  const [loadingCircle, setLoadingCircle] = useState(true);
 
   function buscarElementoAsync(services, idServ) {
     return new Promise((resolve) => {
@@ -77,6 +79,7 @@ function SelectService({
   };
 
   const getTools = async () => {
+    setLoadingCircle(true);
     let servicios = [];
     // eslint-disable-next-line camelcase
     const id_terminal = opciones[3].idReg;
@@ -85,6 +88,7 @@ function SelectService({
     await getToolsDrSim(id_terminal, id_operador)
       .then((respuesta) => {
         servicios = respuesta;
+        setLoadingCircle(false);
       })
       .catch((error) => {
         console.log(error);
@@ -141,6 +145,12 @@ function SelectService({
   // descripcion = buscarElementoAsync(options, valueOptions);
   const currentOption = options.find((option) => option.id === valueOptions);
 
+  if (loadingCircle) {
+    return (
+      <CircularProgress sx={{ margin: 'auto', height: '250px', width: '250px' }} />
+    );
+  }
+
   return (
     <Box sx={{
       display: 'flex',
@@ -152,7 +162,12 @@ function SelectService({
       flexDirection: 'column',
     }}
     >
-      <FormControl sx={{ width: { xs: '80%', sm: '40%' }, backgroundColor: '#fff' }} variant="filled">
+      <FormControl
+        sx={{
+          width: { xs: '80%', sm: '40%' }, backgroundColor: '#fff', display: 'flex',
+        }}
+        variant="filled"
+      >
         <InputLabel id={field.name}>{label}</InputLabel>
         <Select
           labelId={field.name}
@@ -160,7 +175,6 @@ function SelectService({
           value={valueOptions}
           onChange={handleChange}
           label={label}
-          sx={{ backgroundColor: 'white' }}
         >
           {options?.map((option) => (
             <MenuItem key={option.id} value={option.id}>
@@ -168,6 +182,7 @@ function SelectService({
             </MenuItem>
           ))}
         </Select>
+
         {meta.touched && meta.error ? (
           <div className="error">{meta.error}</div>
         ) : null}

@@ -226,8 +226,8 @@ function DesbloqueosForm() {
     opcionesNetworksFilter = opcionesNetworks;
   }
   let opcionesDevicesFilter = [];
-  if (opciones[2]?.idReg) {
-    const opcionesDevices = devicesOptions?.filter((item) => item.brandDrSimID === opciones[2].idReg);
+  if (opciones[1]?.idReg) {
+    const opcionesDevices = devicesOptions?.filter((item) => item.brandDrSimID === opciones[1].idReg);
 
     if (opcionesDevices?.length > 0) {
       opcionesDevicesFilter = opcionesDevices;
@@ -392,15 +392,15 @@ function DesbloqueosForm() {
                     id={1}
                   />
                   <Select
-                    name="network"
-                    options={opcionesNetworksFilter}
-                    label="Compañia telefonica"
-                    id={2}
-                  />
-                  <Select
                     name="brand"
                     options={brandOptions}
                     label="Marca"
+                    id={2}
+                  />
+                  <Select
+                    name="network"
+                    options={opcionesNetworksFilter}
+                    label="Compañia telefonica"
                     id={3}
                   />
                   <Select
@@ -513,6 +513,7 @@ function DesbloqueosForm() {
                     alignItems: 'center',
                     paddingBottom: '30px',
                     borderRadius: '35px',
+                    width: '100%',
                     backgroundColor: '#2c5b97',
                     height: { xs: 'auto', sm: 'auto' },
                     border: '2px solid white',

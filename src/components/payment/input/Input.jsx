@@ -5,6 +5,7 @@ import {
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setOpcionesGlobal } from '../../../store/slices/opciones.slice';
+import QuestionMark from '../../../shared/image/questionmarkimei.png';
 
 function sumDig(n) {
   let a = 0;
@@ -79,12 +80,27 @@ function Input() {
       display: 'flex', width: { xs: '90%', sm: '60%' }, flexDirection: 'column', padding: '20px', borderRadius: '15px',
     }}
     >
-      <Typography sx={{ color: 'white', fontSize: '20px', textAlign: 'left' }}>
-        {' '}
-        Ingresa tu IMEI
-        <span style={{ color: 'red' }}>*</span>
-        {' '}
-      </Typography>
+      <Box sx={{ display: 'flex', width: '100%' }}>
+        <Typography sx={{ color: 'white', fontSize: '20px', textAlign: 'left' }}>
+          {' '}
+          Ingresa tu IMEI
+          <span style={{ color: 'red' }}>*</span>
+          {' '}
+        </Typography>
+        <Box
+          // eslint-disable-next-line no-return-assign
+          onClick={() => window.open('https://youtube.com/shorts/CyBFNeK5EnA?si=lsP1ALAwXZ1pUKD3', '_blank')}
+          sx={{
+            backgroundImage: `url(${QuestionMark})`,
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+            height: '25px',
+            width: '25px',
+            marginLeft: 'auto',
+            cursor: 'pointer',
+          }}
+        />
+      </Box>
       <Typography sx={{ color: '#f0a919', fontSize: '15px' }}>
         {msgImei}
       </Typography>

@@ -50,7 +50,7 @@ function Servicios() {
         textAlign="center"
         sx={{
           fontSize: {
-            xl: '54px', lg: '64px', md: '54px', sm: '36px', xs: '30px',
+            xl: '64px', lg: '64px', md: '54px', sm: '36px', xs: '24px',
           },
           width: '100%',
           paddingBottom: '.5em',

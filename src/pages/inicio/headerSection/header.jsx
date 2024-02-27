@@ -24,6 +24,7 @@ const header = () => (
     <Typography sx={{
       fontWeight: 'bold',
       color: 'white',
+      textAlign: 'center',
       fontSize: {
         xl: '64px', lg: '64px', md: '54px', sm: '36px', xs: '24px',
       },
