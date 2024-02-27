@@ -218,7 +218,7 @@ function Acerca() {
             inteligentes confiable y eficiente, no busques más. En Desbloquea Mi
             Cel, estamos listos para brindarte soluciones que transformarán la
             forma en que usas tu dispositivo. Únete a nuestra creciente lista de
-            clientes satisfechos y descubre la libertad de elegir.
+            clientes satisfechos y de scubre la libertad de elegir.
           </Typography>
         </Card>
       </Grid>

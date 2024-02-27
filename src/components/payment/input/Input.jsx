@@ -67,7 +67,7 @@ function Input() {
       );
       setMsgImei('Correcto!');
     } else {
-      setMsgImei('Escribe tu numero de imei válido');
+      setMsgImei('Escribe tu numero de IMEI válido');
       dispatch(
         setOpcionesGlobal({ id: '5', imei: inputValue, imeiValid: false }),
       );
