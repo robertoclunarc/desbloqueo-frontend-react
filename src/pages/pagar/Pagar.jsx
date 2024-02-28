@@ -11,6 +11,7 @@ import imgStripe from '../../shared/image/stripe-for-wordpress.png';
 
 const env = environments;
 const urlApiStripe = `${env.apiStripeUrl}/create-checkout-session`;
+const urlApiHelcim = '';
 
 const CheckoutForm = ({ disabledButton }) => {
   const opcion = useSelector((state) => state.opciones);
@@ -38,12 +39,36 @@ const CheckoutForm = ({ disabledButton }) => {
   const [loading, setLoading] = useState(false);
   const [loadingButton, setLoadingButton] = useState(false);
 
+  const createLink = (checkoutToken) => {
+    const temp = 1;
+    // do something here
+    return checkoutToken;
+  };
+
+  const getHelcimPay = async () => {
+    const { data } = await axios.post(urlApiHelcim, {
+      urlDomain: `${window.location.origin}/desbloqueos`,
+      id_terminal: idTerminal,
+      id_operador: idOperador,
+      id_service: idService,
+      imei: inpImei,
+      email: inpEmail,
+    });
+
+    // save secret token somewhere
+    const { secretToken, checkoutToken } = data;
+
+    // create a link with checkoutToken
+  };
+
   useEffect(() => {
     if (disabledButton) {
       setLoadingButton(false);
     } else {
       setLoadingButton(true);
     }
+
+    getHelcimPay();
   }, [disabledButton]);
 
   let buttonText = '';
@@ -84,7 +109,7 @@ const CheckoutForm = ({ disabledButton }) => {
       email: inpEmail,
     });
     // Redirige a la URL de Stripe Checkout
-    window.location.replace(data.sessionId);
+    // window.location.replace(data.sessionId);
   };
   return (
     <div className="div_payment-cardElement">
